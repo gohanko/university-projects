@@ -5,12 +5,12 @@ from automated_unitreg.selenium_unitreg.tasks import login, notify_when_course_a
 
 LOGIN_URL = 'https://unitreg.utar.edu.my/portal/courseRegStu/login.jsp'
 
-def parse_json_from_file(filename):
+def parse_json_from_file(filename) -> dict:
     with open(filename) as file_handler:
         data = json.load(file_handler)
     return data
 
-def parse_commands():
+def parse_commands() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument('--browser', help='Specify which browser to use. Defaults to Firefox.')
     parser.add_argument('--username', help='Your student ID.', required=True)

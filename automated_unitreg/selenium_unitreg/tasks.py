@@ -3,7 +3,7 @@ import time
 from plyer import notification
 from automated_unitreg.selenium_unitreg.helper import fill_input_by_name, click_button_by_name
 
-def login(webdriver, login_url, username, password):
+def login(webdriver, login_url, username, password) -> None:
     webdriver.get(login_url)
     assert "Welcome to Course Registration System" in webdriver.title
     fill_input_by_name('reqFregkey', username)
@@ -11,7 +11,7 @@ def login(webdriver, login_url, username, password):
     fill_input_by_name('kaptchafield', input('Enter the captcha code you see: '))
     click_button_by_name('_submit')
 
-def notify_when_course_available(webdriver, course_code):
+def notify_when_course_available(webdriver, course_code) -> None:
     my_course_registration_elem = webdriver.find_element_by_link_text('My Course Registration')
     my_course_registration_elem.click()
 
