@@ -1,4 +1,4 @@
-# automatic-unitreg
+# automated_unitreg
 Automated tool to help us register for courses in the next semester.
 
 ## Installation
