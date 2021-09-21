@@ -1,0 +1,12 @@
+**/venv/
+
+# camp-course
+geckodriver.log
+camp_data.txt
+
+# fetch-datacom-qr
+attendance_link_history.json
+
+# generate-descriptive-statistics
+results/
+*.zip
