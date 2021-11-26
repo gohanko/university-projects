@@ -1,4 +1,5 @@
 #include <SFML\Window.hpp>
+
 class Board {
 
 };
