@@ -1,16 +1,4 @@
 #include <SFML\Graphics.hpp>
-class Board {
-
-};
-
-class Piece {
-
-
-};
-
-class MenuGUI {
-
-};
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Moe Chess!");
@@ -24,8 +12,13 @@ int main() {
                 window.close();
         }
 
-        window.clear(sf::Color::Red);
 
+        // set the shape color to green
+        sf::CircleShape shape(50.f);
+        shape.setFillColor(sf::Color(100, 250, 50));
+
+        window.clear(sf::Color::Red);
+        window.draw(shape);
         window.display();
     }
 

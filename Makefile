@@ -1,10 +1,19 @@
 CC = g++
 
-bd:
-	$(CC) -I ./library/SFML-2.5.1/include -c ./src/main.cpp -o ./build/MoeChess.exe
-	$(CC) -L ./library/SFML-2.5.1/lib -o ./build/MoeChess.exe  -lmingw32 -lsfml-main -lsfml-main -lsfml-graphics -lsfml-window -lsfml-system
+clean_object:
+	del /s /q .\build\*.o
 
-clean:
-ifeq ($(OS), Windows_NT)
-	del /s MoeChess.exe
-endif
+clean_all:
+	del /s /q .\build\*
+
+copy_dependencies:
+	copy .\library\SFML-2.5.1\bin\sfml-graphics-2.dll .\build\sfml-graphics-2.dll
+	copy .\library\SFML-2.5.1\bin\sfml-system-2.dll .\build\sfml-system-2.dll
+	copy .\library\SFML-2.5.1\bin\sfml-window-2.dll .\build\sfml-window-2.dll
+
+build_app:
+	$(CC) -I ./library/SFML-2.5.1/include -c ./src/main.cpp -o ./build/main.o
+	$(CC) -L ./library/SFML-2.5.1/lib -o ./build/main.exe ./build/main.o -lsfml-graphics -lsfml-window -lsfml-system
+
+fresh_build: clean_all copy_dependencies build_app clean_object
+	build/main.exe
