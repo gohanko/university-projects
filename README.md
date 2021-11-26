@@ -5,4 +5,3 @@ Anime themed and kawaii chess game written in C++
 To get started, please have the following installed:
 
 - GCC 7.3.0 MinGW (SEH) - 64-bit
-- make
