@@ -1,102 +1,68 @@
-#include <SFML\Graphics.hpp>
 #include <vector>
 #include <SFML\Graphics.hpp>
 
 class Piece {
 private:
     sf::RenderWindow * m_window;
+    sf::Texture m_texture;
     sf::Vector2i m_position;
     bool is_dead = 0;
 
     // Sprite size is 128x128
-    sf::IntRect spritePositionCalculator(int row, int column) {
+    sf::IntRect _calculateSprintRect(int row, int column) {
         const unsigned int sprite_size = 128;
         sf::IntRect spriteRect(column * sprite_size, row * sprite_size, sprite_size, sprite_size);
         return spriteRect;
     };
-
 public:
-    Piece(sf::RenderWindow * window, sf::Vector2i position) : m_window(window), m_position(position) {}
+    Piece(sf::RenderWindow * window, sf::Texture texture, sf::Vector2i position) : m_window(window), m_texture(texture), m_position(position) {}
 
     void draw() {
-        // 128x128
-        sf::Texture texture;
-        if (!texture.loadFromFile("./assets/sprites/chess_pieces.png", this->spritePositionCalculator(1, 2))) {
-            throw;
-        }
-
         sf::Sprite sprite;
-        sprite.setTexture(texture);
+        sprite.setTexture(m_texture);
         sprite.setPosition(m_position.x, m_position.y);
+        sprite.setTextureRect(_calculateSprintRect(0, 1));
         m_window->draw(sprite);
     }
 };
 
-class Team {
+class PieceSet {
 private:
-    sf::RenderWindow * m_window;
-    enum chess_piece_type { KING, QUEEN, ROOK, KNIGHTS, BISHOPS, PAWNS};
-public:
-    Team(sf::RenderWindow * window) : m_window(window) {}
+    std::vector<Piece> pieces;
 
-    void draw() {
-
+    bool _initialiseSet() {
+        
     }
+public:
+
 };
 
-class BoardCell {
+class Game {
 private:
     sf::RenderWindow * m_window;
-    sf::Vector2f m_size;
-    sf::Color m_color;
-    sf::Vector2i m_position;
-public:
-    BoardCell(sf::RenderWindow * window, sf::Vector2i position, sf::Vector2f size, sf::Color color)
-        : m_window(window), m_position(position), m_size(size), m_color(color) {}
+    sf::Texture m_chess_piece_texture;
 
-    void draw() {
-        sf::RectangleShape cell(m_size);
-        cell.setPosition(sf::Vector2f(m_position.x * m_size.x, m_position.y * m_size.y));
-        cell.setFillColor(m_color);
-        m_window->draw(cell);
-    }
-};
+    void _drawGameBoard(sf::Vector2u draw_area, sf::Vector2u amount_of_cells) {
+        sf::Vector2f cell_size(draw_area.x / amount_of_cells.x, draw_area.y / amount_of_cells.y);
 
-#define HORIZONTAL_CELL_AMOUNT 8
-#define VERTICAL_CELL_AMOUNT 8
-
-class Board {
-private:
-    sf::RenderWindow * m_window;
-    std::vector<BoardCell> m_cells;
-
-    void initialiseBoard() {
-        sf::Vector2u currentWindowSize = m_window->getSize();
-        sf::Vector2u cellSize(currentWindowSize.x / HORIZONTAL_CELL_AMOUNT, currentWindowSize.y / VERTICAL_CELL_AMOUNT); // Divides the window into cells
-
-        for (int horizontal_counter = 0; horizontal_counter < HORIZONTAL_CELL_AMOUNT; horizontal_counter++) {
-            for (int vertical_counter = 0; vertical_counter < VERTICAL_CELL_AMOUNT; vertical_counter++) {    
-                BoardCell cell(
-                    m_window,
-                    sf::Vector2i(horizontal_counter, vertical_counter),
-                    sf::Vector2f(cellSize.x, cellSize.y),
-                    ((horizontal_counter + vertical_counter) % 2) ? sf::Color {211, 211, 211} : sf::Color::White
-                );
-                cell.draw();
-                m_cells.push_back(cell);
+        for (unsigned short horizontal_position=0; horizontal_position < amount_of_cells.x; horizontal_position++) {
+            for (unsigned short vertical_position=0; vertical_position < amount_of_cells.y; vertical_position++) {
+                sf::RectangleShape cell(cell_size);
+                cell.setPosition(sf::Vector2f(horizontal_position * cell_size.x, vertical_position * cell_size.y));
+                cell.setFillColor(((horizontal_position + vertical_position) % 2) ? sf::Color {211, 211, 211} : sf::Color::White);
+                m_window->draw(cell);
             }
         }
     }
-
-    void initialiseTeams() {
-
-    }
 public:
-    Board(sf::RenderWindow * window) : m_window(window) {}
+    Game(sf::RenderWindow * window) : m_window(window) {
+        if (!m_chess_piece_texture.loadFromFile("./assets/sprites/chess_pieces.png")) {
+            throw;
+        }
+    }
 
-    void draw() {
-        this->initialiseBoard();
-        this->initialiseTeams();
+    void render() {
+        this->_drawGameBoard(this->m_window->getSize(), sf::Vector2u(8, 8));
     }
 };
 
@@ -112,10 +78,10 @@ int main() {
                 window.close();
         }
 
-        Board main_board(&window);
+        Game main_game(&window);
 
         window.clear(sf::Color::Black);
-        main_board.draw();
+        main_game.render();
         window.display();
     }
 
