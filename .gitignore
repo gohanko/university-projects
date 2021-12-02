@@ -2,3 +2,4 @@ __pycache__/
 venv/
 geckodriver.log
 geckodriver.exe
+*.pyc
