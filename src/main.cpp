@@ -23,6 +23,7 @@ int main() {
                 window.close();
         }
 
+        // Initializing screens
         Board board;
         switch (current_screen) {
             case SCREEN::MENU:

@@ -1,4 +1,2 @@
-class Menu {
-    public:
-        
-};
+#include "menu.h"
+
