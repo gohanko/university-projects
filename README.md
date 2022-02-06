@@ -1,5 +1,5 @@
 # moe-chess
-Anime themed and kawaii chess game written in C++
+Chess game written in C++
 
 ## Getting started
 To get started, please have the following installed:
