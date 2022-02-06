@@ -14,7 +14,7 @@ int main() {
     Renderer renderer(&window);
     
     // States
-    int current_screen = 0;
+    int current_screen = 1;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -23,12 +23,12 @@ int main() {
                 window.close();
         }
 
+        Board board;
         switch (current_screen) {
             case SCREEN::MENU:
                 renderer.render();
                 break;
             case SCREEN::GAME:
-                Board board;
                 renderer.addRenderObjects(board.getRenderObject(window.getSize(), sf::Vector2u(8, 8)));
                 renderer.render();
                 break;
