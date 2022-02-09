@@ -1,2 +1,4 @@
-# UCCD1024-Data-Structure-and-Algorithmic-Problem-Solving
-Visual Studio 2017 solution for my Data Structure course projects.
+# UCCD1024
+Repository containing exercises and projects for UCCD1024 Data-Structure-and-Algorithmic-Problem-Solving.
+
+Uses Visual Studio 2017.
