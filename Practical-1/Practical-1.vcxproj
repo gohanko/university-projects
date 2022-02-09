@@ -151,13 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Downloads\Practical1\Questions\SourceCodeFiles\Practical-1.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="InputFiles\customers.txt" />
     <Text Include="InputFiles\input.txt" />
     <Text Include="InputFiles\matrix1.txt" />
     <Text Include="InputFiles\output.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Practical-1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
