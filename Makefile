@@ -2,9 +2,9 @@ CC := $(CXX)
 CPPFLAGS := -I ./library/SFML-2.5.1/include
 LDFLAGS := -L ./library/SFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system
 
-SRC_DIR := ./src/
+SRC_DIR := ./src
 BUILD_DIR := ./build
-BIN_DIR := $(BUILD_DIR)/bin/
+BIN_DIR := $(BUILD_DIR)/bin
 OBJ_DIR := $(BUILD_DIR)/object
 
 clean_object:
@@ -18,13 +18,13 @@ copy_dependencies:
 	copy .\library\SFML-2.5.1\bin\sfml-system-2.dll .\build\bin\sfml-system-2.dll
 	copy .\library\SFML-2.5.1\bin\sfml-window-2.dll .\build\bin\sfml-window-2.dll
 
-renderer.o: ./src/renderer/renderer.cpp
+renderer.o: $(SRC_DIR)/renderer/renderer.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $(OBJ_DIR)/$@
 
-board.o: ./src/chess/board/board.cpp
+board.o: $(SRC_DIR)/chess/board/board.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $(OBJ_DIR)/$@
 
-application.o: ./src/application/application.cpp
+application.o: $(SRC_DIR)/application/application.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $(OBJ_DIR)/$@
 
 app.exe: renderer.o board.o application.o
