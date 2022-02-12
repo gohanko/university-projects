@@ -1,7 +1,7 @@
 #include <vector>
 #include <SFML\Graphics.hpp>
-#include "renderer.h"
-#include "chess/board.h"
+#include "../renderer/renderer.h"
+#include "../chess/board/board.h"
 
 enum SCREEN: int {
     MENU,

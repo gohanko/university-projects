@@ -1,5 +1,4 @@
-#include "renderer.h"
-#include <iostream>
+#include "./renderer.h"
 
 Renderer::Renderer(sf::RenderWindow * window) {
     m_window = window;
