@@ -12,9 +12,10 @@ enum SCREEN: int {
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Moe Chess!", sf::Style::Close);
     Renderer renderer(&window);
+    Board board;
     
     // States
-    int current_screen = 1;
+    int current_screen = SCREEN::GAME;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -24,13 +25,13 @@ int main() {
         }
 
         // Initializing screens
-        Board board;
         switch (current_screen) {
             case SCREEN::MENU:
                 renderer.render();
                 break;
             case SCREEN::GAME:
                 renderer.addRenderObjects(board.getRenderObject(window.getSize(), sf::Vector2u(8, 8)));
+                renderer.addSpriteObjects(board.getRenderPieces());
                 renderer.render();
                 break;
             case SCREEN::SETTING:

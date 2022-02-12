@@ -14,3 +14,11 @@ std::vector<sf::RectangleShape> Board::getRenderObject(sf::Vector2u draw_area, s
 
     return render_objects;
 }
+
+std::vector<sf::Sprite> Board::getRenderPieces() {
+    for (const auto &chess_piece: m_chess_pieces) {
+        render_pieces.push_back(chess_piece.getSprite());
+    }
+
+    return render_pieces;
+}
