@@ -14,4 +14,56 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sample-source-code\app.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sample-source-code\Date.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sample-source-code\LibBook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sample-source-code\LibStudent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sample-source-code\List.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sample-source-code\Node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sample-source-code\Date.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sample-source-code\LibBook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sample-source-code\LibStudent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sample-source-code\List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sample-source-code\Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="sample-text-files\book.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sample-text-files\student.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sample-text-files\student_booklist.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sample-text-files\student_info.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="readme.txt" />
+  </ItemGroup>
 </Project>

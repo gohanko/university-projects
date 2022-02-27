@@ -123,6 +123,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="sample-source-code\app.cpp" />
+    <ClCompile Include="sample-source-code\Date.cpp" />
+    <ClCompile Include="sample-source-code\LibBook.cpp" />
+    <ClCompile Include="sample-source-code\LibStudent.cpp" />
+    <ClCompile Include="sample-source-code\List.cpp" />
+    <ClCompile Include="sample-source-code\Node.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="sample-source-code\Date.h" />
+    <ClInclude Include="sample-source-code\LibBook.h" />
+    <ClInclude Include="sample-source-code\LibStudent.h" />
+    <ClInclude Include="sample-source-code\List.h" />
+    <ClInclude Include="sample-source-code\Node.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+    <Text Include="sample-text-files\book.txt" />
+    <Text Include="sample-text-files\student.txt" />
+    <Text Include="sample-text-files\student_booklist.txt" />
+    <Text Include="sample-text-files\student_info.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
