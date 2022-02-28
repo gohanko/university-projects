@@ -24,7 +24,7 @@ int menu();
 
 List student_linked_list;
 
-// Trim left and right whitespace
+// Trim whitespaces left and right of string.
 string trim(const string& str)
 {
 	size_t first = str.find_first_not_of(' ');
