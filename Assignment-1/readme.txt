@@ -10,10 +10,10 @@ Tutor: Lai Siew Cheng
 
 Group Member 2:
 
-Name: 
-Student ID:
-Course:
-Practical Group: 
-Practical Session: 
-Tutor:
+Name: Germaine Liew Jun Yuan
+Student ID: 1804714
+Course: CT
+Practical Group: P6
+Practical Session: Monday (8AM - 10AM)
+Tutor: Lai Siew Cheng
 
