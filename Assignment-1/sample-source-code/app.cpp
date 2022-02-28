@@ -62,6 +62,8 @@ bool ReadFile(string filename) {
 	}
 
 	// student.txt parser
+	// Since the parser parse based on number of lines (every 4 line is one record), it'll
+	// break if the file ununiform lines of data.
 	string line;
 	while (!file.eof()) {
 		int current_line = 0;
