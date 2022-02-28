@@ -24,6 +24,7 @@ int menu();
 
 List student_linked_list;
 
+// Split string based on choosen separator.
 vector<string> splitstring(string to_split, char seperator) {
 	stringstream streamData(to_split);
 	string value;
@@ -59,7 +60,7 @@ bool ReadFile(string filename) {
 
 		current_line++;
 		vector<string> output = splitstring(line, '=');
-		cout << output[1] << endl;
+		
 
 		if (current_line == 4) {
 			current_line = 0;
