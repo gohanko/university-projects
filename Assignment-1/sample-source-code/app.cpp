@@ -24,6 +24,18 @@ int menu();
 
 List student_linked_list;
 
+// Trim left and right whitespace
+string trim(const string& str)
+{
+	size_t first = str.find_first_not_of(' ');
+	if (string::npos == first)
+	{
+		return str;
+	}
+	size_t last = str.find_last_not_of(' ');
+	return str.substr(first, (last - first + 1));
+}
+
 // Split string based on choosen separator.
 vector<string> splitstring(string to_split, char seperator) {
 	stringstream streamData(to_split);
@@ -31,7 +43,7 @@ vector<string> splitstring(string to_split, char seperator) {
 	vector<string> outputArray;
 
 	while (getline(streamData, value, seperator)) {
-		outputArray.push_back(value);
+		outputArray.push_back(trim(value));
 	}
 
 	return outputArray;
@@ -51,28 +63,99 @@ bool ReadFile(string filename) {
 
 	// student.txt parser
 	string line;
-	int current_line = 0;
-	while (file.good()) {
-		getline(file, line);
-		if (line.find_first_not_of(' ') == std::string::npos) { // Skips lines with only whitespace
-			continue;
-		}
+	while (!file.eof()) {
+		int current_line = 0;
+		LibStudent student;
 
-		current_line++;
-		vector<string> output = splitstring(line, '=');
+
+		while (current_line < 4) {
+			getline(file, line);
+			if (line.find_first_not_of(' ') == std::string::npos) { // Skips lines with only whitespace
+				continue;
+			}
+
+			current_line++;
+			vector<string> output = splitstring(line, '=');
+			
+			if (output[0] == "Student Id") {
+				strcpy(student.id, output[1].c_str());
+			}
+			else if (output[0] == "Name") {
+				strcpy(student.name, output[1].c_str());
+			}
+			else if (output[0] == "course") {
+				strcpy(student.course, output[1].c_str());
+			}
+			else if (output[0] == "Phone Number") {
+				strcpy(student.phone_no, output[1].c_str());
+			}
+		}
 		
-
-		if (current_line == 4) {
-			current_line = 0;
-		}
+		student_linked_list.insert(student);
 	}
 
 	file.close();
 	return true;
 }
 
+enum MenuItem : int {
+	READ_FILE = 1,
+	DELETE_RECORD,
+	SEARCH_STUDENT,
+	INSERT_BOOK,
+	DISPLAY_OUTPUT,
+	COMPUTE_AND_DISPLAY_STATISTICS,
+	STUDENT_WITH_SAME_BOOK,
+	DISPLAY_WARNED_STUDENT,
+	EXIT
+};
+
+int menu() {
+	int menu_choice = 0;
+
+	// Main loop
+	while (true) {
+		cout << "Menu\n" << endl;
+		cout << "1. Read file" << endl;
+		cout << "2. Delete record" << endl;
+		cout << "3. Search student" << endl;
+		cout << "4. Insert book" << endl;
+		cout << "5. Display output" << endl;
+		cout << "6. Computer and Display Statistics" << endl;
+		cout << "7. Student with Same Book" << endl;
+		cout << "8. Display Warned Student" << endl;
+		cout << "9. Exit" << endl;
+		cout << "Enter your choice: ";
+		cin >> menu_choice;
+
+		switch (menu_choice) {
+		case MenuItem::READ_FILE:
+			ReadFile("../Assignment-1/sample-text-files/student.txt");
+			cout << "\nREAD FILE\n" << endl;
+			cout << student_linked_list.size() << " records have been successfully read.\n" << endl;
+			break;
+		case MenuItem::DELETE_RECORD:
+			break;
+		case MenuItem::SEARCH_STUDENT:
+			break;
+		case MenuItem::INSERT_BOOK:
+			break;
+		case MenuItem::DISPLAY_OUTPUT:
+			break;
+		case MenuItem::COMPUTE_AND_DISPLAY_STATISTICS:
+			break;
+		case MenuItem::STUDENT_WITH_SAME_BOOK:
+			break;
+		case MenuItem::DISPLAY_WARNED_STUDENT:
+			break;
+		case MenuItem::EXIT:
+			break;
+		}
+	}
+}
+
 int main() {
-	ReadFile("../Assignment-1/sample-text-files/student.txt");
+	menu();
 
 	cout << "\n\n";
 	system("pause");
