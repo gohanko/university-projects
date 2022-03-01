@@ -49,6 +49,23 @@ vector<string> splitstring(string to_split, char seperator) {
 	return outputArray;
 }
 
+bool isDuplicate(LibStudent &student) {
+	int student_list_size = student_linked_list.size();
+	if (student_list_size == 0) {
+		return false;
+	}
+
+	for (int i = 0; i <= student_list_size; i++) {
+		LibStudent temp;
+		student_linked_list.get(i, temp);
+		if (temp.compareName2(student)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool ReadFile(string filename) {
 	ifstream file;
 	file.open(filename, ios::in);
@@ -68,7 +85,6 @@ bool ReadFile(string filename) {
 	while (!file.eof()) {
 		int current_line = 0;
 		LibStudent student;
-
 
 		while (current_line < 4) {
 			getline(file, line);
@@ -93,7 +109,9 @@ bool ReadFile(string filename) {
 			}
 		}
 		
-		student_linked_list.insert(student);
+		if (!isDuplicate(student)) {
+			student_linked_list.insert(student);
+		}
 	}
 
 	file.close();
