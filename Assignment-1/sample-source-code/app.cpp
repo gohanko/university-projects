@@ -12,52 +12,38 @@
 
 using namespace std;
 
-bool ReadFile(string, List *);
-bool DeleteRecord(List *, char *);
 bool Display(List, int, int);
 bool InsertBook(string, List *);
-bool SearchStudent(List *, char *id, LibStudent &);
 bool computeAndDisplayStatistics(List *);
 bool printStuWithSameBook(List *, char *);
 bool displayWarnedStudent(List *, List *, List *);
-int menu();
 
-List student_linked_list;
-
-// Trim whitespaces left and right of string.
-string trim(const string& str)
-{
+string TrimString(const string& str) {
 	size_t first = str.find_first_not_of(' ');
-	if (string::npos == first)
-	{
+	if (string::npos == first) {
 		return str;
 	}
+
 	size_t last = str.find_last_not_of(' ');
 	return str.substr(first, (last - first + 1));
 }
 
-// Split string based on choosen separator.
-vector<string> splitstring(string to_split, char seperator) {
+vector<string> SplitString(string to_split, char seperator) {
 	stringstream streamData(to_split);
 	string value;
 	vector<string> outputArray;
 
 	while (getline(streamData, value, seperator)) {
-		outputArray.push_back(trim(value));
+		outputArray.push_back(TrimString(value));
 	}
 
 	return outputArray;
 }
 
-bool isDuplicate(LibStudent &student) {
-	int student_list_size = student_linked_list.size();
-	if (student_list_size == 0) {
-		return false;
-	}
-
-	for (int i = 0; i <= student_list_size; i++) {
+bool IsStudentDuplicate(List *student_list, LibStudent &student) {
+	for (int i = 1; i <= student_list->size(); i++) {
 		LibStudent temp;
-		student_linked_list.get(i, temp);
+		student_list->get(i, temp);
 		if (temp.compareName2(student)) {
 			return true;
 		}
@@ -66,15 +52,10 @@ bool isDuplicate(LibStudent &student) {
 	return false;
 }
 
-bool ReadFile(string filename) {
+bool ReadFile(string filename, List *student_list) {
 	ifstream file;
 	file.open(filename, ios::in);
 	if (!file.is_open()) {
-		return false;
-	}
-
-	if (file.fail()) {
-		cout << "File not found!" << endl;
 		return false;
 	}
 
@@ -93,7 +74,7 @@ bool ReadFile(string filename) {
 			}
 
 			current_line++;
-			vector<string> output = splitstring(line, '=');
+			vector<string> output = SplitString(line, '=');
 			
 			if (output[0] == "Student Id") {
 				strcpy(student.id, output[1].c_str());
@@ -109,13 +90,41 @@ bool ReadFile(string filename) {
 			}
 		}
 		
-		if (!isDuplicate(student)) {
-			student_linked_list.insert(student);
+		if (!IsStudentDuplicate(student_list, student)) {
+			student_list->insert(student);
 		}
 	}
 
 	file.close();
 	return true;
+}
+
+bool DeleteRecord(List *student_list, char *id) {
+	for (int i = 1; i <= student_list->size(); i++) {
+		LibStudent student;
+		student_list->get(i, student);
+
+		if (strcmp(student.id, id) == 0) {
+			student_list->remove(i);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool SearchStudent(List *student_list, char *id, LibStudent &student) {
+	for (int i = 1; i <= student_list->size(); i++) {
+		LibStudent temp;
+		student_list->get(i, temp);
+		
+		if (strcmp(temp.id, id) == 0) {
+			student = temp;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 enum MenuItem : int {
@@ -130,12 +139,15 @@ enum MenuItem : int {
 	EXIT
 };
 
-int menu() {
+void menu() {
 	int menu_choice = 0;
+	List student_list;
+	bool should_exit = false;
 
-	// Main loop
-	while (true) {
-		cout << "Menu\n" << endl;
+	while (!should_exit) {
+		cout << "******************************************************" << endl;
+		cout << "MENU\n";
+		cout << "----" << endl;
 		cout << "1. Read file" << endl;
 		cout << "2. Delete record" << endl;
 		cout << "3. Search student" << endl;
@@ -145,19 +157,49 @@ int menu() {
 		cout << "7. Student with Same Book" << endl;
 		cout << "8. Display Warned Student" << endl;
 		cout << "9. Exit" << endl;
-		cout << "Enter your choice: ";
+		cout << "\nEnter your choice: ";
 		cin >> menu_choice;
+		cout << "______________________________________________________" << endl;
+		cout << "RESULTS:" << endl;
 
 		switch (menu_choice) {
 		case MenuItem::READ_FILE:
-			ReadFile("../Assignment-1/sample-text-files/student.txt");
-			cout << "\nREAD FILE\n" << endl;
-			cout << student_linked_list.size() << " records have been successfully read.\n" << endl;
+			ReadFile("../Assignment-1/sample-text-files/student.txt", &student_list);
+			cout << "\nSelected READ FILE" << endl;
+			cout << student_list.size() << " records have been successfully read.\n";
 			break;
 		case MenuItem::DELETE_RECORD:
+		{
+			char student_id[10];
+			cout << "\nSeleted DELETE FILE" << endl;
+			cout << "Enter Student ID to delete: ";
+			cin >> student_id;
+
+			bool is_deleted = DeleteRecord(&student_list, student_id);
+			if (is_deleted) {
+				cout << "Record deleted. " << student_list.size() << " records remaining" << endl;
+			} else {
+				cout << "No records deleted" << endl;
+			}
+
 			break;
+		}
 		case MenuItem::SEARCH_STUDENT:
+		{
+			LibStudent student;
+			char student_id[10];
+
+			cout << "\nEnter Student ID to search: ";
+			cin >> student_id;
+
+			if (SearchStudent(&student_list, student_id, student)) {
+				student.print(cout);
+			}
+			else {
+				cout << "Student not found!" << endl;
+			}
 			break;
+		}
 		case MenuItem::INSERT_BOOK:
 			break;
 		case MenuItem::DISPLAY_OUTPUT:
@@ -169,19 +211,14 @@ int menu() {
 		case MenuItem::DISPLAY_WARNED_STUDENT:
 			break;
 		case MenuItem::EXIT:
+			should_exit = true;
 			break;
 		}
+
+		cout << "______________________________________________________\n" << endl;
 	}
 }
 
-int main() {
+void main() {
 	menu();
-
-	cout << "\n\n";
-	system("pause");
-	return 0;
 }
-
-
-
-
