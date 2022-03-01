@@ -1,4 +1,4 @@
-# moe-chess
+# iron-chess
 Chess game written in C++
 
 ## Getting started
