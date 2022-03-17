@@ -12,12 +12,6 @@
 
 using namespace std;
 
-bool Display(List, int, int);
-bool InsertBook(string, List *);
-bool computeAndDisplayStatistics(List *);
-bool printStuWithSameBook(List *, char *);
-bool displayWarnedStudent(List *, List *, List *);
-
 string TrimString(const string& str) {
 	size_t first = str.find_first_not_of(' ');
 	if (string::npos == first) {
@@ -39,6 +33,69 @@ vector<string> SplitString(string to_split, char seperator) {
 
 	return outputArray;
 }
+
+bool Display(List, int, int);
+
+bool InsertBook(string book, List *book_list)
+{
+	string line;
+	char insert_author[1000];
+	ifstream insert;
+	insert.open(book, ios::in);
+	if (!insert.is_open())
+	{
+		cout << "\n\n File book.txt not found!\n";
+		return false;
+	}
+	while (!insert.eof())
+	{
+		LibBook book;
+
+		getline(insert, line);
+		if (line.find_first_not_of(' ') == std::string::npos) { // Skips lines with only whitespace
+			continue;
+		}
+
+		vector<string> output = SplitString(line, ' ');
+
+		vector<string> authors = SplitString(line, '/');
+		for (int i = 0; i < authors.size(); i++) {
+			strcpy(insert_author, authors[i].c_str());
+			cout << "\n" << authors[i] << "\n";
+			*book.author = insert_author;
+		}
+	
+
+
+		strcpy(book.title, output[2].c_str());
+		cout << "\n" << book.title<< "\n";
+
+		strcpy(book.publisher, output[3].c_str());
+		cout << "\n" << book.publisher << "\n";
+
+		strcpy(book.ISBN, output[4].c_str());
+		cout << "\n" << book.ISBN << "\n";
+
+		book.yearPublished = stoi(output[5]);
+		cout << "\n" << book.yearPublished << "\n";
+
+		strcpy(book.callNum, output[6].c_str());
+		cout << "\n" << book.callNum << "\n";
+
+		cout << "\n\n";
+	}
+
+	cout << "\n\nFile has been read\n";
+
+	insert.close();
+	return true;
+}
+
+
+bool computeAndDisplayStatistics(List *);
+bool printStuWithSameBook(List *, char *);
+bool displayWarnedStudent(List *, List *, List *);
+
 
 bool IsStudentDuplicate(List *student_list, LibStudent &student) {
 	for (int i = 1; i <= student_list->size(); i++) {
@@ -127,6 +184,8 @@ bool SearchStudent(List *student_list, char *id, LibStudent &student) {
 	return false;
 }
 
+
+
 enum MenuItem : int {
 	READ_FILE = 1,
 	DELETE_RECORD,
@@ -142,6 +201,7 @@ enum MenuItem : int {
 void menu() {
 	int menu_choice = 0;
 	List student_list;
+	List book_list;
 	bool should_exit = false;
 
 	while (!should_exit) {
@@ -178,7 +238,8 @@ void menu() {
 			bool is_deleted = DeleteRecord(&student_list, student_id);
 			if (is_deleted) {
 				cout << "Record deleted. " << student_list.size() << " records remaining" << endl;
-			} else {
+			}
+			else {
 				cout << "No records deleted" << endl;
 			}
 
@@ -201,7 +262,10 @@ void menu() {
 			break;
 		}
 		case MenuItem::INSERT_BOOK:
+		{
+			InsertBook("../Assignment-1/sample-text-files/book.txt", &book_list);
 			break;
+		}
 		case MenuItem::DISPLAY_OUTPUT:
 			break;
 		case MenuItem::COMPUTE_AND_DISPLAY_STATISTICS:
