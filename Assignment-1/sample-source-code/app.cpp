@@ -12,6 +12,10 @@
 
 using namespace std;
 
+bool IsOnlyTabOrSpace(string text) {
+	return (text.find_first_not_of(' ') == std::string::npos || text.find_first_not_of('\t') == std::string::npos);
+}
+
 string TrimString(const string& str) {
 	size_t first = str.find_first_not_of(' ');
 	if (string::npos == first) {
@@ -28,6 +32,9 @@ vector<string> SplitString(string to_split, char seperator) {
 	vector<string> outputArray;
 
 	while (getline(streamData, value, seperator)) {
+		if (IsOnlyTabOrSpace(value)) {
+			continue;
+		}
 		outputArray.push_back(TrimString(value));
 	}
 
@@ -52,37 +59,34 @@ bool InsertBook(string book, List *book_list)
 		LibBook book;
 
 		getline(insert, line);
-		if (line.find_first_not_of(' ') == std::string::npos) { // Skips lines with only whitespace
+		if (IsOnlyTabOrSpace(line)) { // Skips lines with only whitespace and tabs
 			continue;
 		}
 
 		vector<string> output = SplitString(line, ' ');
-
-		vector<string> authors = SplitString(line, '/');
+		vector<string> authors = SplitString(output[1], '/');
+		cout << "\n***********************************" << endl;
+		cout << "\nAuthors:" << endl;
 		for (int i = 0; i < authors.size(); i++) {
 			strcpy(insert_author, authors[i].c_str());
-			cout << "\n" << authors[i] << "\n";
 			*book.author = insert_author;
+			cout << "    - " << authors[i] << endl;
 		}
-	
-
 
 		strcpy(book.title, output[2].c_str());
-		cout << "\n" << book.title<< "\n";
+		cout << "\nTitle: " << book.title<< "\n";
 
 		strcpy(book.publisher, output[3].c_str());
-		cout << "\n" << book.publisher << "\n";
+		cout << "\nPublisher: " << book.publisher << "\n";
 
 		strcpy(book.ISBN, output[4].c_str());
-		cout << "\n" << book.ISBN << "\n";
+		cout << "\nISBN: " << book.ISBN << "\n";
 
 		book.yearPublished = stoi(output[5]);
-		cout << "\n" << book.yearPublished << "\n";
+		cout << "\nYear Published: " << book.yearPublished << "\n";
 
 		strcpy(book.callNum, output[6].c_str());
-		cout << "\n" << book.callNum << "\n";
-
-		cout << "\n\n";
+		cout << "\nCall Num: " << book.callNum << "\n";
 	}
 
 	cout << "\n\nFile has been read\n";
@@ -91,11 +95,9 @@ bool InsertBook(string book, List *book_list)
 	return true;
 }
 
-
 bool computeAndDisplayStatistics(List *);
 bool printStuWithSameBook(List *, char *);
 bool displayWarnedStudent(List *, List *, List *);
-
 
 bool IsStudentDuplicate(List *student_list, LibStudent &student) {
 	for (int i = 1; i <= student_list->size(); i++) {
@@ -126,7 +128,7 @@ bool ReadFile(string filename, List *student_list) {
 
 		while (current_line < 4) {
 			getline(file, line);
-			if (line.find_first_not_of(' ') == std::string::npos) { // Skips lines with only whitespace
+			if (IsOnlyTabOrSpace(line)) { // Skips lines with only whitespace
 				continue;
 			}
 
@@ -183,8 +185,6 @@ bool SearchStudent(List *student_list, char *id, LibStudent &student) {
 
 	return false;
 }
-
-
 
 enum MenuItem : int {
 	READ_FILE = 1,
