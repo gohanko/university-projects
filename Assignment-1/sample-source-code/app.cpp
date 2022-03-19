@@ -1,29 +1,51 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
+#include <ctime>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <sstream>
+#include <algorithm> 
+#include <locale>
 
 #include "List.h"
 #include "LibStudent.h"
 #include "LibBook.h"
+#include "Date.h"
 
 using namespace std;
+
+#define FINE_RATE_PER_DAY 0.5
 
 bool IsOnlyTabOrSpace(string text) {
 	return (text.find_first_not_of(' ') == std::string::npos || text.find_first_not_of('\t') == std::string::npos);
 }
 
-string TrimString(const string& str) {
-	size_t first = str.find_first_not_of(' ');
-	if (string::npos == first) {
-		return str;
-	}
+// trim from start (in place)
+static inline void ltrim(string &s) {
+	s.erase(s.begin(), find_if(s.begin(), s.end(), [](unsigned char ch) {
+		return !isspace(ch) || !ch == '\t';
+	}));
+}
 
-	size_t last = str.find_last_not_of(' ');
-	return str.substr(first, (last - first + 1));
+// trim from end (in place)
+static inline void rtrim(std::string &s) {
+	s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+		return !isspace(ch) || !ch == '\t';
+	}).base(), s.end());
+}
+
+// trim from both ends (in place)
+static inline void trim(std::string &s) {
+	ltrim(s);
+	rtrim(s);
+}
+
+// trim from both ends (copying)
+static inline std::string trim_copy(std::string s) {
+	trim(s);
+	return s;
 }
 
 vector<string> SplitString(string to_split, char seperator) {
@@ -35,66 +57,90 @@ vector<string> SplitString(string to_split, char seperator) {
 		if (IsOnlyTabOrSpace(value)) {
 			continue;
 		}
-		outputArray.push_back(TrimString(value));
+		outputArray.push_back(trim_copy(value));
 	}
 
 	return outputArray;
 }
 
-bool Display(List, int, int);
+tm make_tm(int year, int month, int day) {
+	tm tm = { 0 };
+	tm.tm_year = year - 1900;
+	tm.tm_mon = month - 1;
+	tm.tm_mday = day;
+	return tm;
+}
 
-bool InsertBook(string book, List *book_list)
-{
-	string line;
-	char insert_author[1000];
-	ifstream insert;
-	insert.open(book, ios::in);
-	if (!insert.is_open())
-	{
-		cout << "\n\n File book.txt not found!\n";
+bool InsertBook(string filename, List *student_list) {
+	ifstream file;
+	file.open(filename, ios::in);
+	if (!file.is_open()) {
 		return false;
 	}
-	while (!insert.eof())
-	{
-		LibBook book;
-
-		getline(insert, line);
-		if (IsOnlyTabOrSpace(line)) { // Skips lines with only whitespace and tabs
+	
+	string line;
+	while (!file.eof()) {
+		getline(file, line);
+		if (IsOnlyTabOrSpace(line)) {
 			continue;
 		}
 
 		vector<string> output = SplitString(line, ' ');
-		vector<string> authors = SplitString(output[1], '/');
-		cout << "\n***********************************" << endl;
-		cout << "\nAuthors:" << endl;
-		for (int i = 0; i < authors.size(); i++) {
-			strcpy(insert_author, authors[i].c_str());
-			*book.author = insert_author;
-			cout << "    - " << authors[i] << endl;
+		string book_record_student_id = output[0];
+
+		for (int i = 1; i < student_list->size(); i++) {
+			LibStudent student;
+			student_list->get(i, student);
+			if (strcmp(book_record_student_id.c_str(), student.id)) {
+				continue;
+			}
+
+			for (int j = 0; j < 15; j++) {
+				// If not empty, move to next one.
+				if (strlen(student.book[j].title) > 1 && student.book[j].title[0] == ' ') {
+					continue;
+				}
+
+				strcpy(student.book[j].title, output[2].c_str());
+				strcpy(student.book[j].publisher, output[3].c_str());
+				strcpy(student.book[j].ISBN, output[4].c_str());
+				student.book[j].yearPublished = stoi(output[5]);
+				strcpy(student.book[j].callNum, output[6].c_str());
+
+				vector<string> borrow_date = SplitString(output[7], '/');
+				student.book[j].borrow.day = stoi(borrow_date[0]);
+				student.book[j].borrow.month = stoi(borrow_date[1]);
+				student.book[j].borrow.year = stoi(borrow_date[2]);
+
+				vector<string> due_date = SplitString(output[8], '/');
+				student.book[j].due.day = stoi(due_date[0]);
+				student.book[j].due.month = stoi(due_date[1]);
+				student.book[j].due.year = stoi(due_date[2]);
+
+				// Calculating fine
+				time_t current_date_time = mktime(&make_tm(2020, 3, 29));
+				time_t due_date_time = mktime(&make_tm(student.book[j].due.year, student.book[j].due.month, student.book[j].due.day));
+
+				const int seconds_per_day = 60 * 60 * 24;
+				if (current_date_time > due_date_time) {
+					time_t overdue_duration = difftime(current_date_time, due_date_time) / seconds_per_day;
+					student.book[j].fine = overdue_duration * FINE_RATE_PER_DAY;
+				}
+
+				student.totalbook++;
+				break;
+			}
+
+			student.calculateTotalFine();
+			student.print(cout);
 		}
-
-		strcpy(book.title, output[2].c_str());
-		cout << "\nTitle: " << book.title<< "\n";
-
-		strcpy(book.publisher, output[3].c_str());
-		cout << "\nPublisher: " << book.publisher << "\n";
-
-		strcpy(book.ISBN, output[4].c_str());
-		cout << "\nISBN: " << book.ISBN << "\n";
-
-		book.yearPublished = stoi(output[5]);
-		cout << "\nYear Published: " << book.yearPublished << "\n";
-
-		strcpy(book.callNum, output[6].c_str());
-		cout << "\nCall Num: " << book.callNum << "\n";
 	}
 
-	cout << "\n\nFile has been read\n";
-
-	insert.close();
+	file.close();
 	return true;
 }
 
+bool Display(List, int, int);
 bool computeAndDisplayStatistics(List *);
 bool printStuWithSameBook(List *, char *);
 bool displayWarnedStudent(List *, List *, List *);
@@ -201,7 +247,6 @@ enum MenuItem : int {
 void menu() {
 	int menu_choice = 0;
 	List student_list;
-	List book_list;
 	bool should_exit = false;
 
 	while (!should_exit) {
@@ -263,7 +308,7 @@ void menu() {
 		}
 		case MenuItem::INSERT_BOOK:
 		{
-			InsertBook("../Assignment-1/sample-text-files/book.txt", &book_list);
+			InsertBook("../Assignment-1/sample-text-files/book.txt", &student_list);
 			break;
 		}
 		case MenuItem::DISPLAY_OUTPUT:
