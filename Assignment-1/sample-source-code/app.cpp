@@ -8,6 +8,7 @@
 #include <sstream>
 #include <algorithm> 
 #include <locale>
+#include <map>
 
 #include "List.h"
 #include "LibStudent.h"
@@ -101,6 +102,15 @@ bool InsertBook(string filename, List *student_list) {
 					continue;
 				}
 
+				/*
+				vector<string> authors = SplitString(output[1], '/');
+				char insert_author[1000];
+				for (int k = 0; k <= authors.size(); k++) {
+					strcpy(insert_author, authors[k].c_str());
+					*student.book[j].author = insert_author;
+				}
+				*/
+
 				strcpy(student.book[j].title, output[2].c_str());
 				strcpy(student.book[j].publisher, output[3].c_str());
 				strcpy(student.book[j].ISBN, output[4].c_str());
@@ -177,8 +187,49 @@ bool Display(List *student_list, int source, int detail) {
 	return true;
 }
 
-bool computeAndDisplayStatistics(List *);
-bool printStuWithSameBook(List *, char *);
+// Incomplete
+bool computeAndDisplayStatistics(List *student_list) {
+	if (student_list->size() == 0) {
+		return false;
+	}
+
+	vector<string> courses;
+	map<string, vector<string>> table_data;
+	for (int i = 0; i < student_list->size(); i++) {
+		LibStudent student;
+		student_list->get(i, student);
+
+		
+		courses.push_back(student.course);
+	}
+} 
+
+bool printStuWithSameBook(List *student_list, char *callNum) {
+	if (student_list->size() == 0) {
+		return false;
+	}
+
+	vector<LibStudent> students_who_borrow;
+
+	for (int i = 1; i <= student_list->size(); i++) {
+		LibStudent student;
+		student_list->get(i, student);
+
+		for (int j = 0; j <= student.totalbook; j++) {
+			if (strcmp(student.book[j].callNum, callNum) == 0) {
+				students_who_borrow.push_back(student);
+			}
+		}
+	}
+
+	cout << "There are " << students_who_borrow.size() << " that borrow the book with call number " << callNum << " as shown below:" << endl;
+	for (auto &student : students_who_borrow) {
+		student.print(cout);
+	}
+
+	return true;
+}
+
 bool displayWarnedStudent(List *, List *, List *);
 
 bool IsStudentDuplicate(List *student_list, LibStudent &student) {
@@ -361,8 +412,14 @@ void menu() {
 			break;
 		case MenuItem::COMPUTE_AND_DISPLAY_STATISTICS:
 			break;
-		case MenuItem::STUDENT_WITH_SAME_BOOK:
+		case MenuItem::STUDENT_WITH_SAME_BOOK: {
+			cout << "Call num of book: ";
+			char callNum[20];
+			cin >> callNum;
+
+			printStuWithSameBook(&student_list, callNum);
 			break;
+		}
 		case MenuItem::DISPLAY_WARNED_STUDENT:
 			break;
 		case MenuItem::EXIT:
