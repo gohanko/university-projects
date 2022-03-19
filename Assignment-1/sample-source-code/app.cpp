@@ -161,8 +161,8 @@ bool Display(List *student_list, int source, int detail) {
 	outfile.open(filename);
 	ostream &output_mode = source == 1 ? outfile: cout;
 
-	for (int i = 0; i < student_list->size(); i++) {
-		output_mode << "STUDENT " << i + 1;
+	for (int i = 1; i < student_list->size(); i++) {
+		output_mode << "STUDENT " << i;
 
 		LibStudent student;
 		student_list->get(i, student);
@@ -171,7 +171,7 @@ bool Display(List *student_list, int source, int detail) {
 		if (detail == 1) {
 			output_mode << "\nBOOK LIST:" << endl;
 			for (int j = 0; j < student.totalbook; j++) {
-				output_mode << "\nBook " << j + 1 << endl;
+				output_mode << "\nBook " << j << endl;
 				student.book[j].print(output_mode);
 			}
 		}
@@ -195,7 +195,7 @@ bool computeAndDisplayStatistics(List *student_list) {
 
 	vector<string> courses;
 	map<string, vector<string>> table_data;
-	for (int i = 0; i < student_list->size(); i++) {
+	for (int i = 1; i < student_list->size(); i++) {
 		LibStudent student;
 		student_list->get(i, student);
 
@@ -222,7 +222,7 @@ bool printStuWithSameBook(List *student_list, char *callNum) {
 		}
 	}
 
-	cout << "There are " << students_who_borrow.size() << " that borrow the book with call number " << callNum << " as shown below:" << endl;
+	cout << "There are " << students_who_borrow.size() << " students that borrow the book with call number " << callNum << " as shown below:" << endl;
 	for (auto &student : students_who_borrow) {
 		student.print(cout);
 	}
@@ -230,7 +230,43 @@ bool printStuWithSameBook(List *student_list, char *callNum) {
 	return true;
 }
 
-bool displayWarnedStudent(List *, List *, List *);
+bool displayWarnedStudent(List *student_list, List *type1, List *type2) {
+	if (student_list->size() == 0) {
+		return false;
+	}
+
+	for (int i = 1; i <= student_list->size(); i++) {
+		LibStudent student;
+		student_list->get(i, student);
+
+		int book_overdue_counter = 0;
+		int book_overdue_more_than_10_days_counter = 0;
+		for (int j = 0; j < student.totalbook; j++) {
+			time_t current_date_time = mktime(&make_tm(2020, 3, 29));
+			time_t due_date_time = mktime(&make_tm(student.book[j].due.year, student.book[j].due.month, student.book[j].due.day));
+
+			const int seconds_per_day = 60 * 60 * 24;
+			time_t overdue_duration = difftime(current_date_time, due_date_time) / seconds_per_day;
+			if (overdue_duration >= 10) {
+				book_overdue_more_than_10_days_counter++;
+			}
+
+			if (overdue_duration > 0) {
+				book_overdue_counter++;
+			}
+		}
+
+		if (book_overdue_counter > 2) {
+			type1->insert(student);
+		}
+
+		if (book_overdue_counter == student.totalbook && student.total_fine > 50) {
+			type2->insert(student);
+		}
+	}
+
+	return true;
+}
 
 bool IsStudentDuplicate(List *student_list, LibStudent &student) {
 	for (int i = 1; i <= student_list->size(); i++) {
@@ -420,8 +456,27 @@ void menu() {
 			printStuWithSameBook(&student_list, callNum);
 			break;
 		}
-		case MenuItem::DISPLAY_WARNED_STUDENT:
+		case MenuItem::DISPLAY_WARNED_STUDENT: {
+			List type1;
+			List type2;
+
+			displayWarnedStudent(&student_list, &type1, &type2);
+
+			cout << "Type 1 List : " << endl;
+			for (int i = 0; i < type1.size(); i++) {
+				LibStudent student;
+				type1.get(i, student);
+				student.print(cout);
+			}
+
+			cout << "Type 2 List : " << endl;
+			for (int i = 0; i < type2.size(); i++) {
+				LibStudent student;
+				type2.get(i, student);
+				student.print(cout);
+			}
 			break;
+		}
 		case MenuItem::EXIT:
 			should_exit = true;
 			break;
