@@ -187,25 +187,70 @@ bool Display(List *student_list, int source, int detail) {
 	return true;
 }
 
+bool existInList(vector<string> courses, string course_to_check) {
+	bool is_seen = false;
+	for (const auto course : courses) {
+		if (course == course_to_check) {
+			is_seen = true;
+		}
+	}
+
+	return is_seen;
+}
+
 // Incomplete
 bool computeAndDisplayStatistics(List *student_list) {
-	if (student_list->size() == 0) {
+	if (student_list->empty()) {
 		return false;
 	}
 
 	vector<string> courses;
-	map<string, vector<string>> table_data;
+	vector<vector<string>> table_data;
 	for (int i = 1; i < student_list->size(); i++) {
 		LibStudent student;
 		student_list->get(i, student);
 
-		
-		courses.push_back(student.course);
+		if (!existInList(courses, student.course)) {
+			courses.push_back(student.course);
+		}
+	}
+
+	for (int j = 0; j < courses.size(); j++) {
+		int number_of_students = 0;
+		int total_borrowed_books = 0;
+		int total_overdue_books = 0;
+		int total_overdue_fine = 0;
+
+		string course = courses[j];
+		vector<string> data;
+		for (int i = 1; i < student_list->size(); i++) {
+			LibStudent student;
+			student_list->get(i, student);
+
+			if (student.course == course) {
+				number_of_students++;
+				total_borrowed_books += student.totalbook;
+				total_overdue_fine += student.total_fine;
+			}
+		}
+
+		data.push_back(course);
+		data.push_back(to_string(number_of_students));
+		data.push_back(to_string(total_borrowed_books));
+		data.push_back(to_string(total_overdue_books));
+		data.push_back(to_string(total_overdue_fine));
+
+		table_data.push_back(data);
+	}
+
+	cout << "Course | Number of Students | Total Books Borrowed | Total Overdue Books | Total Overdue Fine (RM)" << endl;
+	for (const auto &row : table_data) {
+		cout << row[0] << " " << row[1] << " " << row[2] << " " << row[3] << " " << row[4] << " " << endl;
 	}
 } 
 
 bool printStuWithSameBook(List *student_list, char *callNum) {
-	if (student_list->size() == 0) {
+	if (student_list->empty()) {
 		return false;
 	}
 
@@ -231,7 +276,7 @@ bool printStuWithSameBook(List *student_list, char *callNum) {
 }
 
 bool displayWarnedStudent(List *student_list, List *type1, List *type2) {
-	if (student_list->size() == 0) {
+	if (student_list->empty()) {
 		return false;
 	}
 
@@ -447,6 +492,7 @@ void menu() {
 		}
 			break;
 		case MenuItem::COMPUTE_AND_DISPLAY_STATISTICS:
+			computeAndDisplayStatistics(&student_list);
 			break;
 		case MenuItem::STUDENT_WITH_SAME_BOOK: {
 			cout << "Call num of book: ";
