@@ -97,7 +97,7 @@ bool InsertBook(string filename, List *student_list) {
 
 			for (int j = 0; j < 15; j++) {
 				// If not empty, move to next one.
-				if (strlen(student.book[j].title) > 1 && student.book[j].title[0] == ' ') {
+				if (strlen(student.book[j].title) != 1 && student.book[j].title[0] != ' ') {
 					continue;
 				}
 
@@ -131,8 +131,13 @@ bool InsertBook(string filename, List *student_list) {
 				break;
 			}
 
+			for (int j = 0; j < student.totalbook; j++) {
+				student.book[j].print(cout);
+			}
+
 			student.calculateTotalFine();
 			student.print(cout);
+			student_list->set(i, student);
 		}
 	}
 
@@ -140,7 +145,38 @@ bool InsertBook(string filename, List *student_list) {
 	return true;
 }
 
-bool Display(List, int, int);
+bool Display(List *student_list, int source, int detail) {
+	ofstream outfile;
+	string filename = (detail == 1) ? "student_booklist.txt" : "student_info.txt";
+	outfile.open(filename);
+	ostream &output_mode = source == 1 ? outfile: cout;
+
+	for (int i = 0; i < student_list->size(); i++) {
+		output_mode << "STUDENT " << i + 1;
+
+		LibStudent student;
+		student_list->get(i, student);
+		student.print(output_mode);
+
+		if (detail == 1) {
+			output_mode << "\nBOOK LIST:" << endl;
+			for (int j = 0; j < student.totalbook; j++) {
+				output_mode << "\nBook " << j + 1 << endl;
+				student.book[j].print(output_mode);
+			}
+		}
+
+		output_mode << "\n**************************************************************\n" << endl;
+	}
+
+	if (source == 1) {
+		cout << "Successfully display output to " << filename << endl;
+	}
+
+	outfile.close();
+	return true;
+}
+
 bool computeAndDisplayStatistics(List *);
 bool printStuWithSameBook(List *, char *);
 bool displayWarnedStudent(List *, List *, List *);
@@ -311,7 +347,17 @@ void menu() {
 			InsertBook("../Assignment-1/sample-text-files/book.txt", &student_list);
 			break;
 		}
-		case MenuItem::DISPLAY_OUTPUT:
+		case MenuItem::DISPLAY_OUTPUT: {
+			cout << "Where do you want to display the output (1 - File / 2 - Screen): ";
+			int source;
+			cin >> source;
+
+			int detail;
+			cout << "Do you want to display book list for every student (1 - YES / 2 - NO): ";
+			cin >> detail;
+			
+			Display(&student_list, source, detail);
+		}
 			break;
 		case MenuItem::COMPUTE_AND_DISPLAY_STATISTICS:
 			break;
