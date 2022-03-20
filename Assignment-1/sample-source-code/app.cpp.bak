@@ -531,6 +531,7 @@ void menu() {
 		}
 		case MenuItem::DISPLAY_WARNED_STUDENT: {
 			system("cls");
+
 			List type1;
 			List type2;
 
