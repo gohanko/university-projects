@@ -218,7 +218,7 @@ bool computeAndDisplayStatistics(List *student_list) {
 
 		string course = courses[j];
 		vector<string> data;
-		for (int i = 1; i < student_list->size(); i++) {
+		for (int i = 0; i <= student_list->size(); i++) {
 			LibStudent student;
 			student_list->get(i, student);
 
