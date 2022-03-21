@@ -141,10 +141,6 @@ bool InsertBook(string filename, List *student_list) {
 				break;
 			}
 
-			for (int j = 0; j < student.totalbook; j++) {
-				student.book[j].print(cout);
-			}
-
 			student.calculateTotalFine();
 			student.print(cout);
 			student_list->set(i, student);
@@ -198,7 +194,6 @@ bool existInList(vector<string> courses, string course_to_check) {
 	return is_seen;
 }
 
-// Incomplete
 bool computeAndDisplayStatistics(List *student_list) {
 	if (student_list->empty()) {
 		return false;
@@ -301,12 +296,10 @@ bool displayWarnedStudent(List *student_list, List *type1, List *type2) {
 			}
 		}
 
-		if (book_overdue_counter > 2) {
-			type1->insert(student);
-		}
-
 		if (book_overdue_counter == student.totalbook && student.total_fine > 50) {
 			type2->insert(student);
+		} else if (book_overdue_counter > 2) {
+			type1->insert(student);
 		}
 	}
 
