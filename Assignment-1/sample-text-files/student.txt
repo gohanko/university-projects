@@ -32,3 +32,13 @@ Student Id = 1310983
 Name = Audrey Chan
 course = IA
 Phone Number = 521-3879
+
+Student Id = 1310283
+Name = Test Person
+course = IA
+Phone Number = 521-2226
+
+Student Id = 1301583
+Name = Test Person 2
+course = CS
+Phone Number = 521-2326

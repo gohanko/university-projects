@@ -34,3 +34,15 @@
 
 
 1310983 Micheal_Main/Walter_Savitch Data_Structures_and_Other_Objects_Using_C++ Prentice_Hall 0132129485 2010 QA76.73.C153N868 20/3/2020 20/4/2020  
+
+
+1310283 AuthorOfHotdogs/Walter_Savitch AuthorOfHotdogs_Using_C++ Prentice_Hall 0132129485 2010 QA76.73.C153N868 20/3/2020 19/3/2020
+1310283 Micheal_Main/AuthorOfHotdogs AuthorOfHotdogs2_Using_C++ Prentice_Hall 0132129485 2010 QA76.73.C153N868 20/3/2020 19/3/2020
+1310283 Micheal_Main/AuthorOfHotdogs AuthorOfHotdogs3_Using_C++ Prentice_Hall 0132129485 2010 QA76.73.C153N868 20/3/2020 19/3/2020
+1310283 AuthorOfHotdogs/Walter_Savitch AuthorOfHotdogs4_Using_C++ Prentice_Hall 0132129485 2010 QA76.73.C153N868 20/3/2020 25/3/2020
+
+
+1301583 AuthorOfHotdogs/Walter_Savitch AuthorOfHotdogs_Using_C++ Prentice_Hall 0132129485 2010 QA76.73.C153N868 20/3/2020 26/2/2020
+1301583 Micheal_Main/AuthorOfHotdogs AuthorOfHotdogs2_Using_C++ Prentice_Hall 0132129485 2010 QA76.73.C153N868 20/3/2020 26/2/2020
+1301583 Micheal_Main/AuthorOfHotdogs AuthorOfHotdogs3_Using_C++ Prentice_Hall 0132129485 2010 QA76.73.C153N868 20/3/2020 26/2/2020
+1301583 Micheal_Main/AuthorOfHotdogs AuthorOfHotdogs3_Using_C++ Prentice_Hall 0132129485 2010 QA76.73.C153N868 20/3/2020 26/2/2020

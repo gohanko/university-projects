@@ -89,7 +89,7 @@ bool InsertBook(string filename, List *student_list) {
 		vector<string> output = SplitString(line, ' ');
 		string book_record_student_id = output[0];
 
-		for (int i = 1; i < student_list->size(); i++) {
+		for (int i = 1; i <= student_list->size(); i++) {
 			LibStudent student;
 			student_list->get(i, student);
 			if (strcmp(book_record_student_id.c_str(), student.id)) {
@@ -290,7 +290,6 @@ bool displayWarnedStudent(List *student_list, List *type1, List *type2) {
 			if (overdue_duration >= 10) {
 				book_overdue_more_than_10_days_counter++;
 			}
-
 			if (overdue_duration > 0) {
 				book_overdue_counter++;
 			}
@@ -298,9 +297,9 @@ bool displayWarnedStudent(List *student_list, List *type1, List *type2) {
 
 		if (book_overdue_counter == student.totalbook && student.total_fine > 50) {
 			type2->insert(student);
-		} else if (book_overdue_counter > 2) {
+		} else if (book_overdue_more_than_10_days_counter > 2) {
 			type1->insert(student);
-		}
+		} 
 	}
 
 	return true;
