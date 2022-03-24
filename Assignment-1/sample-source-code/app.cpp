@@ -102,14 +102,15 @@ bool InsertBook(string filename, List *student_list) {
 					continue;
 				}
 
-				/*
 				vector<string> authors = SplitString(output[1], '/');
-				char insert_author[1000];
-				for (int k = 0; k <= authors.size(); k++) {
-					strcpy(insert_author, authors[k].c_str());
-					*student.book[j].author = insert_author;
+				for (int k = 0; k < authors.size(); k++) {
+					// Convert c_str()'s const char * to char *
+					char *cstr = new char[authors[k].length() + 1];
+					strcpy(cstr, authors[k].c_str());
+
+					student.book[j].author[k] = cstr;
 				}
-				*/
+			
 
 				strcpy(student.book[j].title, output[2].c_str());
 				strcpy(student.book[j].publisher, output[3].c_str());
@@ -142,9 +143,14 @@ bool InsertBook(string filename, List *student_list) {
 			}
 
 			student.calculateTotalFine();
-			student.print(cout);
 			student_list->set(i, student);
 		}
+	}
+
+	for (int i = 1; i <= student_list->size(); i++) {
+		LibStudent student;
+		student_list->get(i, student);
+		student.print(cout);
 	}
 
 	file.close();
@@ -487,7 +493,6 @@ void menu() {
 			break;
 		}
 		case MenuItem::DISPLAY_OUTPUT: {
-
 			system("cls");
 			cout << "Where do you want to display the output (1 - File / 2 - Screen): ";
 			int source;
@@ -499,9 +504,9 @@ void menu() {
 			
 			Display(&student_list, source, detail);
 			system("pause");
-		}
 			break;
-		case MenuItem::COMPUTE_AND_DISPLAY_STATISTICS:
+		}
+		case MenuItem::COMPUTE_AND_DISPLAY_STATISTICS: {
 			system("cls");
 
 			computeAndDisplayStatistics(&student_list);
@@ -509,6 +514,7 @@ void menu() {
 
 			system("pause");
 			break;
+		}
 		case MenuItem::STUDENT_WITH_SAME_BOOK: {
 			system("cls");
 
@@ -528,14 +534,14 @@ void menu() {
 
 			displayWarnedStudent(&student_list, &type1, &type2);
 
-			cout << "Type 1 List : " << endl;
+			cout << "\nType 1 List : " << endl;
 			for (int i = 0; i < type1.size(); i++) {
 				LibStudent student;
 				type1.get(i, student);
 				student.print(cout);
 			}
 
-			cout << "Type 2 List : " << endl;
+			cout << "\nType 2 List : " << endl;
 			for (int i = 0; i < type2.size(); i++) {
 				LibStudent student;
 				type2.get(i, student);
@@ -545,11 +551,14 @@ void menu() {
 			system("pause");
 			break;
 		}
-		case MenuItem::EXIT:
+		case MenuItem::EXIT: {
 			system("cls");
 
 			cout << "Goodbye\n\n";
 			should_exit = true;
+			break;
+		}
+		default:
 			break;
 		}
 
