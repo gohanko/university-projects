@@ -3,5 +3,4 @@ Repository containing exercises and projects for UCCD1024 Data-Structure-and-Alg
 
 Uses Visual Studio 2017.
 
-
-Attempting to try Git bash to update the files on the repo. If I'm sucessful, this file should be updated on the repo with this text
+The git repository can be found here: https://github.com/gohanko/UCCD1024
