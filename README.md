@@ -1,5 +1,5 @@
 # oop-example
-A simple example of object oriented progamming in Java.
+A simple example of object oriented programming in Java.
 
 The OOP concepts implemented includes:
 
