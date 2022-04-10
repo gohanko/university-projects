@@ -255,6 +255,10 @@ void BST::case3(BTNode *cur) {
 	free(is);
 }
 
+bool BST::deepestNodes() {
+	if (!this->size()) {
+		return false;
+	}
 
-
-
+	return true;
+}

@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1778
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Assignment-1", "Assignment-1\Assignment-1.vcxproj", "{F8E15605-15F5-4CDD-B651-B627D580D52B}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Practical-1", "Practical-1\Practical-1.vcxproj", "{3E3A372B-BCFA-4CB1-BC10-1B06A6AE91AE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{432B6E1C-C49E-4111-B461-325C4DB2D3BC}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -23,22 +19,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F8E15605-15F5-4CDD-B651-B627D580D52B}.Debug|x64.ActiveCfg = Debug|x64
-		{F8E15605-15F5-4CDD-B651-B627D580D52B}.Debug|x64.Build.0 = Debug|x64
-		{F8E15605-15F5-4CDD-B651-B627D580D52B}.Debug|x86.ActiveCfg = Debug|Win32
-		{F8E15605-15F5-4CDD-B651-B627D580D52B}.Debug|x86.Build.0 = Debug|Win32
-		{F8E15605-15F5-4CDD-B651-B627D580D52B}.Release|x64.ActiveCfg = Release|x64
-		{F8E15605-15F5-4CDD-B651-B627D580D52B}.Release|x64.Build.0 = Release|x64
-		{F8E15605-15F5-4CDD-B651-B627D580D52B}.Release|x86.ActiveCfg = Release|Win32
-		{F8E15605-15F5-4CDD-B651-B627D580D52B}.Release|x86.Build.0 = Release|Win32
-		{3E3A372B-BCFA-4CB1-BC10-1B06A6AE91AE}.Debug|x64.ActiveCfg = Debug|x64
-		{3E3A372B-BCFA-4CB1-BC10-1B06A6AE91AE}.Debug|x64.Build.0 = Debug|x64
-		{3E3A372B-BCFA-4CB1-BC10-1B06A6AE91AE}.Debug|x86.ActiveCfg = Debug|Win32
-		{3E3A372B-BCFA-4CB1-BC10-1B06A6AE91AE}.Debug|x86.Build.0 = Debug|Win32
-		{3E3A372B-BCFA-4CB1-BC10-1B06A6AE91AE}.Release|x64.ActiveCfg = Release|x64
-		{3E3A372B-BCFA-4CB1-BC10-1B06A6AE91AE}.Release|x64.Build.0 = Release|x64
-		{3E3A372B-BCFA-4CB1-BC10-1B06A6AE91AE}.Release|x86.ActiveCfg = Release|Win32
-		{3E3A372B-BCFA-4CB1-BC10-1B06A6AE91AE}.Release|x86.Build.0 = Release|Win32
 		{D9F7BD56-E389-4ECB-82F2-AA04E387D3C7}.Debug|x64.ActiveCfg = Debug|x64
 		{D9F7BD56-E389-4ECB-82F2-AA04E387D3C7}.Debug|x64.Build.0 = Debug|x64
 		{D9F7BD56-E389-4ECB-82F2-AA04E387D3C7}.Debug|x86.ActiveCfg = Debug|Win32
