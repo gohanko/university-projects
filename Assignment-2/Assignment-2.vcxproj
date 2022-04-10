@@ -139,6 +139,7 @@
     <ClInclude Include="Source Codes\Student.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="readme.txt" />
     <Text Include="Sample Textfile\student.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

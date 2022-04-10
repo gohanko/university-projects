@@ -55,5 +55,6 @@
     <Text Include="Sample Textfile\student.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="readme.txt" />
   </ItemGroup>
 </Project>
