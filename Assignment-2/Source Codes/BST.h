@@ -48,5 +48,6 @@ struct BST {
 	void traverseAndClone(BTNode *cur, type item);
 	bool CloneSubtree(BST t1, type item);
 	bool printAncestor(type item);
+	bool printSpiral();
 };
 #endif

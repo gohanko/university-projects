@@ -178,6 +178,7 @@ int menu() {
 			break;
 		}
 		case MenuItem::PRINT_SPIRAL: {
+			student_bst.printSpiral();
 			break;
 		}
 		case MenuItem::EXIT: {

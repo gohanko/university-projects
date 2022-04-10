@@ -375,3 +375,49 @@ bool BST::printAncestor(type item) {
 
 	return true;
 }
+
+void traverseTreeAndSaveNodeByRow(BTNode * cur, vector<vector<BTNode>> * nodes_by_row, int current_level) {
+	if (cur == NULL) return;
+	if (current_level >= nodes_by_row->size()) {
+		nodes_by_row->resize(nodes_by_row->size() + 1);
+	}
+	nodes_by_row->at(current_level).push_back(*cur);
+
+	current_level += 1;
+	traverseTreeAndSaveNodeByRow(cur->left, nodes_by_row, current_level);
+	traverseTreeAndSaveNodeByRow(cur->right, nodes_by_row, current_level);
+}
+
+bool BST::printSpiral() {
+	if (this->empty()) return false;
+
+	vector<vector<BTNode>> nodes_by_row;
+	nodes_by_row.resize(nodes_by_row.size() + 1);
+	traverseTreeAndSaveNodeByRow(root, &nodes_by_row, 0);
+
+	bool toLeft = false;
+	for (auto row : nodes_by_row) {
+
+		if (toLeft) {
+			for (int i = 0; i < row.size(); i++) {
+				BTNode node = row.at(i);
+
+				cout << node.item.id << " ";
+			}
+
+			toLeft = false;
+		}
+		else {
+			for (int i = row.size() - 1; i >= 0; i--) {
+				BTNode node = row.at(i);
+				cout << node.item.id << " ";
+			}
+
+			toLeft = true;
+		}
+
+	}
+	cout << endl;
+
+	return true;
+}
