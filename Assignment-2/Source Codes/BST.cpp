@@ -305,6 +305,10 @@ void printDecreasingOrder(BTNode *cur, ostream &output_mode) {
 }
 
 bool BST::display(int order, int source) {
+	if (this->empty()) {
+		return false;
+	}
+
 	ofstream outFile;
 	outFile.open("student-info.txt");
 	ostream &output_mode = (source == 1) ? cout : outFile;
