@@ -153,6 +153,19 @@ int menu() {
 			break;
 		}
 		case MenuItem::CLONE_SUBTREE: {
+			BST t2;
+			Student student;
+
+			cout << "Enter the student.id from which to clone a subtree from: ";
+			cin >> student.id;
+
+			t2.CloneSubtree(student_bst, student);
+
+			cout << "Original Tree: " << endl;
+			student_bst.preOrderPrint();
+
+			cout << "Clone Subtree: " << endl;
+			t2.preOrderPrint();
 			break;
 		}
 		case MenuItem::PRINT_ANCESTOR: {

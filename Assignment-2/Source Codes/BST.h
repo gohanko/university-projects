@@ -45,5 +45,7 @@ struct BST {
 	void preOrderSearch(BTNode * current, int current_level, int * deepest_level_found, vector<BTNode> * deepest_nodes);
 	bool deepestNodes();
 	bool display(int order, int source);
+	void traverseAndClone(BTNode *cur, type item);
+	bool CloneSubtree(BST t1, type item);
 };
 #endif

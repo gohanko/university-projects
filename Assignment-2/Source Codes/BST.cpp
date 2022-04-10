@@ -322,3 +322,25 @@ bool BST::display(int order, int source) {
 
 	return true;
 }
+
+void BST::traverseAndClone(BTNode *cur, type item) {
+	if (cur == NULL) return;
+	if (item.compare2(cur->item)) {
+		root = cur;
+	}
+
+	traverseAndClone(cur->right, item);
+	traverseAndClone(cur->left, item);
+}
+
+bool BST::CloneSubtree(BST t1, type item) {
+	if (t1.empty()) {
+		return false;
+	}
+	if (!this->empty()) {
+		return false;
+	}
+
+	traverseAndClone(t1.root, item);
+	return true;
+}
