@@ -344,3 +344,7 @@ bool BST::CloneSubtree(BST t1, type item) {
 	traverseAndClone(t1.root, item);
 	return true;
 }
+
+bool BST::printAncestor(type item) {
+
+}
