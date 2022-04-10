@@ -116,6 +116,7 @@ enum MenuItem : int {
 int menu() {
 	bool isExit = false;
 
+	BST student_bst;
 	while (!isExit) {
 		cout << "(1) Read data to BST" << endl;
 		cout << "(2) Print deepest nodes" << endl;
@@ -129,13 +130,13 @@ int menu() {
 		int choice = 0;
 		cin >> choice;
 
-		BST student_tree;
 		switch (choice) {
 		case MenuItem::READ_DATA_TO_BST: {
-			readFile("../Assignment-2/Sample Textfile/student.txt", &student_tree);
+			readFile("../Assignment-2/Sample Textfile/student.txt", &student_bst);
 			break;
 		}
 		case MenuItem::PRINT_DEEPEST_NODES: {
+			student_bst.deepestNodes();
 			break;
 		}
 		case MenuItem::DISPLAY_STUDENT: {

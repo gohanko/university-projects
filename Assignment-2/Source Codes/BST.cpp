@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <vector>
 #include "BST.h"
 
 
@@ -255,9 +256,35 @@ void BST::case3(BTNode *cur) {
 	free(is);
 }
 
+void BST::preOrderSearch(BTNode * current, int current_level, int * deepest_level_found, vector<BTNode> * deepest_nodes) {
+	if (current == NULL) return;
+	current_level++;
+
+	if (current_level > *deepest_level_found) {
+		*deepest_level_found = current_level;
+		deepest_nodes->clear();
+	}
+
+	if (current_level == *deepest_level_found) {
+		deepest_nodes->push_back(*current);
+	}
+
+	preOrderSearch(current->left, current_level, deepest_level_found, deepest_nodes);
+	preOrderSearch(current->right, current_level, deepest_level_found, deepest_nodes);
+}
+
 bool BST::deepestNodes() {
-	if (!this->size()) {
+	if (this->empty()) {
 		return false;
+	}
+
+	vector<BTNode> deepest_nodes;
+	int deepest_level_found = 0;
+
+	this->preOrderSearch(this->root, 0, &deepest_level_found, &deepest_nodes);
+
+	for (BTNode node : deepest_nodes) {
+		cout << node.item.name << endl;
 	}
 
 	return true;
