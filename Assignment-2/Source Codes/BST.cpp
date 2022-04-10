@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <vector>
@@ -284,7 +284,36 @@ bool BST::deepestNodes() {
 	this->preOrderSearch(this->root, 0, &deepest_level_found, &deepest_nodes);
 
 	for (BTNode node : deepest_nodes) {
-		cout << node.item.name << endl;
+		node.item.print(cout);
+	}
+
+	return true;
+}
+
+void printIncreasingOrder(BTNode *cur, ostream &output_mode) {
+	if (cur == NULL) return;
+	printIncreasingOrder(cur->left, output_mode);
+	cur->item.print(output_mode);
+	printIncreasingOrder(cur->right, output_mode);
+}
+
+void printDecreasingOrder(BTNode *cur, ostream &output_mode) {
+	if (cur == NULL) return;
+	printDecreasingOrder(cur->right, output_mode);
+	cur->item.print(output_mode);
+	printDecreasingOrder(cur->left, output_mode);
+}
+
+bool BST::display(int order, int source) {
+	ofstream outFile;
+	outFile.open("student-info.txt");
+	ostream &output_mode = (source == 1) ? cout : outFile;
+
+	if (order == 1) {
+		printIncreasingOrder(root, output_mode);
+	}
+	else {
+		printDecreasingOrder(root, output_mode);
 	}
 
 	return true;

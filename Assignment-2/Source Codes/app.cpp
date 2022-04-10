@@ -140,6 +140,16 @@ int menu() {
 			break;
 		}
 		case MenuItem::DISPLAY_STUDENT: {
+			int order = 0;
+			int source = 0;
+
+			cout << "Ascending (1), Descending (2): ";
+			cin >> order;
+
+			cout << "\nScreen (1), File (2): ";
+			cin >> source;
+
+			student_bst.display(order, source);
 			break;
 		}
 		case MenuItem::CLONE_SUBTREE: {
