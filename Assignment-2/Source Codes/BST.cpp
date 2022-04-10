@@ -345,6 +345,33 @@ bool BST::CloneSubtree(BST t1, type item) {
 	return true;
 }
 
-bool BST::printAncestor(type item) {
+void traverseTreeAndRecordPath(BTNode *cur, type item, vector<BTNode> * ancestor_nodes) {
+	if (cur == NULL) return;
+	if (item.compare2(cur->item)) {
+		for (int i = ancestor_nodes->size() -1; i >= 0; i--) {
+			BTNode n = ancestor_nodes->at(i);
+			cout << n.item.id << " ";
+		}
+		cout << endl;
+		return;
+	}
 
+	ancestor_nodes->push_back(*cur);
+	traverseTreeAndRecordPath(cur->left, item, ancestor_nodes);
+	traverseTreeAndRecordPath(cur->right, item, ancestor_nodes);
+	ancestor_nodes->pop_back();
+}
+
+bool BST::printAncestor(type item) {
+	if (this->empty()) return false;
+
+	if (root->item.compare2(item)) {
+		cout << "There is no ancestor for this item." << endl;
+		return true;
+	}
+
+	vector<BTNode> ancestor_nodes;
+	traverseTreeAndRecordPath(root, item, &ancestor_nodes);
+
+	return true;
 }

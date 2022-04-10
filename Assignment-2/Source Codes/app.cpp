@@ -169,6 +169,12 @@ int menu() {
 			break;
 		}
 		case MenuItem::PRINT_ANCESTOR: {
+			Student student;
+
+			cout << "Enter the student.id that you want to find the ancestor of: ";
+			cin >> student.id;
+
+			student_bst.printAncestor(student);
 			break;
 		}
 		case MenuItem::PRINT_SPIRAL: {
