@@ -256,21 +256,17 @@ void BST::case3(BTNode *cur) {
 	free(is);
 }
 
-void BST::preOrderSearch(BTNode * current, int current_level, int * deepest_level_found, vector<BTNode> * deepest_nodes) {
+void BST::preOrderSearch(BTNode * current, int current_level, vector<Queue> * nodes_by_row) {
 	if (current == NULL) return;
-	current_level++;
-
-	if (current_level > *deepest_level_found) {
-		*deepest_level_found = current_level;
-		deepest_nodes->clear();
+	if (current_level >= nodes_by_row->size()) {
+		nodes_by_row->resize(nodes_by_row->size() + 1);
 	}
 
-	if (current_level == *deepest_level_found) {
-		deepest_nodes->push_back(*current);
-	}
+	nodes_by_row->at(current_level).enqueue(current);
 
-	preOrderSearch(current->left, current_level, deepest_level_found, deepest_nodes);
-	preOrderSearch(current->right, current_level, deepest_level_found, deepest_nodes);
+	current_level += 1;
+	preOrderSearch(current->left, current_level, nodes_by_row);
+	preOrderSearch(current->right, current_level, nodes_by_row);
 }
 
 bool BST::deepestNodes() {
@@ -278,13 +274,15 @@ bool BST::deepestNodes() {
 		return false;
 	}
 
-	vector<BTNode> deepest_nodes;
-	int deepest_level_found = 0;
+	vector<Queue> nodes_by_row;
 
-	this->preOrderSearch(this->root, 0, &deepest_level_found, &deepest_nodes);
+	this->preOrderSearch(this->root, 0, &nodes_by_row);
 
-	for (BTNode node : deepest_nodes) {
-		node.item.print(cout);
+	Queue deepest_row = nodes_by_row.at(nodes_by_row.size() - 1);
+	for (int i = 0; i < deepest_row.size(); i++) {
+		BTNode * node;
+		deepest_row.dequeue(node);
+		node->item.print(cout);
 	}
 
 	return true;
