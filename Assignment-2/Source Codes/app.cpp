@@ -12,35 +12,14 @@
 
 using namespace std;
 
-
-// trim from start (in place)
-static inline void ltrim(string &s) {
-	s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
-		return !isspace(ch) || !ch == '\t';
-	}));
-}
-
-// trim from end (in place)
-static inline void rtrim(std::string &s) {
-	s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
-		return !isspace(ch) || !ch == '\t';
-	}).base(), s.end());
-}
-
-// trim from both ends (in place)
-static inline void trim(std::string &s) {
-	ltrim(s);
-	rtrim(s);
-}
-
-// trim from both ends (copying)
-static inline std::string trim_copy(std::string s) {
-	trim(s);
+static inline string trim(string s) {
+	s.erase(s.begin(), find_if(s.begin(), s.end(), [](unsigned char ch) { return !isspace(ch) || !ch == '\t'; }));
+	s.erase(find_if(s.rbegin(), s.rend(), [](unsigned char ch) { return !isspace(ch) || !ch == '\t'; }).base(), s.end());
 	return s;
 }
 
 bool isLineOnlyTabOrSpace(string line) {
-	return (line.find_first_not_of(' ') == std::string::npos || line.find_first_not_of('\t') == std::string::npos);
+	return (line.find_first_not_of(' ') == string::npos || line.find_first_not_of('\t') == string::npos);
 };
 
 vector<string> splitString(string to_split, char seperator) {
@@ -52,7 +31,8 @@ vector<string> splitString(string to_split, char seperator) {
 		if (isLineOnlyTabOrSpace(value)) {
 			continue;
 		}
-		outputArray.push_back(trim_copy(value));
+
+		outputArray.push_back(trim(value));
 	}
 
 	return outputArray;
@@ -62,6 +42,7 @@ bool readFile(const char * filename, BST * student_bst) {
 	ifstream inFile;
 	inFile.open(filename, ios::in);
 	if (!inFile.is_open()) {
+		cout << "File can't be opened!" << endl;
 		return false;
 	}
 
@@ -132,7 +113,7 @@ int menu() {
 
 		switch (choice) {
 		case MenuItem::READ_DATA_TO_BST: {
-			readFile("../Assignment-2/Sample Textfile/student.txt", &student_bst);
+			readFile("./student.txt", &student_bst);
 			break;
 		}
 		case MenuItem::PRINT_DEEPEST_NODES: {
