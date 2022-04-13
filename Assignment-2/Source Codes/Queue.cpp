@@ -3,24 +3,19 @@
 
 using namespace std;
 
-
-
 Queue::Queue() {
 	head = tail = NULL;
 	count = 0;
 }
-
 
 bool Queue::empty() {
 	if (count == 0) return true;
 	return false;
 }
 
-
 int Queue::size() {
 	return count;
 }
-
 
 bool Queue::enqueue(type2 newItem) {// Any simplification can be done on code below?
 	Node	*tmp = new Node(newItem);
@@ -37,7 +32,6 @@ bool Queue::enqueue(type2 newItem) {// Any simplification can be done on code be
 	return true;
 }
 
-
 bool Queue::dequeue(type2 &itemExtracted) {
 	Node	*cur = head;
 
@@ -49,7 +43,6 @@ bool Queue::dequeue(type2 &itemExtracted) {
 	if (count == 0) tail = NULL;
 	return true;
 }
-
 
 Node *Queue::find(type2 record) {
 	Node	*cur;

@@ -38,7 +38,7 @@ vector<string> splitString(string to_split, char seperator) {
 	return outputArray;
 }
 
-bool readFile(const char * filename, BST * student_bst) {
+bool readFile(const char *filename, BST *student_bst) {
 	ifstream inFile;
 	inFile.open(filename, ios::in);
 	if (!inFile.is_open()) {
@@ -169,6 +169,9 @@ int menu() {
 		default:
 			break;
 		}
+		
+		cout << endl;
+		cout << "***********************************************************************" << endl;
 	}
 
 	return 0;

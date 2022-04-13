@@ -4,16 +4,15 @@
 #include	"Node.h"
 
 struct Queue {
-		int		count;
-		Node	*head;
-		Node	*tail;
-		Queue();
-		bool empty();
-		int size();
-		bool enqueue(type2); 
-		bool dequeue(type2 &);
-		Node	*find(type2);
+	int	count;
+	Node *head;
+	Node *tail;
+	Queue();
+	bool empty();
+	int size();
+	bool enqueue(type2); 
+	bool dequeue(type2 &);
+	Node *find(type2);
 };
-
 
 #endif

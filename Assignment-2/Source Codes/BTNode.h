@@ -6,11 +6,9 @@
 using type = Student;
 
 struct BTNode {
-
-		type	item;
-		BTNode	*left, *right;
-		BTNode(type);
+	type item;
+	BTNode *left, *right;
+	BTNode(type);
 };
-
 
 #endif

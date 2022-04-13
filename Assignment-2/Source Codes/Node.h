@@ -6,11 +6,9 @@
 using type2 = BTNode *;
 
 struct Node {
-	
-		type2		item;
-		Node	*next;
-		Node(type2);
+	type2 item;
+	Node *next;
+	Node(type2);
 };
-
 
 #endif

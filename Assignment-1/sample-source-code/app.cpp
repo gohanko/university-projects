@@ -104,7 +104,7 @@ bool InsertBook(string filename, List *student_list) {
 
 				vector<string> authors = SplitString(output[1], '/');
 				for (int k = 0; k < authors.size(); k++) {
-					// Convert c_str()'s const char * to char *
+					// Convert c_str()'s const char *to char *
 					char *cstr = new char[authors[k].length() + 1];
 					strcpy(cstr, authors[k].c_str());
 
@@ -135,7 +135,7 @@ bool InsertBook(string filename, List *student_list) {
 				const int seconds_per_day = 60 * 60 * 24;
 				if (current_date_time > due_date_time) {
 					time_t overdue_duration = difftime(current_date_time, due_date_time) / seconds_per_day;
-					student.book[j].fine = overdue_duration * FINE_RATE_PER_DAY;
+					student.book[j].fine = overdue_duration *FINE_RATE_PER_DAY;
 				}
 
 				student.totalbook++;

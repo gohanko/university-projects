@@ -4,33 +4,27 @@
 #include <vector>
 #include "BST.h"
 
-
 using namespace std;
-
 
 BST::BST() {
 	root = NULL;
 	count = 0;
 }
 
-
 bool BST::empty() {
 	if (count == 0) return true;
 	return false;
 }
 
-
 int BST::size() {
 	return count;
 }
-
 
 void BST::preOrderPrint() {
 	if (root == NULL) return;// handle special case
 	else preOrderPrint2(root);// do normal process
 	cout << endl;
 }
-
 
 void BST::preOrderPrint2(BTNode *cur) {
 	if (cur == NULL) return;
@@ -39,13 +33,11 @@ void BST::preOrderPrint2(BTNode *cur) {
 	preOrderPrint2(cur->right);
 }
 
-
 void BST::inOrderPrint() {
 	if (root == NULL) return;// handle special case
 	else inOrderPrint2(root);// do normal process
 	cout << endl;
 }
-
 
 void BST::inOrderPrint2(BTNode *cur) {
 	if (cur == NULL) return;
@@ -54,13 +46,11 @@ void BST::inOrderPrint2(BTNode *cur) {
 	inOrderPrint2(cur->right);
 }
 
-
 void BST::postOrderPrint() {
 	if (root == NULL) return;// handle special case
 	else postOrderPrint2(root);// do normal process
 	cout << endl;
 }
-
 
 void BST::postOrderPrint2(BTNode *cur) {
 	if (cur == NULL) return;
@@ -69,15 +59,12 @@ void BST::postOrderPrint2(BTNode *cur) {
 	cur->item.print(cout);
 }
 
-
-
 int BST::countNode() {
 	int	counter = 0;
 	if (root == NULL) return 0;
 	countNode2(root, counter);
 	return counter;
 }
-
 
 void BST::countNode2(BTNode *cur, int &count) {
 	if (cur == NULL) return;
@@ -86,12 +73,10 @@ void BST::countNode2(BTNode *cur, int &count) {
 	count++;
 }
 
-
 bool BST::findGrandsons(type grandFather) {
 	if (root == NULL) return false;
 	return (fGS2(grandFather, root));
 }
-
 
 bool BST::fGS2(type grandFather, BTNode *cur) {
 	if (cur == NULL) return false;
@@ -105,7 +90,6 @@ bool BST::fGS2(type grandFather, BTNode *cur) {
 	return fGS2(grandFather, cur->right);
 }
 
-
 void BST::fGS3(BTNode *cur, int level) {
 	if (cur == NULL) return;
 	if (level == 2) {
@@ -115,8 +99,6 @@ void BST::fGS3(BTNode *cur, int level) {
 	fGS3(cur->left, level + 1);
 	fGS3(cur->right, level + 1);
 }
-
-
 
 void BST::topDownLevelTraversal() {
 	BTNode			*cur;
@@ -153,7 +135,6 @@ bool BST::insert(type newItem) {
 	return true;
 }
 
-
 void BST::insert2(BTNode *cur, BTNode *newNode) {
 	//if (cur->item > newNode->item) {
 	if (cur->item.compare1(newNode->item)){
@@ -169,8 +150,6 @@ void BST::insert2(BTNode *cur, BTNode *newNode) {
 			insert2(cur->right, newNode);
 	}
 }
-
-
 
 bool BST::remove(type item) {
 	if (root == NULL) return false; 		// special case 1: tree is empty
@@ -202,7 +181,6 @@ bool BST::remove2(BTNode *pre, BTNode *cur, type item) {
 	return remove2(cur, cur->right, item);
 }
 
-
 void BST::case2(BTNode *pre, BTNode *cur) {
 
 	// special case: delete root node
@@ -232,7 +210,6 @@ void BST::case2(BTNode *pre, BTNode *cur) {
 	free(cur);					// remove item
 }
 
-
 void BST::case3(BTNode *cur) {
 	BTNode		*is, *isFather;
 
@@ -256,7 +233,7 @@ void BST::case3(BTNode *cur) {
 	free(is);
 }
 
-void BST::preOrderSearch(BTNode * current, int current_level, vector<Queue> * nodes_by_row) {
+void BST::preOrderSearch(BTNode *current, int current_level, vector<Queue> *nodes_by_row) {
 	if (current == NULL) return;
 	if (current_level >= nodes_by_row->size()) {
 		nodes_by_row->resize(nodes_by_row->size() + 1);
@@ -275,12 +252,11 @@ bool BST::deepestNodes() {
 	}
 
 	vector<Queue> nodes_by_row;
-
 	this->preOrderSearch(this->root, 0, &nodes_by_row);
 
 	Queue deepest_row = nodes_by_row.at(nodes_by_row.size() - 1);
 	for (int i = 0; i < deepest_row.size(); i++) {
-		BTNode * node;
+		BTNode *node;
 		deepest_row.dequeue(node);
 		node->item.print(cout);
 	}
@@ -325,10 +301,11 @@ void BST::traverseAndClone(BTNode *cur, type item) {
 	if (cur == NULL) return;
 	if (item.compare2(cur->item)) {
 		root = cur;
+		return;
 	}
 
-	traverseAndClone(cur->right, item);
 	traverseAndClone(cur->left, item);
+	traverseAndClone(cur->right, item);
 }
 
 bool BST::CloneSubtree(BST t1, type item) {
@@ -343,7 +320,7 @@ bool BST::CloneSubtree(BST t1, type item) {
 	return true;
 }
 
-void traverseTreeAndRecordPath(BTNode *cur, type item, vector<BTNode> * ancestor_nodes) {
+void traverseTreeAndRecordPath(BTNode *cur, type item, vector<BTNode> *ancestor_nodes) {
 	if (cur == NULL) return;
 	if (item.compare2(cur->item)) {
 		for (int i = ancestor_nodes->size() -1; i >= 0; i--) {
@@ -374,7 +351,7 @@ bool BST::printAncestor(type item) {
 	return true;
 }
 
-void traverseTreeAndSaveNodeByRow(BTNode * cur, vector<vector<BTNode>> * nodes_by_row, int current_level) {
+void traverseTreeAndSaveNodeByRow(BTNode *cur, vector<vector<BTNode>> *nodes_by_row, int current_level) {
 	if (cur == NULL) return;
 	if (current_level >= nodes_by_row->size()) {
 		nodes_by_row->resize(nodes_by_row->size() + 1);
@@ -395,7 +372,6 @@ bool BST::printSpiral() {
 
 	bool toLeft = false;
 	for (auto row : nodes_by_row) {
-
 		if (toLeft) {
 			for (int i = 0; i < row.size(); i++) {
 				BTNode node = row.at(i);
@@ -415,7 +391,7 @@ bool BST::printSpiral() {
 		}
 
 	}
-	cout << endl;
 
+	cout << endl;
 	return true;
 }
