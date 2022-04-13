@@ -290,7 +290,7 @@ bool BST::display(int order, int source) {
 	if (order == 1) {
 		printIncreasingOrder(root, output_mode);
 	}
-	else {
+	if (order == 2) {
 		printDecreasingOrder(root, output_mode);
 	}
 

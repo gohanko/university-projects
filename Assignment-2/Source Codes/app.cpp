@@ -142,9 +142,11 @@ int menu() {
 
 			t2.CloneSubtree(student_bst, student);
 
+			cout << "***************************************" << endl;
 			cout << "Original Tree: " << endl;
 			student_bst.preOrderPrint();
 
+			cout << "***************************************" << endl;
 			cout << "Clone Subtree: " << endl;
 			t2.preOrderPrint();
 			break;
