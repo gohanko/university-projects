@@ -11,13 +11,15 @@ geckodriver.exe
 # random_scripts/fetch-datacom-qr
 attendance_link_history.json
 
-# UCCM2233 Statistics/generate-descriptive-statistics
+# example_code/oop-example
+*.class
+
+# course_related/UCCM2233 Statistics/generate-descriptive-statistics
 results/
 *.zip
 
-# UCCD1024 Data Structure And Algorithmic Problem Solving
+# course_related/UCCD1024 Data Structure And Algorithmic Problem Solving
 debug/
 .vs/
 Assignment-1/student_booklist.txt
 Assignment-2/student-info.txt
-
