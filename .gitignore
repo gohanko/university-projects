@@ -1,12 +1,19 @@
+# virtualenv .gitignore
 **/venv/
 
-# camp-course
+# random_scripts/camp-course
 geckodriver.log
 camp_data.txt
 
-# fetch-datacom-qr
+# random_scripts/fetch-datacom-qr
 attendance_link_history.json
 
-# generate-descriptive-statistics
+# UCCM2233 Statistics/generate-descriptive-statistics
 results/
 *.zip
+
+# UCCD1024 Data Structure And Algorithmic Problem Solving
+debug/
+.vs/
+Assignment-1/student_booklist.txt
+Assignment-2/student-info.txt
