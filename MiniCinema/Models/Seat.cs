@@ -29,8 +29,8 @@ namespace MiniCinema.Models
                         RowEnd = 1,
                         ColumnEnd = 1,
                         IsDisabled = false,
-                        SeatTypeID = 1,
-                        SeatingConfigurationID = 1,
+                        SeatTypeId = 1,
+                        SeatingConfigurationId = 1,
                     },
                     new Seat
                     {
@@ -39,8 +39,8 @@ namespace MiniCinema.Models
                         RowEnd = 1,
                         ColumnEnd = 2,
                         IsDisabled = false,
-                        SeatTypeID = 1,
-                        SeatingConfigurationID = 1,
+                        SeatTypeId = 1,
+                        SeatingConfigurationId = 1,
                     },
                     new Seat
                     {
@@ -49,8 +49,8 @@ namespace MiniCinema.Models
                         RowEnd = 1,
                         ColumnEnd = 3,
                         IsDisabled = false,
-                        SeatTypeID = 1,
-                        SeatingConfigurationID = 1,
+                        SeatTypeId = 1,
+                        SeatingConfigurationId = 1,
                     }
                 );
 
@@ -60,7 +60,7 @@ namespace MiniCinema.Models
     }
     public class Seat
     {
-        public int Id { get; set; }
+        public int SeatId { get; set; }
         public int RowStart { get; set; }
         public int ColumnStart { get; set; }
         public int RowEnd { get; set; }
@@ -68,12 +68,11 @@ namespace MiniCinema.Models
         public bool IsDisabled { get; set; }
 
         [ForeignKey("SeatType")]
-        public int SeatTypeID { get; set; }
-        public SeatType SeatType { get; set; }
+        public int SeatTypeId { get; set; }
+        public SeatType SeatType { get; set; } = null!;
 
         [ForeignKey("SeatingConfiguration")]
-        public int SeatingConfigurationID { get; set; }
-        public SeatingConfiguration SeatingConfiguration { get; set; }
-
+        public int SeatingConfigurationId { get; set; }
+        public SeatingConfiguration SeatingConfiguration { get; set; } = null!;
     }
 }

@@ -16,6 +16,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.MovieSession[0].ShowingDate)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieSession[0].Hall)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieSession[0].MovieDetail)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -26,9 +32,15 @@
                 @Html.DisplayFor(modelItem => item.ShowingDate)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.Hall.HallId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MovieDetail.Genre)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.MovieSessionId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.MovieSessionId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.MovieSessionId">Delete</a>
             </td>
         </tr>
 }

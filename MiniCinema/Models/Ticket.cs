@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MiniCinema.Models
 {
-    public static class TicketSeedData
+   /* public static class TicketSeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
@@ -31,15 +31,15 @@ namespace MiniCinema.Models
                 context.SaveChanges();
             }
         }
-    }
+    }*/
     public class Ticket
     {
-        public int Id { get; set; }
+        public int TicketId { get; set; }
         public string BookingNumber { get; set; } = string.Empty;
 
         [ForeignKey("MovieSession")]
-        public int MovieSessionID { get; set; }
-        public MovieSession MovieSession { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
+        public int MovieSessionId { get; set; }
+        public MovieSession MovieSession { get; set; } = null!;
+        public ICollection<Transaction> Transactions { get; set; } = null!;
     }
 }

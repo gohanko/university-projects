@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MiniCinema.Models
 {
-    public static class TransactionSeedData
+    /*public static class TransactionSeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
@@ -31,28 +31,31 @@ namespace MiniCinema.Models
                 context.SaveChanges();
             }
         }
-    }
+    }*/
     public class Transaction
     {
-        public int Id { get; set; }
+        public int TransactionId { get; set; }
         public string PriceCurrency { get; set; } = "MY";
 
-        [Column(TypeName="money")]
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal PriceAmount { get; set; }
 
         public string Description { get; set; } = string.Empty;
 
         [DataType(DataType.DateTime)]
         public DateTime DateTime { get; set; }
+
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal DiscountPercentageApplied { get; set; }
 
         [ForeignKey("TransactionType")]
-        public int TransactionTypeID { get; set; }
+        public int TransactionTypeId { get; set; }
 
-        public TransactionType Type { get; set; }
+        public TransactionType Type { get; set; } = null!;
 
         [ForeignKey("Ticket")]
-        public int TicketID { get; set; }
-        public Ticket Ticket { get; set; }
+        public int TicketId { get; set; }
+        public Ticket Ticket { get; set; } = null!;
     }
 }

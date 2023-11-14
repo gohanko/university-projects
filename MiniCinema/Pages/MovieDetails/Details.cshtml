@@ -49,7 +49,13 @@
         </dd>
     </dl>
 </div>
+
+@foreach (var item in Model.MovieDetail.MovieSessions)
+{
+    <p>@item</p>
+}
+
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.MovieDetail?.Id">Edit</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.MovieDetail?.MovieDetailId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>

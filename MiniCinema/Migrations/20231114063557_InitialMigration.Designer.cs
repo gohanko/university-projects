@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniCinema.Data;
 
@@ -11,9 +12,11 @@ using MiniCinema.Data;
 namespace MiniCinema.Migrations
 {
     [DbContext(typeof(MiniCinemaContext))]
-    partial class MiniCinemaContextModelSnapshot : ModelSnapshot
+    [Migration("20231114063557_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,9 +184,6 @@ namespace MiniCinema.Migrations
                     b.Property<int>("MovieDetailId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MovieSession")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ShowingDate")
                         .HasColumnType("datetime2");
 
@@ -192,8 +192,6 @@ namespace MiniCinema.Migrations
                     b.HasIndex("HallId");
 
                     b.HasIndex("MovieDetailId");
-
-                    b.HasIndex("MovieSession");
 
                     b.ToTable("MovieSession");
                 });
@@ -401,10 +399,6 @@ namespace MiniCinema.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MiniCinema.Models.MovieDetail", null)
-                        .WithMany("MovieSessions")
-                        .HasForeignKey("MovieSession");
-
                     b.Navigation("Hall");
 
                     b.Navigation("MovieDetail");
@@ -457,11 +451,6 @@ namespace MiniCinema.Migrations
                     b.Navigation("Ticket");
 
                     b.Navigation("Type");
-                });
-
-            modelBuilder.Entity("MiniCinema.Models.MovieDetail", b =>
-                {
-                    b.Navigation("MovieSessions");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.SeatType", b =>

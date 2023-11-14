@@ -28,7 +28,7 @@ namespace MiniCinema.Pages.MovieSessions
                 return NotFound();
             }
 
-            var moviesession = await _context.MovieSession.FirstOrDefaultAsync(m => m.Id == id);
+            var moviesession = await _context.MovieSession.FirstOrDefaultAsync(m => m.MovieSessionId == id);
             if (moviesession == null)
             {
                 return NotFound();

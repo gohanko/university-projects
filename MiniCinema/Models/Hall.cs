@@ -24,7 +24,9 @@ namespace MiniCinema.Models
                 context.Hall.AddRange(
                     new Hall
                     {
-                        Type = "",
+                        Type = "Deluxe",
+                        BranchId = 1,
+                        SeatingConfigurationId = 1
                     }
                 );
 
@@ -34,14 +36,14 @@ namespace MiniCinema.Models
     }
     public class Hall
     {
-        public int Id { get; set; }
+        public int HallId { get; set; }
         public string Type { get; set; } = string.Empty;
         [ForeignKey("CinemaBranch")]
-        public int CinemaBranchID {  get; set; }
-        public Branch CinemaBranch { get; set; }
+        public int BranchId {  get; set; }
+        public Branch Branch { get; set; } = null!;
 
         [ForeignKey("SeatingConfiguration")]
-        public int SeatingConfigurationID { get; set; }
-        public SeatingConfiguration SeatingConfiguration { get; set; }
+        public int SeatingConfigurationId { get; set; }
+        public SeatingConfiguration SeatingConfiguration { get; set; } = null!;
     }
 }

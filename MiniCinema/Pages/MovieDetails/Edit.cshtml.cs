@@ -30,7 +30,7 @@ namespace MiniCinema.Pages.MovieDetails
                 return NotFound();
             }
 
-            var moviedetail =  await _context.MovieDetail.FirstOrDefaultAsync(m => m.Id == id);
+            var moviedetail =  await _context.MovieDetail.FirstOrDefaultAsync(m => m.MovieDetailId == id);
             if (moviedetail == null)
             {
                 return NotFound();
@@ -56,7 +56,7 @@ namespace MiniCinema.Pages.MovieDetails
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MovieDetailExists(MovieDetail.Id))
+                if (!MovieDetailExists(MovieDetail.MovieDetailId))
                 {
                     return NotFound();
                 }
@@ -71,7 +71,7 @@ namespace MiniCinema.Pages.MovieDetails
 
         private bool MovieDetailExists(int id)
         {
-          return (_context.MovieDetail?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.MovieDetail?.Any(e => e.MovieDetailId == id)).GetValueOrDefault();
         }
     }
 }

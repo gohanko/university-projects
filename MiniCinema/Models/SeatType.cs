@@ -52,11 +52,11 @@ namespace MiniCinema.Models
     }
     public class SeatType
     {
-        public int Id { get; set; }
+        public int SeatTypeId { get; set; }
         public string Name { get; set; } = string.Empty;
         public int Capacity { get; set; }
         public bool IsAccessible { get; set; }
 
-        public ICollection<Seat> Seats { get; set; }
+        public ICollection<Seat> Seats { get; set; } = null!;
     }
 }

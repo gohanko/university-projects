@@ -25,7 +25,9 @@ namespace MiniCinema.Pages.MovieSessions
         {
             if (_context.MovieSession != null)
             {
-                MovieSession = await _context.MovieSession.ToListAsync();
+                MovieSession = await _context.MovieSession
+                .Include(m => m.Hall)
+                .Include(m => m.MovieDetail).ToListAsync();
             }
         }
     }

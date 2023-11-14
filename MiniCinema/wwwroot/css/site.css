@@ -16,3 +16,10 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#movieCarousel .carousel-item img {
+    object-fit: cover;
+    object-position: center;
+    height: 50vh;
+    overflow: hidden;
+}

@@ -25,7 +25,7 @@ namespace MiniCinema.Models
                     new Branch
                     {
                         Name = "MiniCinema Kampar",
-                        LocationAddressID = 0
+                        LocationAddressId = 1
                     }
                 );
 
@@ -35,11 +35,11 @@ namespace MiniCinema.Models
     }
     public class Branch
     {
-        public int Id { get; set; }
+        public int BranchId { get; set; }
         public string Name { get; set; } = string.Empty;
 
         [ForeignKey("LocationAddress")]
-        public int LocationAddressID { get; set; }
-        public LocationAddress LocationAddress { get; set; }
+        public int LocationAddressId { get; set; }
+        public LocationAddress LocationAddress { get; set; } = null!;
     }
 }

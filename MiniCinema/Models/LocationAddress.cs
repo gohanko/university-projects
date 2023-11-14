@@ -23,6 +23,12 @@ namespace MiniCinema.Models
                 context.LocationAddress.AddRange(
                     new LocationAddress
                     {
+                        Line1 = "Lot 554, 5",
+                        Line2 = "Jalan Baru, Taman Tasik Emas",
+                        TownCity = "Kampar",
+                        StateProvince = "Perak",
+                        CountryCode = "MY",
+                        PostalCode = "31900",
                     }
                 );
 
@@ -32,7 +38,7 @@ namespace MiniCinema.Models
     }
     public class LocationAddress
     {
-        public int Id { get; set; }
+        public int LocationAddressId { get; set; }
         public string Line1 { get; set; } = string.Empty;
         public string Line2 { get; set; } = string.Empty;
         public string TownCity { get; set; } = string.Empty;

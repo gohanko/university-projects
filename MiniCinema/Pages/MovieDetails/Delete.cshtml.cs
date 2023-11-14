@@ -29,7 +29,7 @@ namespace MiniCinema.Pages.MovieDetails
                 return NotFound();
             }
 
-            var moviedetail = await _context.MovieDetail.FirstOrDefaultAsync(m => m.Id == id);
+            var moviedetail = await _context.MovieDetail.FirstOrDefaultAsync(m => m.MovieDetailId == id);
 
             if (moviedetail == null)
             {

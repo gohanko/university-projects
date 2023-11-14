@@ -23,6 +23,8 @@ namespace MiniCinema.Models
                 context.Guest.AddRange(
                     new Guest
                     {
+                        Email = "email@example.com",
+                        PhoneNumber = "+60123456789"
                     }
                 );
 
@@ -32,7 +34,7 @@ namespace MiniCinema.Models
     }
     public class Guest
     {
-        public int Id { get; set; }
+        public int GuestId { get; set; }
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
     }

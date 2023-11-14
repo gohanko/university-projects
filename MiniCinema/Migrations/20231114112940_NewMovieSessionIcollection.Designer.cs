@@ -12,8 +12,8 @@ using MiniCinema.Data;
 namespace MiniCinema.Migrations
 {
     [DbContext(typeof(MiniCinemaContext))]
-    [Migration("20231112115104_Initialize")]
-    partial class Initialize
+    [Migration("20231114112940_NewMovieSessionIcollection")]
+    partial class NewMovieSessionIcollection
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,60 +27,81 @@ namespace MiniCinema.Migrations
 
             modelBuilder.Entity("MiniCinema.Models.Branch", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BranchId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BranchId"));
 
-                    b.Property<int>("LocationAddressID")
+                    b.Property<int>("LocationAddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("BranchId");
 
-                    b.HasIndex("LocationAddressID");
+                    b.HasIndex("LocationAddressId");
 
                     b.ToTable("Branch");
                 });
 
-            modelBuilder.Entity("MiniCinema.Models.Hall", b =>
+            modelBuilder.Entity("MiniCinema.Models.Guest", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GuestId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GuestId"));
 
-                    b.Property<int>("CinemaBranchID")
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GuestId");
+
+                    b.ToTable("Guest");
+                });
+
+            modelBuilder.Entity("MiniCinema.Models.Hall", b =>
+                {
+                    b.Property<int>("HallId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("SeatingConfigurationID")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HallId"));
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeatingConfigurationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("HallId");
 
-                    b.HasIndex("CinemaBranchID");
+                    b.HasIndex("BranchId");
 
-                    b.HasIndex("SeatingConfigurationID");
+                    b.HasIndex("SeatingConfigurationId");
 
                     b.ToTable("Hall");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.LocationAddress", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("LocationAddressId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationAddressId"));
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
@@ -106,18 +127,18 @@ namespace MiniCinema.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("LocationAddressId");
 
                     b.ToTable("LocationAddress");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.MovieDetail", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MovieDetailId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieDetailId"));
 
                     b.Property<string>("Genre")
                         .IsRequired()
@@ -144,44 +165,49 @@ namespace MiniCinema.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.HasKey("Id");
+                    b.HasKey("MovieDetailId");
 
                     b.ToTable("MovieDetail");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.MovieSession", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MovieSessionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieSessionId"));
 
-                    b.Property<int>("HallID")
+                    b.Property<int>("HallId")
                         .HasColumnType("int");
 
-                    b.Property<int>("MovieDetailID")
+                    b.Property<int>("MovieDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MovieSession")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ShowingDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("MovieSessionId");
 
-                    b.HasIndex("HallID");
+                    b.HasIndex("HallId");
 
-                    b.HasIndex("MovieDetailID");
+                    b.HasIndex("MovieDetailId");
+
+                    b.HasIndex("MovieSession");
 
                     b.ToTable("MovieSession");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.Seat", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SeatId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeatId"));
 
                     b.Property<int>("ColumnEnd")
                         .HasColumnType("int");
@@ -198,28 +224,28 @@ namespace MiniCinema.Migrations
                     b.Property<int>("RowStart")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeatTypeID")
+                    b.Property<int>("SeatTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeatingConfigurationID")
+                    b.Property<int>("SeatingConfigurationId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("SeatId");
 
-                    b.HasIndex("SeatTypeID");
+                    b.HasIndex("SeatTypeId");
 
-                    b.HasIndex("SeatingConfigurationID");
+                    b.HasIndex("SeatingConfigurationId");
 
                     b.ToTable("Seat");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.SeatType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SeatTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeatTypeId"));
 
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
@@ -231,18 +257,18 @@ namespace MiniCinema.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SeatTypeId");
 
                     b.ToTable("SeatType");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.SeatingConfiguration", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SeatingConfigurationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeatingConfigurationId"));
 
                     b.Property<int>("ColumnSize")
                         .HasColumnType("int");
@@ -250,40 +276,40 @@ namespace MiniCinema.Migrations
                     b.Property<int>("RowSize")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("SeatingConfigurationId");
 
                     b.ToTable("SeatingConfiguration");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.Ticket", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TicketId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketId"));
 
                     b.Property<string>("BookingNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MovieSessionID")
+                    b.Property<int>("MovieSessionId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("TicketId");
 
-                    b.HasIndex("MovieSessionID");
+                    b.HasIndex("MovieSessionId");
 
                     b.ToTable("Ticket");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.Transaction", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
@@ -293,43 +319,43 @@ namespace MiniCinema.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("DiscountPercentageApplied")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<decimal>("PriceAmount")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("PriceCurrency")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TicketID")
+                    b.Property<int>("TicketId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TransactionTypeID")
+                    b.Property<int>("TransactionTypeId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("TransactionId");
 
-                    b.HasIndex("TicketID");
+                    b.HasIndex("TicketId");
 
-                    b.HasIndex("TransactionTypeID");
+                    b.HasIndex("TransactionTypeId");
 
                     b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.TransactionType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TransactionTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionTypeId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("TransactionTypeId");
 
                     b.ToTable("TransactionType");
                 });
@@ -338,7 +364,7 @@ namespace MiniCinema.Migrations
                 {
                     b.HasOne("MiniCinema.Models.LocationAddress", "LocationAddress")
                         .WithMany()
-                        .HasForeignKey("LocationAddressID")
+                        .HasForeignKey("LocationAddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -347,19 +373,19 @@ namespace MiniCinema.Migrations
 
             modelBuilder.Entity("MiniCinema.Models.Hall", b =>
                 {
-                    b.HasOne("MiniCinema.Models.Branch", "CinemaBranch")
+                    b.HasOne("MiniCinema.Models.Branch", "Branch")
                         .WithMany()
-                        .HasForeignKey("CinemaBranchID")
+                        .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiniCinema.Models.SeatingConfiguration", "SeatingConfiguration")
                         .WithMany()
-                        .HasForeignKey("SeatingConfigurationID")
+                        .HasForeignKey("SeatingConfigurationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CinemaBranch");
+                    b.Navigation("Branch");
 
                     b.Navigation("SeatingConfiguration");
                 });
@@ -368,15 +394,19 @@ namespace MiniCinema.Migrations
                 {
                     b.HasOne("MiniCinema.Models.Hall", "Hall")
                         .WithMany()
-                        .HasForeignKey("HallID")
+                        .HasForeignKey("HallId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiniCinema.Models.MovieDetail", "MovieDetail")
                         .WithMany()
-                        .HasForeignKey("MovieDetailID")
+                        .HasForeignKey("MovieDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("MiniCinema.Models.MovieDetail", null)
+                        .WithMany("MovieSessions")
+                        .HasForeignKey("MovieSession");
 
                     b.Navigation("Hall");
 
@@ -387,13 +417,13 @@ namespace MiniCinema.Migrations
                 {
                     b.HasOne("MiniCinema.Models.SeatType", "SeatType")
                         .WithMany("Seats")
-                        .HasForeignKey("SeatTypeID")
+                        .HasForeignKey("SeatTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiniCinema.Models.SeatingConfiguration", "SeatingConfiguration")
                         .WithMany("Seats")
-                        .HasForeignKey("SeatingConfigurationID")
+                        .HasForeignKey("SeatingConfigurationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -406,7 +436,7 @@ namespace MiniCinema.Migrations
                 {
                     b.HasOne("MiniCinema.Models.MovieSession", "MovieSession")
                         .WithMany()
-                        .HasForeignKey("MovieSessionID")
+                        .HasForeignKey("MovieSessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -417,19 +447,24 @@ namespace MiniCinema.Migrations
                 {
                     b.HasOne("MiniCinema.Models.Ticket", "Ticket")
                         .WithMany("Transactions")
-                        .HasForeignKey("TicketID")
+                        .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MiniCinema.Models.TransactionType", "Type")
                         .WithMany()
-                        .HasForeignKey("TransactionTypeID")
+                        .HasForeignKey("TransactionTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Ticket");
 
                     b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("MiniCinema.Models.MovieDetail", b =>
+                {
+                    b.Navigation("MovieSessions");
                 });
 
             modelBuilder.Entity("MiniCinema.Models.SeatType", b =>

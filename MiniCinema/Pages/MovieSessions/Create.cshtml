@@ -19,6 +19,14 @@
                 <span asp-validation-for="MovieSession.ShowingDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="MovieSession.HallId" class="control-label"></label>
+                <select asp-for="MovieSession.HallId" class ="form-control" asp-items="ViewBag.HallId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MovieSession.MovieDetailId" class="control-label"></label>
+                <select asp-for="MovieSession.MovieDetailId" class ="form-control" asp-items="ViewBag.MovieDetailId"></select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

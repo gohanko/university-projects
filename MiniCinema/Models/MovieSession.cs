@@ -26,14 +26,14 @@ namespace MiniCinema.Models
                     new MovieSession
                     {
                         ShowingDate = DateTime.Parse("12/10/2023 07:00:00 +8:00"),
-                        HallID = 1,
-                        MovieDetailID = 1
+                        HallId = 1,
+                        MovieDetailId = 1
                     },
                     new MovieSession
                     {
                         ShowingDate = DateTime.Parse("12/10/2023 09:00:00 +8:00"),
-                        HallID = 1,
-                        MovieDetailID = 1
+                        HallId = 1,
+                        MovieDetailId = 1
                     }
                 );
 
@@ -43,18 +43,18 @@ namespace MiniCinema.Models
     }
     public class MovieSession
     {
-        public int Id { get; set; }
+        public int MovieSessionId { get; set; }
 
         [Display(Name = "Showing Date")]
         [DataType(DataType.DateTime)]
         public DateTime ShowingDate { get; set; }
 
         [ForeignKey("Hall")]
-        public int HallID { get; set; }
-        public Hall Hall { get; set; }
+        public int HallId { get; set; }
+        public Hall Hall { get; set; } = null!;
 
         [ForeignKey("MovieDetail")]
-        public int MovieDetailID { get; set; }
-        public MovieDetail MovieDetail { get; set; }
+        public int MovieDetailId { get; set; }
+        public MovieDetail MovieDetail { get; set; } = null!;
     }
 }

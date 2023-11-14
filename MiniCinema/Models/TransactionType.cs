@@ -3,7 +3,7 @@ using MiniCinema.Data;
 
 namespace MiniCinema.Models
 {
-    public static class TransactionTypeSeedData
+   /* public static class TransactionTypeSeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
@@ -29,10 +29,10 @@ namespace MiniCinema.Models
                 context.SaveChanges();
             }
         }
-    }
+    }*/
     public class TransactionType
     {
-        public int Id { get; set; }
+        public int TransactionTypeId { get; set; }
         public string Name { get; set; } = string.Empty;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiniCinema.Data;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MiniCinema.Models
 {
@@ -67,7 +68,7 @@ namespace MiniCinema.Models
     }
     public class MovieDetail
     {
-        public int Id { get; set; }
+        public int MovieDetailId { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
@@ -88,5 +89,8 @@ namespace MiniCinema.Models
         [StringLength(5)]
         [Required]
         public string Rating { get; set; } = string.Empty;
+
+        [ForeignKey("MovieSession")]
+        public ICollection<MovieSession> MovieSessions { get; set; } = null!;
     }
 }

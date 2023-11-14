@@ -21,6 +21,8 @@ namespace MiniCinema.Pages.MovieSessions
 
         public IActionResult OnGet()
         {
+        ViewData["HallId"] = new SelectList(_context.Hall, "HallId", "HallId");
+        ViewData["MovieDetailId"] = new SelectList(_context.MovieDetail, "MovieDetailId", "Genre");
             return Page();
         }
 

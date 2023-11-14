@@ -44,10 +44,10 @@ namespace MiniCinema.Models
     }
     public class SeatingConfiguration
     {
-        public int Id { get; set; }
+        public int SeatingConfigurationId { get; set; }
         public int RowSize { get; set; }
         public int ColumnSize { get; set; }
 
-        public ICollection<Seat>? Seats { get; set; }
+        public ICollection<Seat> Seats { get; set; } = null!;
     }
 }

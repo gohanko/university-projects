@@ -16,18 +16,20 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    BranchSeedData.Initialize(services);
-    GuestSeedData.Initialize(services);
-    HallSeedData.Initialize(services);
     LocationAddressSeedData.Initialize(services);
+    BranchSeedData.Initialize(services);
+    
+    SeatTypeSeedData.Initialize(services);
+    SeatingConfigurationSeedData.Initialize(services);
+    SeatSeedData.Initialize(services);
+    HallSeedData.Initialize(services);
+    
+    GuestSeedData.Initialize(services);
     MovieDetailSeedData.Initialize(services);
     MovieSessionSeedData.Initialize(services);
-    SeatSeedData.Initialize(services);
-    SeatingConfigurationSeedData.Initialize(services);
-    SeatTypeSeedData.Initialize(services);
-    TicketSeedData.Initialize(services);
+    /*TicketSeedData.Initialize(services);
     TransactionSeedData.Initialize(services);
-    TransactionTypeSeedData.Initialize(services);
+    TransactionTypeSeedData.Initialize(services);*/
 }
 
 // Configure the HTTP request pipeline.

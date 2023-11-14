@@ -6,16 +6,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MiniCinema.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialize : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Guest",
+                columns: table => new
+                {
+                    GuestId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Guest", x => x.GuestId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LocationAddress",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    LocationAddressId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Line1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Line2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -26,14 +40,14 @@ namespace MiniCinema.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocationAddress", x => x.Id);
+                    table.PrimaryKey("PK_LocationAddress", x => x.LocationAddressId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "MovieDetail",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    MovieDetailId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -44,28 +58,28 @@ namespace MiniCinema.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieDetail", x => x.Id);
+                    table.PrimaryKey("PK_MovieDetail", x => x.MovieDetailId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "SeatingConfiguration",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    SeatingConfigurationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RowSize = table.Column<int>(type: "int", nullable: false),
                     ColumnSize = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SeatingConfiguration", x => x.Id);
+                    table.PrimaryKey("PK_SeatingConfiguration", x => x.SeatingConfigurationId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "SeatType",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    SeatTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
@@ -73,39 +87,39 @@ namespace MiniCinema.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SeatType", x => x.Id);
+                    table.PrimaryKey("PK_SeatType", x => x.SeatTypeId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "TransactionType",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    TransactionTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TransactionType", x => x.Id);
+                    table.PrimaryKey("PK_TransactionType", x => x.TransactionTypeId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Branch",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    BranchId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LocationAddressID = table.Column<int>(type: "int", nullable: false)
+                    LocationAddressId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Branch", x => x.Id);
+                    table.PrimaryKey("PK_Branch", x => x.BranchId);
                     table.ForeignKey(
-                        name: "FK_Branch_LocationAddress_LocationAddressID",
-                        column: x => x.LocationAddressID,
+                        name: "FK_Branch_LocationAddress_LocationAddressId",
+                        column: x => x.LocationAddressId,
                         principalTable: "LocationAddress",
-                        principalColumn: "Id",
+                        principalColumn: "LocationAddressId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -113,30 +127,30 @@ namespace MiniCinema.Migrations
                 name: "Seat",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    SeatId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RowStart = table.Column<int>(type: "int", nullable: false),
                     ColumnStart = table.Column<int>(type: "int", nullable: false),
                     RowEnd = table.Column<int>(type: "int", nullable: false),
                     ColumnEnd = table.Column<int>(type: "int", nullable: false),
                     IsDisabled = table.Column<bool>(type: "bit", nullable: false),
-                    SeatTypeID = table.Column<int>(type: "int", nullable: false),
-                    SeatingConfigurationID = table.Column<int>(type: "int", nullable: false)
+                    SeatTypeId = table.Column<int>(type: "int", nullable: false),
+                    SeatingConfigurationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Seat", x => x.Id);
+                    table.PrimaryKey("PK_Seat", x => x.SeatId);
                     table.ForeignKey(
-                        name: "FK_Seat_SeatType_SeatTypeID",
-                        column: x => x.SeatTypeID,
+                        name: "FK_Seat_SeatType_SeatTypeId",
+                        column: x => x.SeatTypeId,
                         principalTable: "SeatType",
-                        principalColumn: "Id",
+                        principalColumn: "SeatTypeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Seat_SeatingConfiguration_SeatingConfigurationID",
-                        column: x => x.SeatingConfigurationID,
+                        name: "FK_Seat_SeatingConfiguration_SeatingConfigurationId",
+                        column: x => x.SeatingConfigurationId,
                         principalTable: "SeatingConfiguration",
-                        principalColumn: "Id",
+                        principalColumn: "SeatingConfigurationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -144,26 +158,26 @@ namespace MiniCinema.Migrations
                 name: "Hall",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    HallId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CinemaBranchID = table.Column<int>(type: "int", nullable: false),
-                    SeatingConfigurationID = table.Column<int>(type: "int", nullable: false)
+                    BranchId = table.Column<int>(type: "int", nullable: false),
+                    SeatingConfigurationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hall", x => x.Id);
+                    table.PrimaryKey("PK_Hall", x => x.HallId);
                     table.ForeignKey(
-                        name: "FK_Hall_Branch_CinemaBranchID",
-                        column: x => x.CinemaBranchID,
+                        name: "FK_Hall_Branch_BranchId",
+                        column: x => x.BranchId,
                         principalTable: "Branch",
-                        principalColumn: "Id",
+                        principalColumn: "BranchId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Hall_SeatingConfiguration_SeatingConfigurationID",
-                        column: x => x.SeatingConfigurationID,
+                        name: "FK_Hall_SeatingConfiguration_SeatingConfigurationId",
+                        column: x => x.SeatingConfigurationId,
                         principalTable: "SeatingConfiguration",
-                        principalColumn: "Id",
+                        principalColumn: "SeatingConfigurationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -171,26 +185,26 @@ namespace MiniCinema.Migrations
                 name: "MovieSession",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    MovieSessionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ShowingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HallID = table.Column<int>(type: "int", nullable: false),
-                    MovieDetailID = table.Column<int>(type: "int", nullable: false)
+                    HallId = table.Column<int>(type: "int", nullable: false),
+                    MovieDetailId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieSession", x => x.Id);
+                    table.PrimaryKey("PK_MovieSession", x => x.MovieSessionId);
                     table.ForeignKey(
-                        name: "FK_MovieSession_Hall_HallID",
-                        column: x => x.HallID,
+                        name: "FK_MovieSession_Hall_HallId",
+                        column: x => x.HallId,
                         principalTable: "Hall",
-                        principalColumn: "Id",
+                        principalColumn: "HallId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieSession_MovieDetail_MovieDetailID",
-                        column: x => x.MovieDetailID,
+                        name: "FK_MovieSession_MovieDetail_MovieDetailId",
+                        column: x => x.MovieDetailId,
                         principalTable: "MovieDetail",
-                        principalColumn: "Id",
+                        principalColumn: "MovieDetailId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -198,19 +212,19 @@ namespace MiniCinema.Migrations
                 name: "Ticket",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    TicketId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BookingNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MovieSessionID = table.Column<int>(type: "int", nullable: false)
+                    MovieSessionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ticket", x => x.Id);
+                    table.PrimaryKey("PK_Ticket", x => x.TicketId);
                     table.ForeignKey(
-                        name: "FK_Ticket_MovieSession_MovieSessionID",
-                        column: x => x.MovieSessionID,
+                        name: "FK_Ticket_MovieSession_MovieSessionId",
+                        column: x => x.MovieSessionId,
                         principalTable: "MovieSession",
-                        principalColumn: "Id",
+                        principalColumn: "MovieSessionId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -218,87 +232,90 @@ namespace MiniCinema.Migrations
                 name: "Transaction",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    TransactionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PriceCurrency = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PriceAmount = table.Column<decimal>(type: "money", nullable: false),
+                    PriceAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DiscountPercentageApplied = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TransactionTypeID = table.Column<int>(type: "int", nullable: false),
-                    TicketID = table.Column<int>(type: "int", nullable: false)
+                    TransactionTypeId = table.Column<int>(type: "int", nullable: false),
+                    TicketId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transaction", x => x.Id);
+                    table.PrimaryKey("PK_Transaction", x => x.TransactionId);
                     table.ForeignKey(
-                        name: "FK_Transaction_Ticket_TicketID",
-                        column: x => x.TicketID,
+                        name: "FK_Transaction_Ticket_TicketId",
+                        column: x => x.TicketId,
                         principalTable: "Ticket",
-                        principalColumn: "Id",
+                        principalColumn: "TicketId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transaction_TransactionType_TransactionTypeID",
-                        column: x => x.TransactionTypeID,
+                        name: "FK_Transaction_TransactionType_TransactionTypeId",
+                        column: x => x.TransactionTypeId,
                         principalTable: "TransactionType",
-                        principalColumn: "Id",
+                        principalColumn: "TransactionTypeId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Branch_LocationAddressID",
+                name: "IX_Branch_LocationAddressId",
                 table: "Branch",
-                column: "LocationAddressID");
+                column: "LocationAddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hall_CinemaBranchID",
+                name: "IX_Hall_BranchId",
                 table: "Hall",
-                column: "CinemaBranchID");
+                column: "BranchId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hall_SeatingConfigurationID",
+                name: "IX_Hall_SeatingConfigurationId",
                 table: "Hall",
-                column: "SeatingConfigurationID");
+                column: "SeatingConfigurationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieSession_HallID",
+                name: "IX_MovieSession_HallId",
                 table: "MovieSession",
-                column: "HallID");
+                column: "HallId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieSession_MovieDetailID",
+                name: "IX_MovieSession_MovieDetailId",
                 table: "MovieSession",
-                column: "MovieDetailID");
+                column: "MovieDetailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Seat_SeatingConfigurationID",
+                name: "IX_Seat_SeatingConfigurationId",
                 table: "Seat",
-                column: "SeatingConfigurationID");
+                column: "SeatingConfigurationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Seat_SeatTypeID",
+                name: "IX_Seat_SeatTypeId",
                 table: "Seat",
-                column: "SeatTypeID");
+                column: "SeatTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ticket_MovieSessionID",
+                name: "IX_Ticket_MovieSessionId",
                 table: "Ticket",
-                column: "MovieSessionID");
+                column: "MovieSessionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_TicketID",
+                name: "IX_Transaction_TicketId",
                 table: "Transaction",
-                column: "TicketID");
+                column: "TicketId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_TransactionTypeID",
+                name: "IX_Transaction_TransactionTypeId",
                 table: "Transaction",
-                column: "TransactionTypeID");
+                column: "TransactionTypeId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Guest");
+
             migrationBuilder.DropTable(
                 name: "Seat");
 
