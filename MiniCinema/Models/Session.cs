@@ -5,35 +5,35 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MiniCinema.Models
 {
-    public static class MovieSessionSeedData
+    public static class SessionSeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new MiniCinemaContext(serviceProvider.GetRequiredService<DbContextOptions<MiniCinemaContext>>()))
             {
-                if (context == null || context.MovieSession == null)
+                if (context == null || context.Session == null)
                 {
                     throw new ArgumentNullException("Null MiniCinemaContext");
                 }
 
                 // Look for any movies.
-                if (context.MovieSession.Any())
+                if (context.Session.Any())
                 {
                     return;   // DB has been seeded
                 }
 
-                context.MovieSession.AddRange(
-                    new MovieSession
+                context.Session.AddRange(
+                    new Session
                     {
                         ShowingDate = DateTime.Parse("12/10/2023 07:00:00 +8:00"),
                         HallId = 1,
-                        MovieDetailId = 1
+                        MovieId = 1
                     },
-                    new MovieSession
+                    new Session
                     {
                         ShowingDate = DateTime.Parse("12/10/2023 09:00:00 +8:00"),
                         HallId = 1,
-                        MovieDetailId = 1
+                        MovieId = 1
                     }
                 );
 
@@ -41,20 +41,21 @@ namespace MiniCinema.Models
             }
         }
     }
-    public class MovieSession
+    public class Session
     {
-        public int MovieSessionId { get; set; }
+        public int SessionId { get; set; }
 
         [Display(Name = "Showing Date")]
         [DataType(DataType.DateTime)]
         public DateTime ShowingDate { get; set; }
 
+        [Display(Name = "Hall")]
         [ForeignKey("Hall")]
         public int HallId { get; set; }
         public Hall Hall { get; set; } = null!;
 
-        [ForeignKey("MovieDetail")]
-        public int MovieDetailId { get; set; }
-        public MovieDetail MovieDetail { get; set; } = null!;
+        [ForeignKey("Movie")]
+        public int MovieId { get; set; }
+        public Movie Movie { get; set; } = null!;
     }
 }

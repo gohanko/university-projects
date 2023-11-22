@@ -3,25 +3,25 @@ using MiniCinema.Data;
 
 namespace MiniCinema.Models
 {
-    public static class LocationAddressSeedData
+    public static class AddressSeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new MiniCinemaContext(serviceProvider.GetRequiredService<DbContextOptions<MiniCinemaContext>>()))
             {
-                if (context == null || context.LocationAddress == null)
+                if (context == null || context.Address == null)
                 {
                     throw new ArgumentNullException("Null MiniCinemaContext");
                 }
 
                 // Look for any movies.
-                if (context.LocationAddress.Any())
+                if (context.Address.Any())
                 {
                     return;   // DB has been seeded
                 }
 
-                context.LocationAddress.AddRange(
-                    new LocationAddress
+                context.Address.AddRange(
+                    new Address
                     {
                         Line1 = "Lot 554, 5",
                         Line2 = "Jalan Baru, Taman Tasik Emas",
@@ -36,9 +36,9 @@ namespace MiniCinema.Models
             }
         }
     }
-    public class LocationAddress
+    public class Address
     {
-        public int LocationAddressId { get; set; }
+        public int AddressId { get; set; }
         public string Line1 { get; set; } = string.Empty;
         public string Line2 { get; set; } = string.Empty;
         public string TownCity { get; set; } = string.Empty;

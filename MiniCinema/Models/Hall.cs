@@ -26,7 +26,8 @@ namespace MiniCinema.Models
                     {
                         Type = "Deluxe",
                         BranchId = 1,
-                        SeatingConfigurationId = 1
+                        RowSize = 10,
+                        ColumnSize = 10,
                     }
                 );
 
@@ -38,12 +39,13 @@ namespace MiniCinema.Models
     {
         public int HallId { get; set; }
         public string Type { get; set; } = string.Empty;
+
+        public int RowSize { get; set; }
+        public int ColumnSize { get; set; }
+        public ICollection<Seat> Seats { get; set; } = null!;
+
         [ForeignKey("CinemaBranch")]
         public int BranchId {  get; set; }
         public Branch Branch { get; set; } = null!;
-
-        [ForeignKey("SeatingConfiguration")]
-        public int SeatingConfigurationId { get; set; }
-        public SeatingConfiguration SeatingConfiguration { get; set; } = null!;
     }
 }

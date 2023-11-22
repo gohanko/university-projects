@@ -38,7 +38,7 @@
 
     <div class="container-fluid py-2">
         <div class="row">
-            @foreach (var item in Model.MovieDetails)
+            @foreach (var item in Model.Movies)
             {
                 <div class="col">
                     <div class="card gx-5">
@@ -46,7 +46,7 @@
                         <div class="card-body">
                             <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
                             <p class="card-text">@Html.DisplayFor(modelItem => item.ReleaseDate)</p>
-                            <a asp-page="./MovieDetails/Details/" asp-route-id="@item.MovieDetailId" class="btn btn-primary">Buy Ticket</a>
+                            <a asp-page="./ShowtimeByMovie/" asp-route-id="@item.MovieId" class="btn btn-primary">Buy Ticket</a>
                         </div>
                     </div>
                 </div>

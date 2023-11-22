@@ -45,14 +45,10 @@ namespace MiniCinema.Models
 
         [DataType(DataType.DateTime)]
         public DateTime DateTime { get; set; }
+        public int TransactionType { get; set; }
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal DiscountPercentageApplied { get; set; }
-
-        [ForeignKey("TransactionType")]
-        public int TransactionTypeId { get; set; }
-
-        public TransactionType Type { get; set; } = null!;
 
         [ForeignKey("Ticket")]
         public int TicketId { get; set; }

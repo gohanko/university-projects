@@ -14,13 +14,13 @@ namespace MiniCinema.Pages
             _context = context;
         }
 
-        public IList<MovieDetail> MovieDetails { get; set; } = default!;
+        public IList<Movie> Movies { get; set; } = default!;
         public async Task OnGetAsync()
         {
-            if (_context.MovieDetail != null)
+            if (_context.Movie != null)
             {
-                MovieDetails = await _context.MovieDetail
-                    .Include(m => m.MovieSessions)
+                Movies = await _context.Movie
+                    .Include(m => m.Sessions)
                     .ToListAsync();
             }
         }

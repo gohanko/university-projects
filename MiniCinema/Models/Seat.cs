@@ -28,9 +28,9 @@ namespace MiniCinema.Models
                         ColumnStart = 1,
                         RowEnd = 1,
                         ColumnEnd = 1,
-                        IsDisabled = false,
-                        SeatTypeId = 1,
-                        SeatingConfigurationId = 1,
+                        Capacity = 1,
+                        Type = 1,
+                        HallId = 1,
                     },
                     new Seat
                     {
@@ -38,9 +38,10 @@ namespace MiniCinema.Models
                         ColumnStart = 2,
                         RowEnd = 1,
                         ColumnEnd = 2,
-                        IsDisabled = false,
-                        SeatTypeId = 1,
-                        SeatingConfigurationId = 1,
+                        Capacity = 1,
+                        Type = 1,
+                        IsAccessible = false,
+                        HallId = 1,
                     },
                     new Seat
                     {
@@ -48,9 +49,10 @@ namespace MiniCinema.Models
                         ColumnStart = 3,
                         RowEnd = 1,
                         ColumnEnd = 3,
-                        IsDisabled = false,
-                        SeatTypeId = 1,
-                        SeatingConfigurationId = 1,
+                        Capacity = 1,
+                        Type = 1,
+                        IsAccessible = false,
+                        HallId = 1,
                     }
                 );
 
@@ -65,14 +67,17 @@ namespace MiniCinema.Models
         public int ColumnStart { get; set; }
         public int RowEnd { get; set; }
         public int ColumnEnd { get; set; }
-        public bool IsDisabled { get; set; }
+        public int Capacity { get; set; }
 
-        [ForeignKey("SeatType")]
-        public int SeatTypeId { get; set; }
-        public SeatType SeatType { get; set; } = null!;
+        public int Type { get; set; }
+        public bool IsAccessible { get; set; }
 
-        [ForeignKey("SeatingConfiguration")]
-        public int SeatingConfigurationId { get; set; }
-        public SeatingConfiguration SeatingConfiguration { get; set; } = null!;
+        [ForeignKey("Guest")]
+        public int? GuestId { get; set; }
+        public Guest? Guest { get; set; } = null!;
+
+        [ForeignKey("Hall")]
+        public int HallId { get; set; }
+        public Hall Hall { get; set; } = null!;
     }
 }

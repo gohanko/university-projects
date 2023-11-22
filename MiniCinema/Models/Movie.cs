@@ -5,25 +5,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MiniCinema.Models
 {
-    public static class MovieDetailSeedData
+    public static class MovieSeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new MiniCinemaContext(serviceProvider.GetRequiredService<DbContextOptions<MiniCinemaContext>>()))
             {
-                if (context == null || context.MovieDetail == null)
+                if (context == null || context.Movie == null)
                 {
                     throw new ArgumentNullException("Null MiniCinemaContext");
                 }
 
                 // Look for any movies.
-                if (context.MovieDetail.Any())
+                if (context.Movie.Any())
                 {
                     return;   // DB has been seeded
                 }
 
-                context.MovieDetail.AddRange(
-                    new MovieDetail
+                context.Movie.AddRange(
+                    new Movie
                     {
                         Title = "Castle in the Sky",
                         ReleaseDate = DateTime.Parse("1986-8-2"),
@@ -32,7 +32,7 @@ namespace MiniCinema.Models
                         Genre = "Anime",
                         Rating = "R",
                     },
-                    new MovieDetail
+                    new Movie
                     {
                         Title = "Tales from Earthsea",
                         ReleaseDate = DateTime.Parse("2006-7-29"),
@@ -41,7 +41,7 @@ namespace MiniCinema.Models
                         Genre = "Anime",
                         Rating = "R",
                     },
-                    new MovieDetail
+                    new Movie
                     {
                         Title = "Ghostbusters 2",
                         ReleaseDate = DateTime.Parse("1986-2-23"),
@@ -51,7 +51,7 @@ namespace MiniCinema.Models
                         Rating = "R",
                     },
 
-                    new MovieDetail
+                    new Movie
                     {
                         Title = "时光代理人",
                         ReleaseDate = DateTime.Parse("2021-4-30"),
@@ -66,9 +66,10 @@ namespace MiniCinema.Models
             }
         }
     }
-    public class MovieDetail
+    public class Movie
     {
-        public int MovieDetailId { get; set; }
+        [Display(Name = "Movie ID")]
+        public int MovieId { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         [Required]
@@ -90,7 +91,6 @@ namespace MiniCinema.Models
         [Required]
         public string Rating { get; set; } = string.Empty;
 
-        [ForeignKey("MovieSession")]
-        public ICollection<MovieSession> MovieSessions { get; set; } = null!;
+        public ICollection<Session> Sessions { get; set; } = null!;
     }
 }

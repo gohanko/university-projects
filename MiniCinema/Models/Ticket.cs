@@ -39,7 +39,7 @@ namespace MiniCinema.Models
 
         [ForeignKey("MovieSession")]
         public int MovieSessionId { get; set; }
-        public MovieSession MovieSession { get; set; } = null!;
+        public Session MovieSession { get; set; } = null!;
         public ICollection<Transaction> Transactions { get; set; } = null!;
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniCinema.Data;
 
@@ -11,9 +12,10 @@ using MiniCinema.Data;
 namespace MiniCinema.Migrations
 {
     [DbContext(typeof(MiniCinemaContext))]
-    partial class MiniCinemaContextModelSnapshot : ModelSnapshot
+    [Migration("20231122123813_Initialise")]
+    partial class Initialise
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,7 +187,7 @@ namespace MiniCinema.Migrations
                     b.Property<int>("ColumnStart")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GuestId")
+                    b.Property<int>("GuestId")
                         .HasColumnType("int");
 
                     b.Property<int>("HallId")
@@ -324,7 +326,9 @@ namespace MiniCinema.Migrations
                 {
                     b.HasOne("MiniCinema.Models.Guest", "Guest")
                         .WithMany()
-                        .HasForeignKey("GuestId");
+                        .HasForeignKey("GuestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MiniCinema.Models.Hall", "Hall")
                         .WithMany("Seats")
