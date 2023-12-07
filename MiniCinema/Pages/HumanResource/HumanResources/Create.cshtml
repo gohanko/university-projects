@@ -1,0 +1,61 @@
+﻿@page
+@model MiniCinema.Pages.HumanResources.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container mt-3">
+    <h1>Create</h1>
+
+    <h4>Staff Info</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="HumanResource.Name" class="control-label"></label>
+                    <input asp-for="HumanResource.Name" class="form-control" />
+                    <span asp-validation-for="HumanResource.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HumanResource.Age" class="control-label"></label>
+                    <input asp-for="HumanResource.Age" class="form-control" />
+                    <span asp-validation-for="HumanResource.Age" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HumanResource.BirthdayDate" class="control-label"></label>
+                    <input asp-for="HumanResource.BirthdayDate" class="form-control" />
+                    <span asp-validation-for="HumanResource.BirthdayDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HumanResource.Position" class="control-label"></label>
+                    <input asp-for="HumanResource.Position" class="form-control" />
+                    <span asp-validation-for="HumanResource.Position" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HumanResource.Department" class="control-label"></label>
+                    <input asp-for="HumanResource.Department" class="form-control" />
+                    <span asp-validation-for="HumanResource.Department" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HumanResource.Salary" class="control-label"></label>
+                    <input asp-for="HumanResource.Salary" class="form-control" />
+                    <span asp-validation-for="HumanResource.Salary" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

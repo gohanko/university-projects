@@ -5,23 +5,50 @@
     ViewData["Title"] = "Showtimes";
 }
 
-<div class="container">
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-        <div class="col-md-4">
-            <img 
-                width="100"
-                height="100"
-                src="@Model.Base64QRUri"
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-3">
+            <img
+                src="@Model.Ticket.Session.Movie.ImageURL"
+                width="100%"
             />
         </div>
         <div class="col-md-8">
-            <div class="card-body">
-            <h5 class="card-title">@Model.Ticket.Session.HallId</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <div class="row">
+                <div class="col-md-10">
+                    <h1 class="card-title">@Model.Ticket.Session.Movie.Title</h1>
+                    <p class="card-title">Runtime: @Model.Ticket.Session.Movie.RuntimeMinutes Minutes</p>
+                </div>
+
+                <div class="col-md-2">
+                    <img width="100%"
+                         height="100%"
+                         src="@Model.Base64QRUri" />
+                </div>
             </div>
-        </div>
+            <div class="row mt-3">
+                <p class="card-text">
+                    <img
+                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IkxheWVyXzEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYwIDYwOyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNjAgNjAiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxwYXRoIGQ9Ik0yOC4wNywxMi43NWMtMC41NC0wLjMyLTEuMi0wLjMzLTEuNzUtMC4wMmMtMC41NCwwLjMxLTAuODgsMC44OS0wLjg4LDEuNTF2OC44NGMwLDAuNjIsMC4zNCwxLjIsMC44OCwxLjUxICBjMC4yNiwwLjE1LDAuNTYsMC4yMiwwLjg1LDAuMjJjMC4zMSwwLDAuNjItMC4wOCwwLjg5LTAuMjVsNy4zNS00LjQyYzAsMCwwLDAsMCwwYzAuNTMtMC4zMiwwLjg0LTAuODcsMC44NC0xLjQ5ICBjMC0wLjYxLTAuMzEtMS4xNy0wLjg0LTEuNDlMMjguMDcsMTIuNzV6IE0yNy40NCwyMi42MXYtNy45bDYuNTcsMy45NUwyNy40NCwyMi42MXoiLz48cGF0aCBkPSJNNTEuMzYsNmMwLTAuNTUtMC40NS0xLTEtMUg5LjY0Yy0wLjU1LDAtMSwwLjQ1LTEsMXYyNS4zMmMwLDAuNTUsMC40NSwxLDEsMWg0MC43MmMwLjU1LDAsMS0wLjQ1LDEtMVYxMC4zMSAgYzAtMC41NS0wLjQ1LTEtMS0xcy0xLDAuNDUtMSwxdjIwLjAxSDEwLjY0VjdoMzkuNzJDNTAuOTEsNyw1MS4zNiw2LjU1LDUxLjM2LDZ6Ii8+PHBhdGggZD0iTTIxLjEzLDM5LjUzYzAtMi44LTIuMjctNS4wNy01LjA3LTUuMDdjLTIuOCwwLTUuMDcsMi4yNy01LjA3LDUuMDdjMCwyLjc5LDIuMjcsNS4wNyw1LjA3LDUuMDcgIEMxOC44NSw0NC42LDIxLjEzLDQyLjMzLDIxLjEzLDM5LjUzeiBNMTIuOTksMzkuNTNjMC0xLjY5LDEuMzgtMy4wNywzLjA3LTMuMDdzMy4wNywxLjM4LDMuMDcsMy4wN3MtMS4zOCwzLjA3LTMuMDcsMy4wNyAgUzEyLjk5LDQxLjIzLDEyLjk5LDM5LjUzeiIvPjxwYXRoIGQ9Ik0zMy43LDM5LjUzYzAtMi44LTIuMjctNS4wNy01LjA3LTUuMDdjLTIuNzksMC01LjA3LDIuMjctNS4wNyw1LjA3YzAsMi43OSwyLjI3LDUuMDcsNS4wNyw1LjA3ICBDMzEuNDMsNDQuNiwzMy43LDQyLjMzLDMzLjcsMzkuNTN6IE0yNS41NiwzOS41M2MwLTEuNjksMS4zOC0zLjA3LDMuMDctMy4wN3MzLjA3LDEuMzgsMy4wNywzLjA3cy0xLjM4LDMuMDctMy4wNywzLjA3ICBTMjUuNTYsNDEuMjMsMjUuNTYsMzkuNTN6Ii8+PHBhdGggZD0iTTQzLjgzLDQ0LjY5Yy0wLjIyLDAtMC40MywwLjA3LTAuNiwwLjJjLTEuNCwxLjA1LTIuNjYsMS4wNS00LjA2LDBjLTAuMTctMC4xMy0wLjM4LTAuMi0wLjYtMC4yICBjLTEuNDksMC0yLjgxLDAuNzItMy42NiwxLjgxYy0wLjg1LTEuMDktMi4xNy0xLjgxLTMuNjYtMS44MWMtMC4yMiwwLTAuNDMsMC4wNy0wLjYsMC4yYy0xLjQsMS4wNS0yLjY2LDEuMDUtNC4wNiwwICBjLTAuMTctMC4xMy0wLjM4LTAuMi0wLjYtMC4yYy0xLjQ5LDAtMi44LDAuNzItMy42NiwxLjgxYy0wLjg1LTEuMDktMi4xNy0xLjgxLTMuNjYtMS44MWMtMC4yMiwwLTAuNDMsMC4wNy0wLjYsMC4yICBjLTEuNCwxLjA1LTIuNjYsMS4wNS00LjA2LDBjLTAuMTctMC4xMy0wLjM4LTAuMi0wLjYtMC4yYy0yLjU3LDAtNC42NiwyLjA5LTQuNjYsNC42NlY1NGMwLDAuNTUsMC40NSwxLDEsMWgxMi41N2gxMi41N2gxMi41NyAgYzAuNTUsMCwxLTAuNDUsMS0xdi00LjY2QzQ4LjQ5LDQ2Ljc4LDQ2LjQsNDQuNjksNDMuODMsNDQuNjl6IE0xMC43Nyw0OS4zNGMwLTEuMzcsMS4wNC0yLjUsMi4zNi0yLjY0YzEuOTIsMS4yOSwzLjkzLDEuMjksNS44NSwwICBjMS4zMywwLjE1LDIuMzYsMS4yOCwyLjM2LDIuNjRWNTNIMTAuNzdWNDkuMzR6IE0yMy4zNSw0OS4zNGMwLTEuMzcsMS4wNC0yLjUsMi4zNi0yLjY0YzEuOTIsMS4yOSwzLjkzLDEuMjksNS44NSwwICBjMS4zMywwLjE1LDIuMzYsMS4yOCwyLjM2LDIuNjRWNTNIMjMuMzVWNDkuMzR6IE00Ni40OSw1M0gzNS45MnYtMy42NmMwLTEuMzcsMS4wNC0yLjUsMi4zNi0yLjY0YzEuOTIsMS4yOSwzLjkzLDEuMjksNS44NSwwICBjMS4zMywwLjE1LDIuMzYsMS4yOCwyLjM2LDIuNjRWNTN6Ii8+PHBhdGggZD0iTTQ2LjI3LDM5LjUzYzAtMi44LTIuMjctNS4wNy01LjA3LTUuMDdzLTUuMDcsMi4yNy01LjA3LDUuMDdjMCwyLjc5LDIuMjcsNS4wNyw1LjA3LDUuMDdTNDYuMjcsNDIuMzMsNDYuMjcsMzkuNTN6ICAgTTM4LjE0LDM5LjUzYzAtMS42OSwxLjM4LTMuMDcsMy4wNy0zLjA3czMuMDcsMS4zOCwzLjA3LDMuMDdzLTEuMzgsMy4wNy0zLjA3LDMuMDdTMzguMTQsNDEuMjMsMzguMTQsMzkuNTN6Ii8+PC9zdmc+"
+                        width="40px"
+                    />
+                    Hall Cinema - @Model.Ticket.Session.HallId
+                </p>
+                <p class="card-text">
+                    <img
+                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDIwIDIwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xIDRjMC0xLjEuOS0yIDItMmgxNGEyIDIgMCAwIDEgMiAydjE0YTIgMiAwIDAgMS0yIDJIM2EyIDIgMCAwIDEtMi0yVjR6bTIgMnYxMmgxNFY2SDN6bTItNmgydjJINVYwem04IDBoMnYyaC0yVjB6TTUgOWgydjJINVY5em0wIDRoMnYySDV2LTJ6bTQtNGgydjJIOVY5em0wIDRoMnYySDl2LTJ6bTQtNGgydjJoLTJWOXptMCA0aDJ2MmgtMnYtMnoiLz48L3N2Zz4="
+                        width="40px"
+                    />    
+                    @Model.Ticket.Session.ShowingDate.ToLongDateString()
+                </p>
+                <p class="card-text">
+                    <img
+                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDMyIDMyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxzdHlsZT4uY2xzLTF7ZmlsbDojMTAxODIwO308L3N0eWxlPjwvZGVmcz48dGl0bGUvPjxnIGRhdGEtbmFtZT0iTGF5ZXIgMTUiIGlkPSJMYXllcl8xNSI+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTYsMzFBMTUsMTUsMCwxLDEsMzEsMTYsMTUsMTUsMCwwLDEsMTYsMzFaTTE2LDNBMTMsMTMsMCwxLDAsMjksMTYsMTMsMTMsMCwwLDAsMTYsM1oiLz48cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0yMC4yNCwyMS42NmwtNC45NS00Ljk1QTEsMSwwLDAsMSwxNSwxNlY4aDJ2Ny41OWw0LjY2LDQuNjVaIi8+PC9nPjwvc3ZnPg=="
+                        width="40px"
+                    />
+                    @Model.Ticket.Session.ShowingDate.ToLongTimeString()    
+                </p>
+            </div>
         </div>
     </div>
 </div>

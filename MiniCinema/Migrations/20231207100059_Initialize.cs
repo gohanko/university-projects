@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MiniCinema.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initialize : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,6 +25,72 @@ namespace MiniCinema.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Address", x => x.AddressId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Branchs",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BranchName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BranchManager = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Postcode = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Branchs", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Department",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DepartmentName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeapartmentDesciption = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Department", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HumanResource",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    BirthdayDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HumanResource", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Leave",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LeaveStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LeaveEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReasonForLeave = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Leave", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +125,24 @@ namespace MiniCinema.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Profile", x => x.ProfileId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Resign",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    ResignDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Resign", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,6 +311,21 @@ namespace MiniCinema.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Branchs");
+
+            migrationBuilder.DropTable(
+                name: "Department");
+
+            migrationBuilder.DropTable(
+                name: "HumanResource");
+
+            migrationBuilder.DropTable(
+                name: "Leave");
+
+            migrationBuilder.DropTable(
+                name: "Resign");
+
             migrationBuilder.DropTable(
                 name: "Seat");
 

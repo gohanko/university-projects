@@ -1,0 +1,63 @@
+﻿@page
+@model MiniCinema.Pages.Res.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container mt-3">
+
+    <h1>Edit</h1>
+
+    <h4>Resign</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Resign.ID" />
+                <div class="form-group">
+                    <label asp-for="Resign.Name" class="control-label"></label>
+                    <input asp-for="Resign.Name" class="form-control" />
+                    <span asp-validation-for="Resign.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Resign.Age" class="control-label"></label>
+                    <input asp-for="Resign.Age" class="form-control" />
+                    <span asp-validation-for="Resign.Age" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Resign.ResignDate" class="control-label"></label>
+                    <input asp-for="Resign.ResignDate" class="form-control" />
+                    <span asp-validation-for="Resign.ResignDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Resign.Position" class="control-label"></label>
+                    <input asp-for="Resign.Position" class="form-control" />
+                    <span asp-validation-for="Resign.Position" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Resign.Department" class="control-label"></label>
+                    <input asp-for="Resign.Department" class="form-control" />
+                    <span asp-validation-for="Resign.Department" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Resign.LastSalary" class="control-label"></label>
+                    <input asp-for="Resign.LastSalary" class="form-control" />
+                    <span asp-validation-for="Resign.LastSalary" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

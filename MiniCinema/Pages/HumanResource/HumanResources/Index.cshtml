@@ -1,0 +1,101 @@
+﻿@page
+@model MiniCinema.Pages.HumanResources.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Staff Info</h3>
+        </div>
+        <div class="col-md-9">
+            <ul class="nav nav-pills nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/HumanResource/Branchs/Index">Branchs Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/HumanResource/Department/Index">Department Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" asp-page="/HumanResource/HumanResources/Index">Staff Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/HumanResource/Leave/Index">Leave Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/HumanResource/Res/Index">Resign Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/HumanResource/Menu/Index">Back to Menu</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <hr />
+
+    <p>
+        <a asp-page="Create">Create New Staff Info record</a>
+    </p>
+
+    <body style="background-color:#D3D3D3;">
+    </body>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.HumanResource[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HumanResource[0].Age)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HumanResource[0].BirthdayDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HumanResource[0].Position)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HumanResource[0].Department)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HumanResource[0].Salary)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.HumanResource)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthdayDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salary)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>

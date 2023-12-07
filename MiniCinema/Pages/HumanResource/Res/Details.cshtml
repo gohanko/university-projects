@@ -1,0 +1,57 @@
+﻿@page
+@model MiniCinema.Pages.Res.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mt-3">
+    <h1>Details</h1>
+
+    <div>
+        <h4>Resign</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Resign.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Resign.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Resign.Age)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Resign.Age)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Resign.ResignDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Resign.ResignDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Resign.Position)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Resign.Position)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Resign.Department)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Resign.Department)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Resign.LastSalary)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Resign.LastSalary)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-page="./Edit" asp-route-id="@Model.Resign?.ID">Edit</a> |
+        <a asp-page="./Index">Back to List</a>
+    </div>
+</div>
