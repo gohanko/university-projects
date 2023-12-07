@@ -19,8 +19,8 @@ using (var scope = app.Services.CreateScope())
     AddressSeedData.Initialize(services);
     BranchSeedData.Initialize(services);
 
-    GuestSeedData.Initialize(services);
     HallSeedData.Initialize(services);
+    ProfileSeedData.Initialize(services);
     SeatSeedData.Initialize(services);
     
     MovieSeedData.Initialize(services);

@@ -29,6 +29,7 @@ namespace MiniCinema.Models
                         ReleaseDate = DateTime.Parse("1986-8-2"),
                         Language = "JP",
                         RuntimeMinutes = 125,
+                        ImageURL = "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/nx513-G47zqEhndFBY.jpg",
                         Genre = "Anime",
                         Rating = "R",
                     },
@@ -38,6 +39,7 @@ namespace MiniCinema.Models
                         ReleaseDate = DateTime.Parse("2006-7-29"),
                         Language = "JP",
                         RuntimeMinutes = 115,
+                        ImageURL = "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx1829-DqhBRfDU7n6D.jpg",
                         Genre = "Anime",
                         Rating = "R",
                     },
@@ -47,6 +49,7 @@ namespace MiniCinema.Models
                         ReleaseDate = DateTime.Parse("1986-2-23"),
                         Language = "EN",
                         RuntimeMinutes = 120,
+                        ImageURL = "https://m.media-amazon.com/images/M/MV5BNWI5NTg3MTMtZWY0Ny00YWJmLThkZDUtMTBkZTVhMDAyMmVlXkEyXkFqcGdeQXVyNjc5NjEzNA@@._V1_.jpg",
                         Genre = "Comedy",
                         Rating = "R",
                     },
@@ -57,6 +60,7 @@ namespace MiniCinema.Models
                         ReleaseDate = DateTime.Parse("2021-4-30"),
                         Language = "CN",
                         RuntimeMinutes = 190,
+                        ImageURL = "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx136484-nBYX9HCItKjb.jpg",
                         Genre = "Donghua",
                         Rating = "R",
                     }
@@ -80,6 +84,8 @@ namespace MiniCinema.Models
         public DateTime ReleaseDate { get; set; }
         public string Language { get; set; } = string.Empty;
         public int RuntimeMinutes { get; set; } = 0;
+
+        public string ImageURL { get; set; } = string.Empty;
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
         [Required]

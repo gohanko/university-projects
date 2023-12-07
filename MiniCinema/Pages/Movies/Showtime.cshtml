@@ -1,5 +1,5 @@
 ﻿@page
-@model MiniCinema.Pages.ShowtimeByMovie
+@model MiniCinema.Pages.Movies.Showtime
 
 @{
     ViewData["Title"] = "Showtimes";
@@ -29,7 +29,7 @@
             {
                 <tr>
                     <td>
-                        <a asp-page="./SeatSelection/" asp-route-id="@session.HallId">
+                        <a asp-page="/Ticketing/Booking" asp-route-id="@session.SessionId">
                             @Html.DisplayFor(modelItem => session.ShowingDate)
                         </a>
                     </td>

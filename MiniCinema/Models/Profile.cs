@@ -3,28 +3,29 @@ using MiniCinema.Data;
 
 namespace MiniCinema.Models
 {
-    public static class GuestSeedData
+    public class ProfileSeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new MiniCinemaContext(serviceProvider.GetRequiredService<DbContextOptions<MiniCinemaContext>>()))
             {
-                if (context == null || context.Guest == null)
+                if (context == null || context.Profile == null)
                 {
                     throw new ArgumentNullException("Null MiniCinemaContext");
                 }
 
                 // Look for any movies.
-                if (context.Guest.Any())
+                if (context.Profile.Any())
                 {
                     return;   // DB has been seeded
                 }
 
-                context.Guest.AddRange(
-                    new Guest
+                context.Profile.AddRange(
+                    new Profile
                     {
-                        Email = "email@example.com",
-                        PhoneNumber = "+60123456789"
+                        Fullname = "John Doe",
+                        Email = "john.doe@common.org",
+                        PhoneNumber = "+60148817836"
                     }
                 );
 
@@ -32,9 +33,11 @@ namespace MiniCinema.Models
             }
         }
     }
-    public class Guest
+
+    public class Profile
     {
-        public int GuestId { get; set; }
+        public int ProfileId { get; set; }
+        public string Fullname { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
     }

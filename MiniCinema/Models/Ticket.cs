@@ -35,11 +35,17 @@ namespace MiniCinema.Models
     public class Ticket
     {
         public int TicketId { get; set; }
-        public string BookingNumber { get; set; } = string.Empty;
 
-        [ForeignKey("MovieSession")]
-        public int MovieSessionId { get; set; }
-        public Session MovieSession { get; set; } = null!;
-        public ICollection<Transaction> Transactions { get; set; } = null!;
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal PriceAmount { get; set; }
+
+        [ForeignKey("Profile")]
+        public int ProfileId { get; set; }
+        public Profile Profile { get; set; } = null!;
+
+        [ForeignKey("Session")]
+        public int SessionId { get; set; }
+        public Session Session { get; set; } = null!;
     }
 }

@@ -4,22 +4,22 @@ using Microsoft.EntityFrameworkCore;
 using MiniCinema.Data;
 using MiniCinema.Models;
 
-namespace MiniCinema.Pages
+namespace MiniCinema.Pages.Movies
 {
-    public class ShowtimeByMovie : PageModel
+    public class Showtime : PageModel
     {
         private readonly MiniCinemaContext _context;
 
-        public ShowtimeByMovie(MiniCinemaContext context)
+        public Showtime(MiniCinemaContext context)
         {
             _context = context;
         }
 
         public Movie Movie { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int movie_id)
         {
-            if (id == null || _context.Movie == null)
+            if (_context.Movie == null)
             {
                 return NotFound();
             }
@@ -28,7 +28,7 @@ namespace MiniCinema.Pages
                 .Include(movie => movie.Sessions)
                 .ThenInclude(sessions => sessions.Hall)
                 .ThenInclude(Hall => Hall.Branch)
-                .FirstOrDefaultAsync(m => m.MovieId == id);
+                .FirstOrDefaultAsync(m => m.MovieId == movie_id);
 
             if (movie == null)
             {

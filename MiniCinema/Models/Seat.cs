@@ -24,34 +24,121 @@ namespace MiniCinema.Models
                 context.Seat.AddRange(
                     new Seat
                     {
-                        RowStart = 1,
-                        ColumnStart = 1,
-                        RowEnd = 1,
-                        ColumnEnd = 1,
-                        Capacity = 1,
-                        Type = 1,
+                        Row = 1,
+                        Column = 1,
                         HallId = 1,
                     },
                     new Seat
                     {
-                        RowStart = 1,
-                        ColumnStart = 2,
-                        RowEnd = 1,
-                        ColumnEnd = 2,
-                        Capacity = 1,
-                        Type = 1,
-                        IsAccessible = false,
+                        Row = 1,
+                        Column = 2,
                         HallId = 1,
                     },
                     new Seat
                     {
-                        RowStart = 1,
-                        ColumnStart = 3,
-                        RowEnd = 1,
-                        ColumnEnd = 3,
-                        Capacity = 1,
-                        Type = 1,
-                        IsAccessible = false,
+                        Row = 1,
+                        Column = 3,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 1,
+                        Column = 4,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 1,
+                        Column = 5,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 2,
+                        Column = 1,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 2,
+                        Column = 2,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 2,
+                        Column = 3,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 2,
+                        Column = 4,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 2,
+                        Column = 5,
+                        HallId = 1,
+                    }, new Seat
+                    {
+                        Row = 3,
+                        Column = 1,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 3,
+                        Column = 2,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 3,
+                        Column = 3,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 3,
+                        Column = 4,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 3,
+                        Column = 5,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 4,
+                        Column = 1,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 4,
+                        Column = 2,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 4,
+                        Column = 3,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 4,
+                        Column = 4,
+                        HallId = 1,
+                    },
+                    new Seat
+                    {
+                        Row = 4,
+                        Column = 5,
                         HallId = 1,
                     }
                 );
@@ -63,18 +150,12 @@ namespace MiniCinema.Models
     public class Seat
     {
         public int SeatId { get; set; }
-        public int RowStart { get; set; }
-        public int ColumnStart { get; set; }
-        public int RowEnd { get; set; }
-        public int ColumnEnd { get; set; }
-        public int Capacity { get; set; }
+        public int Row { get; set; }
+        public int Column { get; set; }
 
-        public int Type { get; set; }
-        public bool IsAccessible { get; set; }
-
-        [ForeignKey("Guest")]
-        public int? GuestId { get; set; }
-        public Guest? Guest { get; set; } = null!;
+        [ForeignKey("Profile")]
+        public int? ProfileId { get; set; }
+        public Profile booked_by { get; set; } = null!;
 
         [ForeignKey("Hall")]
         public int HallId { get; set; }
