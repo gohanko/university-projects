@@ -11,7 +11,7 @@ namespace MiniCinema.Pages.Ticketing
     {
         private readonly MiniCinemaContext _context;
         public Session Session { get; set; } = default!;
-
+        public ICollection<Seat> RecommendedSeats { get; set; } = default!;
         public Booking(MiniCinemaContext context)
         {
             _context = context;
@@ -30,6 +30,51 @@ namespace MiniCinema.Pages.Ticketing
             return value;
         }
 
+        public ICollection<Seat> SeatRecommender(ICollection<Seat> ExistingSeats)
+        {
+            int max_num_of_row = 0;
+            int max_num_of_column = 0;
+
+            foreach (var existing_seat in ExistingSeats)
+            {
+                if (existing_seat.Row > max_num_of_row)
+                {
+                    max_num_of_row = existing_seat.Row;
+                }
+
+                if (existing_seat.Column > max_num_of_column)
+                {
+                    max_num_of_column = existing_seat.Column;
+                }
+            }
+
+            int recommended_row_core = (int) ((double) max_num_of_row * ((double) 3/ (double) 4));
+            int recommended_column_core = max_num_of_column / 2;
+
+            ICollection<Seat> RecommendedSeats = new List<Seat>();
+
+            foreach (var existing_seat in ExistingSeats)
+            {
+                if (existing_seat.ProfileId != null)
+                {
+                    continue;
+                }
+
+                Console.WriteLine(existing_seat.Row >= recommended_row_core);
+
+                if (
+                    existing_seat.Row >= recommended_row_core
+                    && existing_seat.Column >= (recommended_column_core - 1)
+                    && existing_seat.Column <= (recommended_column_core + 1)
+                )
+                {
+                    RecommendedSeats.Add(existing_seat);
+                }
+            }
+
+            return RecommendedSeats;
+        }
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
             if (_context.Session == null)
@@ -38,8 +83,7 @@ namespace MiniCinema.Pages.Ticketing
             }
 
             var session = await _context.Session
-                .Include(session => session.Hall)
-                .ThenInclude(hall => hall.Seats)
+                .Include(session => session.Hall).ThenInclude(hall => hall.Seats)
                 .FirstOrDefaultAsync(session => session.SessionId == id);
 
             if (session == null)
@@ -49,6 +93,7 @@ namespace MiniCinema.Pages.Ticketing
             else
             {
                 Session = session;
+                RecommendedSeats = SeatRecommender(Session.Hall.Seats);
             }
 
             return Page();
@@ -123,6 +168,7 @@ namespace MiniCinema.Pages.Ticketing
             Profile profile = await handleOnProfileFormSubmit();
             Ticket.SessionId = session.SessionId;
             Ticket.ProfileId = profile.ProfileId;
+            Ticket.PriceAmount = 12;
             Seat seat = await AssignSeat(profile.ProfileId);
             if (seat == null)
             {
@@ -132,7 +178,7 @@ namespace MiniCinema.Pages.Ticketing
             _context.Ticket.Add(Ticket);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Ticketing/Viewer", new { ticket_id = id });
+            return RedirectToPage("/Ticketing/Viewer", new { ticket_id = Ticket.TicketId });
         }
     }
 }

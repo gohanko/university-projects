@@ -3,46 +3,71 @@
 
 @{
     ViewData["Title"] = "Book Ticket";
+
+    bool isSeatStillAvailable = false;
+
+    foreach (var seat in Model.Session.Hall.Seats)
+    {
+        if (seat.ProfileId == null)
+        {
+            isSeatStillAvailable = true;
+        }
+    }
 }
 
 <div class="container mt-3">
     <h4>Book Ticket</h4>
 
-    <form class="form-horizontal" method="post" >
-        <div class="form-group row mt-2">
-            <label for="fullname" class="col-sm-2 col-form-label">Fullname</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="fullname" placeholder="Example Name">
+    @if (isSeatStillAvailable) {
+        <form class="form-horizontal" method="post" >
+            <div class="form-group row mt-2">
+                <label for="fullname" class="col-sm-2 col-form-label">Fullname</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="fullname" placeholder="Example Name">
+                </div>
             </div>
-        </div>
 
-        <div class="form-group row mt-2">
-            <label for="email_address" class="col-sm-2 col-form-label">Email address</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="email_address" placeholder="name@example.com">
-            </div>    
-        </div>
-        <div class="form-group row mt-2">
-            <label for="phone_number" class="col-sm-2 col-form-label">Phone Number</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="phone_number" placeholder="+60123456789">
+            <div class="form-group row mt-2">
+                <label for="email_address" class="col-sm-2 col-form-label">Email address</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email_address" placeholder="name@example.com">
+                </div>    
             </div>
-        </div>
-        <div class="form-group row mt-2">
-            <label for="seat_selection" class="col-sm-2 col-form-label">Select Seat</label>
-            <div class="col-sm-10">
-                <select class="form-control" id="seat_selection" name="seat_selection">
-                    @foreach (var seat in Model.Session.Hall.Seats)
-                    {
-                        <option value="@seat.SeatId" disabled="@(@seat.ProfileId != null)">@seat.Row@Model.ConvertNumberToAlphabet(@seat.Column)</option>
-                    }
-                </select>
+            <div class="form-group row mt-2">
+                <label for="phone_number" class="col-sm-2 col-form-label">Phone Number</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="phone_number" placeholder="+60123456789">
+                </div>
             </div>
-        </div>
+            <div class="form-group row mt-2">
+                <label for="seat_selection" class="col-sm-2 col-form-label">Select Seat</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="seat_selection" name="seat_selection">
+                        @foreach (var seat in Model.Session.Hall.Seats)
+                        {
+                            <option value="@seat.SeatId" disabled="@(@seat.ProfileId != null)">
+                                @seat.Row@Model.ConvertNumberToAlphabet(@seat.Column)
+                            
+                                @if (@Model.RecommendedSeats.Any(recommended_seat => recommended_seat.SeatId == seat.SeatId))
+                                {
+                                    <span class="badge rounded-pill bg-success">(Recommended)</span>
+                                }
+                            </option>
 
-        <div class="row mt-2">
-            <button type="submit" class="btn btn-primary float-right">Book Ticket</button>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <button type="submit" class="btn btn-primary float-right">Book Ticket</button>
+            </div>
+        </form>
+    } else
+    {
+        <div class="alert alert-danger" role="alert">
+            No more seats are available!
         </div>
-    </form>
+    }
 
 </div>

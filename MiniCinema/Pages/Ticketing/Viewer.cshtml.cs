@@ -33,7 +33,7 @@ namespace MiniCinema.Pages.Ticketing
 
             var ticket = await _context.Ticket
                 .Include(ticket => ticket.Session).ThenInclude(session => session.Movie)
-                .Include(ticket => ticket.Session).ThenInclude(session => session.Hall)
+                .Include(ticket => ticket.Session).ThenInclude(session => session.Hall).ThenInclude(hall => hall.Branch)
                 .FirstOrDefaultAsync(m => m.TicketId == ticket_id);
 
             if (ticket == null)
