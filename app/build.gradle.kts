@@ -58,6 +58,7 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.ui.text.google.fonts)
 
     // Jetpack Compose Setup
     val composeBom = platform("androidx.compose:compose-bom:2024.06.00")
