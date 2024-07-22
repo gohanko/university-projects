@@ -18,7 +18,11 @@ fun CalculatorScreen(navHostController: NavHostController) {
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-
+            // Loan Type Dropdown
+            // Number Field (Currency)
+            // Interest Rate (Float)
+            // Number of Payment (Integer)
+            //
         }
     }
 }
