@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import com.example.sidewayloan.ui.composables.CalculatoFAB
+import com.example.sidewayloan.ui.composables.CalculatorFAB
 
 @Composable
-fun History(navController: NavController) {
+fun HistoryScreen(openCalculator: () -> Unit) {
     Scaffold(
-        floatingActionButton = { CalculatoFAB(navController) }
+        floatingActionButton = { CalculatorFAB(openCalculator) }
     ) { padding ->
         Column(modifier = Modifier.padding((padding))) {
 

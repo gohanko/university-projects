@@ -16,6 +16,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.NavController
 import com.example.sidewayloan.data.BottomNavigationItem
+import com.example.sidewayloan.navigation.History
+import com.example.sidewayloan.navigation.Settings
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -25,13 +27,13 @@ fun BottomNavigationBar(navController: NavController) {
 
     val items = listOf(
         BottomNavigationItem(
-            route = "history",
+            route = History,
             text = "History",
             selectedIcon = Icons.AutoMirrored.Filled.Article,
             unselectedIcon = Icons.AutoMirrored.Outlined.Article
         ),
         BottomNavigationItem(
-            route = "settings",
+            route = Settings,
             text = "Settings",
             selectedIcon = Icons.Outlined.Settings,
             unselectedIcon = Icons.Filled.Settings

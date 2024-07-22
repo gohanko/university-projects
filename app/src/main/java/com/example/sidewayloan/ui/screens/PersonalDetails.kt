@@ -17,7 +17,7 @@ fun BirthdayField() {
 
 @Preview
 @Composable
-fun PersonalDetails() {
+fun PersonalDetailsScreen() {
     Column {
         BirthdayField()
     }

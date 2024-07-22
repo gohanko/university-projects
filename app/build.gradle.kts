@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -54,6 +55,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 
     // Jetpack Compose Setup
     val composeBom = platform("androidx.compose:compose-bom:2024.06.00")
