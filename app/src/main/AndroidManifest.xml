@@ -13,13 +13,9 @@
         android:theme="@style/Theme.App.Default"
         tools:targetApi="31" >
         <activity
-            android:name=".CalculatorActivity"
-            android:exported="false"
-            android:label="@string/title_activity_calculator"
-            android:theme="@style/Theme.App.Default" />
-        <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

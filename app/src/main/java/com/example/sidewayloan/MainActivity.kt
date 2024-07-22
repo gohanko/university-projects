@@ -27,7 +27,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-fun calculateLoan(principle: Float, rateOfInterest: Float, numberOfInstallments: Int): Float {
-    return (principle * (1 + (rateOfInterest * numberOfInstallments))) / numberOfInstallments
-}
