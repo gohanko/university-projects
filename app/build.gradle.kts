@@ -65,7 +65,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     // Material Design 3
-    implementation(libs.material3)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.material.icons.extended)
 
     // Splash Screen API
     implementation(libs.androidx.core.splashscreen)
