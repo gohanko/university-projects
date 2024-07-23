@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -19,6 +21,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,18 +32,17 @@ import androidx.navigation.NavHostController
 import com.example.sidewayloan.data.Loan
 import com.example.sidewayloan.data.LoanType
 import com.example.sidewayloan.ui.composables.CalculatorTopAppBar
+import com.example.sidewayloan.ui.composables.ChipGroup
 
 @Composable
 fun CalculatorScreen(navHostController: NavHostController) {
-    var loanState by remember {
-        mutableStateOf(Loan(
-            type = LoanType.HOUSING,
-            amount = 0.0f,
-            interestRate = 0.0f,
-            repaymentPeriod = 0,
-            startDateUnixTime = 0
-        ))
-    };
+    var type by remember { mutableStateOf(LoanType.PERSONAL) }
+    var amount by remember { mutableStateOf("") }
+    var interestRate by remember { mutableStateOf("") }
+    var repaymentPeriod by remember { mutableStateOf("") }
+
+    val currentTime = System.currentTimeMillis()
+    var startDateUnixTime by remember { mutableLongStateOf(currentTime) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -57,42 +61,51 @@ fun CalculatorScreen(navHostController: NavHostController) {
             // Loan Type Dropdown
             Text(text = "Select Loan Type")
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                AssistChip(onClick = { /*TODO*/ }, label = { Text("Personal Loan") })
-                AssistChip(onClick = { /*TODO*/ }, label = { Text("Housing Loan") })
-            }
+            ChipGroup(
+                LoanType.entries,
+                onValueChange = {
+                    type = LoanType.valueOf(it)
+                }
+            )
 
-            // Number Field (Currency)
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text("Amount") },
-                value = "",
+                value = amount.toString(),
                 onValueChange = {
-                    loanState = loanState.copy(amount = it.toFloat())
+                    if (it.isEmpty()) {
+                        return@OutlinedTextField
+                    }
+
+                    amount = it
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
-            // Interest Rate (Float)
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text("Interest Rate") },
-                value = "",
+                value = interestRate.toString(),
                 onValueChange = {
-                    loanState = loanState.copy(interestRate = it.toFloat())
+                    if (it.isEmpty()) {
+                        return@OutlinedTextField
+                    }
+
+                    interestRate = it
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
-            // Number of Payment (Integer)
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text("Repayment Period") },
-                value = "",
+                value = repaymentPeriod.toString(),
                 onValueChange = {
-                    loanState = loanState.copy(repaymentPeriod = it.toShort())
+                    if (it.isEmpty()) {
+                        return@OutlinedTextField
+                    }
+
+                    repaymentPeriod = it
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
