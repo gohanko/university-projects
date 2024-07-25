@@ -22,19 +22,18 @@ import java.util.Locale
 @Composable
 fun DateTextField(
     modifier: Modifier = Modifier,
-    selectedUnixTime: Long,
-    onSelectDate: (Long) -> Unit
+    date: String,
+    onSelectDate: (String) -> Unit
 ) {
     var showDatePickerDialog by remember { mutableStateOf(false) }
 
     OutlinedTextField(
         modifier = modifier,
         label={ Text("Date") },
-        value=convertMillisToDate(selectedUnixTime),
+        value=date,
         placeholder={ Text("dd/MM/yyyy") },
         onValueChange = {
-            val date = convertDateToMillis(it)
-            onSelectDate(date)
+            onSelectDate(it)
         },
         trailingIcon = {
             IconButton(onClick = {
@@ -50,7 +49,7 @@ fun DateTextField(
 
     if (showDatePickerDialog) {
         CustomDatePicker(
-            selectedUnixTime = selectedUnixTime,
+            date = date,
             onDateSelected = {
                 onSelectDate(it)
             },

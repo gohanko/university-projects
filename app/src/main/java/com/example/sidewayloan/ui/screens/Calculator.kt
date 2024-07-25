@@ -27,6 +27,7 @@ import com.example.sidewayloan.data.LoanType
 import com.example.sidewayloan.ui.composables.CalculatorTopAppBar
 import com.example.sidewayloan.ui.composables.ChipGroup
 import com.example.sidewayloan.ui.composables.DateTextField
+import com.example.sidewayloan.utils.convertMillisToDate
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -39,7 +40,7 @@ fun CalculatorScreen(navHostController: NavHostController) {
     var repaymentPeriod by remember { mutableStateOf("") }
 
     val currentTime = System.currentTimeMillis()
-    var startDateUnixMillis by remember { mutableLongStateOf(currentTime) }
+    var startDate by remember { mutableStateOf(convertMillisToDate(currentTime)) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -97,9 +98,9 @@ fun CalculatorScreen(navHostController: NavHostController) {
 
             DateTextField(
                 modifier = Modifier.fillMaxWidth(),
-                selectedUnixTime = startDateUnixMillis,
+                date = startDate,
                 onSelectDate = {
-                    startDateUnixMillis = it
+                    startDate = it
                 }
             )
 
@@ -115,7 +116,6 @@ fun CalculatorScreen(navHostController: NavHostController) {
                     Text(text = "Calculate")
                 }
             }
-
         }
     }
 }
