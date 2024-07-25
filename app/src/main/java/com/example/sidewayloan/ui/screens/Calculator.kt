@@ -26,6 +26,10 @@ import androidx.navigation.NavHostController
 import com.example.sidewayloan.data.LoanType
 import com.example.sidewayloan.ui.composables.CalculatorTopAppBar
 import com.example.sidewayloan.ui.composables.ChipGroup
+import com.example.sidewayloan.ui.composables.DateTextField
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun CalculatorScreen(navHostController: NavHostController) {
@@ -35,7 +39,7 @@ fun CalculatorScreen(navHostController: NavHostController) {
     var repaymentPeriod by remember { mutableStateOf("") }
 
     val currentTime = System.currentTimeMillis()
-    var startDateUnixTime by remember { mutableLongStateOf(currentTime) }
+    var startDateUnixMillis by remember { mutableLongStateOf(currentTime) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -89,6 +93,14 @@ fun CalculatorScreen(navHostController: NavHostController) {
 
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+
+            DateTextField(
+                modifier = Modifier.fillMaxWidth(),
+                selectedUnixTime = startDateUnixMillis,
+                onSelectDate = {
+                    startDateUnixMillis = it
+                }
             )
 
             Spacer(modifier = Modifier.weight(1f))

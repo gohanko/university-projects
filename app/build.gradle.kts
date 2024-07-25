@@ -10,7 +10,6 @@ android {
 
     defaultConfig {
         applicationId = "com.example.sidewayloan"
-        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -19,6 +18,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        minSdk = 26
     }
 
     buildFeatures {
