@@ -22,7 +22,7 @@ import java.util.Locale
 @Composable
 fun DateTextField(
     modifier: Modifier = Modifier,
-    date: String,
+    initialSelectedDate: String,
     onSelectDate: (String) -> Unit
 ) {
     var showDatePickerDialog by remember { mutableStateOf(false) }
@@ -30,7 +30,7 @@ fun DateTextField(
     OutlinedTextField(
         modifier = modifier,
         label={ Text("Date") },
-        value=date,
+        value=initialSelectedDate,
         placeholder={ Text("dd/MM/yyyy") },
         onValueChange = {
             onSelectDate(it)
@@ -49,7 +49,7 @@ fun DateTextField(
 
     if (showDatePickerDialog) {
         CustomDatePicker(
-            date = date,
+            initialSelectedDate = initialSelectedDate,
             onDateSelected = {
                 onSelectDate(it)
             },

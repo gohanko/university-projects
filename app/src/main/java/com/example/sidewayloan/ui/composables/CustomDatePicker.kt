@@ -17,15 +17,15 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomDatePicker(
-    date: String,
+    initialSelectedDate: String,
     onDateSelected: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = convertDateToMillis(date),
+        initialSelectedDateMillis = convertDateToMillis(initialSelectedDate),
     )
 
-    val selectedDate = datePickerState.selectedDateMillis?.let {
+    val newSelectedDate = datePickerState.selectedDateMillis?.let {
         convertMillisToDate(it)
     } ?: ""
 
@@ -33,7 +33,7 @@ fun CustomDatePicker(
         onDismissRequest = { onDismiss() },
         confirmButton = {
             Button(onClick = {
-                onDateSelected(selectedDate)
+                onDateSelected(newSelectedDate)
                 onDismiss()
             }) {
                 Text(text = "OK")

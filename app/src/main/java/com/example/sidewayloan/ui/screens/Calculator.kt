@@ -98,7 +98,7 @@ fun CalculatorScreen(navHostController: NavHostController) {
 
             DateTextField(
                 modifier = Modifier.fillMaxWidth(),
-                date = startDate,
+                initialSelectedDate = startDate,
                 onSelectDate = {
                     startDate = it
                 }
