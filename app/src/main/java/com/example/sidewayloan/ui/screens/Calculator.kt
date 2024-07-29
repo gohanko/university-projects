@@ -17,20 +17,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.sidewayloan.data.Loan
 import com.example.sidewayloan.data.LoanType
+import com.example.sidewayloan.ui.composables.CalculatorResultsBottomSheet
 import com.example.sidewayloan.ui.composables.CalculatorTopAppBar
 import com.example.sidewayloan.ui.composables.ChipGroup
 import com.example.sidewayloan.ui.composables.DateTextField
+import com.example.sidewayloan.utils.convertDateToMillis
 import com.example.sidewayloan.utils.convertMillisToDate
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @Composable
 fun CalculatorScreen(navHostController: NavHostController) {
@@ -41,6 +40,8 @@ fun CalculatorScreen(navHostController: NavHostController) {
 
     val currentTime = System.currentTimeMillis()
     var startDate by remember { mutableStateOf(convertMillisToDate(currentTime)) }
+
+    var showBottomSheet by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -91,7 +92,7 @@ fun CalculatorScreen(navHostController: NavHostController) {
                 label = { Text("Repayment Period") },
                 value = repaymentPeriod,
                 onValueChange = {
-
+                    repaymentPeriod = it
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -111,11 +112,24 @@ fun CalculatorScreen(navHostController: NavHostController) {
             ) {
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = {}
+                    onClick = {
+                        showBottomSheet = true
+                    }
                 ) {
                     Text(text = "Calculate")
                 }
             }
+        }
+
+        if (showBottomSheet) {
+            CalculatorResultsBottomSheet(loan = Loan(
+                type = type,
+                amount = amount.toBigDecimal(),
+                interestRate = interestRate.toFloat(),
+                repaymentPeriod = repaymentPeriod.toShort(),
+                startDateUnixTime = convertDateToMillis(startDate)
+            )
+            )
         }
     }
 }
