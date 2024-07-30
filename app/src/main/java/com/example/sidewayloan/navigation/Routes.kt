@@ -2,9 +2,10 @@ package com.example.sidewayloan.navigation
 
 import kotlinx.serialization.Serializable
 
-@Serializable object Main
-@Serializable object History
-@Serializable object Settings
+@Serializable object UserSettingsRoute
 
-@Serializable object Secondary
-@Serializable object Calculator
+@Serializable object MainRoute
+@Serializable object HistoryRoute
+@Serializable object SettingsRoute
+
+@Serializable object CalculatorRoute

@@ -73,6 +73,10 @@ dependencies {
     // Material Design 3
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
+    
+    // Proto DataStore
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.protobuf.javalite)
 
     // Splash Screen API
     implementation(libs.androidx.core.splashscreen)

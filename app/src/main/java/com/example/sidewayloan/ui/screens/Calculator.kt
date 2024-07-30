@@ -128,8 +128,7 @@ fun CalculatorScreen(navHostController: NavHostController) {
                 interestRate = interestRate.toFloat(),
                 repaymentPeriod = repaymentPeriod.toShort(),
                 startDateUnixTime = convertDateToMillis(startDate)
-            )
-            )
+            ))
         }
     }
 }
