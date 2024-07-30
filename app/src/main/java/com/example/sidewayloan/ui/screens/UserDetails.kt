@@ -16,30 +16,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sidewayloan.ui.composables.DateTextField
+import com.example.sidewayloan.utils.convertDateToMillis
 import com.example.sidewayloan.utils.convertMillisToDate
 
-@Composable
-fun BirthdayField() {
-    OutlinedTextField(
-        label = { Text(text = "Birthday") },
-        value = "",
-        onValueChange = {}
-    )
-}
 
 @Preview
 @Composable
 fun PersonalDetailsScreen() {
     val currentTime = System.currentTimeMillis()
-    var birthdate by remember { mutableStateOf(convertMillisToDate(currentTime)) }
+    var birthday by remember { mutableStateOf(convertMillisToDate(currentTime)) }
+
+    fun setBirthday(birthdayUnix: Long) {
+
+    }
 
     Column {
         Text("Please enter your birthdate")
 
         DateTextField(
-            initialSelectedDate = birthdate,
+            initialSelectedDate = birthday,
             onSelectDate = {
-                birthdate = it
+                birthday = it
             }
         )
 
@@ -49,7 +46,7 @@ fun PersonalDetailsScreen() {
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-
+                    setBirthday(convertDateToMillis(birthday))
                 }
             ) {
                 Text(text = "Save")
