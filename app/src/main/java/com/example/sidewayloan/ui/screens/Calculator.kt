@@ -21,18 +21,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.datastore.core.DataStore
 import androidx.navigation.NavHostController
 import com.example.sidewayloan.data.Loan
 import com.example.sidewayloan.data.LoanType
+import com.example.sidewayloan.data.user_settings.UserSettings
 import com.example.sidewayloan.ui.composables.CalculatorResultsBottomSheet
 import com.example.sidewayloan.ui.composables.CalculatorTopAppBar
 import com.example.sidewayloan.ui.composables.ChipGroup
 import com.example.sidewayloan.ui.composables.DateTextField
 import com.example.sidewayloan.utils.convertDateToMillis
 import com.example.sidewayloan.utils.convertMillisToDate
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import java.time.Instant
+import java.time.LocalDate
+import java.time.Period
+import java.time.ZoneId
 
 @Composable
-fun CalculatorScreen(navHostController: NavHostController) {
+fun CalculatorScreen(
+    navHostController: NavHostController,
+) {
     var type by remember { mutableStateOf(LoanType.PERSONAL) }
     var amount by remember { mutableStateOf("") }
     var interestRate by remember { mutableStateOf("") }
@@ -42,6 +52,39 @@ fun CalculatorScreen(navHostController: NavHostController) {
     var startDate by remember { mutableStateOf(convertMillisToDate(currentTime)) }
 
     var showBottomSheet by remember { mutableStateOf(false) }
+
+    fun calculateMaximumTenure(type: LoanType, birthday: Long): Int {
+        val instant = Instant.ofEpochMilli(birthday)
+        val age = Period.between(
+            instant.atZone(ZoneId.of("utc")).toLocalDate(),
+            LocalDate.now()
+        ).years
+
+        val defaultMaxTenure = when(type) {
+            LoanType.PERSONAL -> 10
+            LoanType.HOUSING -> 35
+        }
+
+        val defaultMaxAge = when(type) {
+            LoanType.PERSONAL -> 60
+            LoanType.HOUSING -> 75
+        }
+
+        val ageDifference = defaultMaxAge - age
+        if (ageDifference <= 0 || age > defaultMaxAge) {
+            return 0
+        }
+
+        if (ageDifference < defaultMaxTenure) {
+            return ageDifference * 12
+        }
+
+        if (ageDifference > defaultMaxTenure) {
+            return defaultMaxTenure * 12
+        }
+
+        return 0
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -79,7 +122,7 @@ fun CalculatorScreen(navHostController: NavHostController) {
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Interest Rate") },
+                label = { Text("Interest Rate (%)") },
                 value = interestRate,
                 onValueChange = {
                     interestRate = it
@@ -122,13 +165,18 @@ fun CalculatorScreen(navHostController: NavHostController) {
         }
 
         if (showBottomSheet) {
-            CalculatorResultsBottomSheet(loan = Loan(
-                type = type,
-                amount = amount.toBigDecimal(),
-                interestRate = interestRate.toFloat(),
-                repaymentPeriod = repaymentPeriod.toShort(),
-                startDateUnixTime = convertDateToMillis(startDate)
-            ))
+            CalculatorResultsBottomSheet(
+                loan = Loan(
+                    type = type,
+                    amount = amount.toBigDecimal(),
+                    interestRate = interestRate.toFloat() / 100,
+                    repaymentPeriod = repaymentPeriod.toShort(),
+                    startDateUnixTime = convertDateToMillis(startDate)
+                ),
+                onDismissRequest = {
+                    showBottomSheet = false
+                }
+            )
         }
     }
 }

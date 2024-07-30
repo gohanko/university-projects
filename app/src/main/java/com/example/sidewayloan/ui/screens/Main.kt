@@ -25,7 +25,6 @@ fun MainScreen(
     openUserSettings: () -> Unit,
 ) {
     val userSettings = runBlocking { userSettingsDataStore.data.first() }
-    Log.d("AAAAAAAAAAAAAA", userSettings.birthday.toString())
     if (userSettings.birthday == null) {
         openUserSettings()
     }
