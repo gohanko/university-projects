@@ -3,6 +3,7 @@ package com.example.sidewayloan.ui.screens.calculator_screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -162,15 +163,38 @@ fun CalculatorScreen(
         }
 
         if (showBottomSheet) {
+            val loan = Loan(
+                type = type,
+                amount = amount.toFloat(),
+                interestRate = interestRate.toFloat(),
+                numberOfInstalment = numberOfInstalment.toInt(),
+                startDateUnixTime = convertDateToMillis(startDate)
+            )
+
             LoanResultBottomSheet(
-                historyViewModel = historyViewModel,
-                loan = Loan(
-                    type = type,
-                    amount = amount.toFloat(),
-                    interestRate = interestRate.toFloat(),
-                    numberOfInstalment = numberOfInstalment.toInt(),
-                    startDateUnixTime = convertDateToMillis(startDate)
-                ),
+                content = {
+                    Row(
+                        modifier = Modifier,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Button(
+                            modifier = Modifier.weight(0.5f),
+                            onClick = {
+                                historyViewModel.upsertLoan(loan)
+                            }
+                        ) {
+                            Text("Save Loan")
+                        }
+
+                        Button(
+                            modifier = Modifier.weight(0.5f),
+                            onClick = { /*TODO*/ }
+                        ) {
+                            Text("Back Home")
+                        }
+                    }
+                },
+                loan = loan,
                 onDismissRequest = {
                     showBottomSheet = false
                 }

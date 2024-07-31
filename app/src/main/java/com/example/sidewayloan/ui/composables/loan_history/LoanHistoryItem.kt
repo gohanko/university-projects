@@ -17,6 +17,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,15 +29,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sidewayloan.R
 import com.example.sidewayloan.data.database.loan.Loan
+import com.example.sidewayloan.ui.composables.LoanResultBottomSheet
+import com.example.sidewayloan.ui.screens.history_screen.HistoryViewModel
 import com.example.sidewayloan.ui.theme.outlineVariantLight
 import com.example.sidewayloan.ui.theme.primaryLight
 
 @Composable
-fun LoanHistoryItem(item: Loan) {
-    Column (
-        modifier = Modifier.padding(horizontal = 20.dp).clickable {
+fun LoanHistoryItem(
+    loan: Loan
+) {
+    var showLoanResultBottomSheet by remember { mutableStateOf(false) }
 
-        },
+    Column (
+        modifier = Modifier
+            .padding(horizontal = 20.dp)
+            .clickable {
+                showLoanResultBottomSheet = true
+            },
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Row (
@@ -59,12 +71,12 @@ fun LoanHistoryItem(item: Loan) {
 
                 Column {
                     Text(
-                        text = item.type.toString(),
+                        text = loan.type.toString(),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                     )
                     Text(
-                        text = item.amount.toString(),
+                        text = loan.amount.toString(),
                         fontWeight = FontWeight.Normal,
                         fontSize = 12.sp,
                     )
@@ -80,5 +92,15 @@ fun LoanHistoryItem(item: Loan) {
         }
 
         HorizontalDivider(color = outlineVariantLight)
+    }
+
+    if (showLoanResultBottomSheet) {
+        LoanResultBottomSheet(
+            content = {},
+            loan = loan,
+            onDismissRequest = {
+                showLoanResultBottomSheet = false
+            }
+        )
     }
 }
