@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -80,6 +81,13 @@ dependencies {
     // Proto DataStore
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.protobuf.javalite)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.runtime.livedata)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.room.compiler)
 
     // Splash Screen API
     implementation(libs.androidx.core.splashscreen)
