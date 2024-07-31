@@ -1,4 +1,4 @@
-package com.example.sidewayloan.ui.composables.loan_history
+package com.example.sidewayloan.ui.composables.loan_list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,29 +30,29 @@ import androidx.compose.ui.unit.sp
 import com.example.sidewayloan.R
 import com.example.sidewayloan.data.database.loan.Loan
 import com.example.sidewayloan.ui.composables.LoanResultBottomSheet
-import com.example.sidewayloan.ui.screens.history_screen.HistoryViewModel
 import com.example.sidewayloan.ui.theme.outlineVariantLight
 import com.example.sidewayloan.ui.theme.primaryLight
 
 @Composable
-fun LoanHistoryItem(
+fun LoanListItem(
     loan: Loan
 ) {
     var showLoanResultBottomSheet by remember { mutableStateOf(false) }
 
     Column (
         modifier = Modifier
-            .padding(horizontal = 20.dp)
-            .clickable {
-                showLoanResultBottomSheet = true
-            },
+            .padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Row (
+            modifier = Modifier.clickable {
+                showLoanResultBottomSheet = true
+            },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
                     modifier = Modifier
