@@ -1,5 +1,9 @@
-package com.example.sidewayloan.data
+package com.example.sidewayloan.data.database.loan
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.sidewayloan.data.AmortisationRow
 import com.example.sidewayloan.utils.convertMillisToDate
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -22,12 +26,26 @@ enum class LoanType {
     }
 }
 
+@Entity
 data class Loan (
+    @ColumnInfo(name = "type")
     var type: LoanType = LoanType.HOUSING,
+
+    @ColumnInfo(name = "amount")
     var amount: Float = 0.0f,
+
+    @ColumnInfo(name = "interestRate")
     var interestRate: Float = 0.0f,
+
+    @ColumnInfo(name = "numberOfInstalment")
     var numberOfInstalment: Int = 0,
+
+    @ColumnInfo(name = "startDateUnixTime")
     var startDateUnixTime: Long = 0,
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var id: Int = 0
 ) {
     fun getMonthlyInstalment(): Float {
         val monthlyInstalment = when(type) {

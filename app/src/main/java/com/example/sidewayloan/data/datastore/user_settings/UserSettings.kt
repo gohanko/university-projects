@@ -1,4 +1,4 @@
-package com.example.sidewayloan.data.user_settings
+package com.example.sidewayloan.data.datastore.user_settings
 
 import kotlinx.serialization.Serializable
 

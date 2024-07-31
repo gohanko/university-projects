@@ -1,9 +1,6 @@
-package com.example.sidewayloan.data.user_settings
+package com.example.sidewayloan.data.datastore.user_settings
 
-import android.content.Context
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
-import androidx.datastore.dataStore
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import java.io.InputStream

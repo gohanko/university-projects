@@ -1,4 +1,4 @@
-package com.example.sidewayloan.ui.screens
+package com.example.sidewayloan.ui.screens.user_settings_screen
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
@@ -19,9 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.navigation.NavHostController
-import com.example.sidewayloan.data.user_settings.UserSettings
+import com.example.sidewayloan.data.datastore.user_settings.UserSettings
 import com.example.sidewayloan.navigation.MainRoute
-import com.example.sidewayloan.ui.composables.DateTextField
+import com.example.sidewayloan.ui.composables.date_picker_field.DatePickerField
 import com.example.sidewayloan.utils.convertDateToMillis
 import com.example.sidewayloan.utils.convertMillisToDate
 import kotlinx.coroutines.launch
@@ -49,7 +49,7 @@ fun UserSettingsScreen(
     ) {
         Text("Please enter your birthdate")
 
-        DateTextField(
+        DatePickerField(
             modifier = Modifier.fillMaxWidth(),
             initialSelectedDate = birthday,
             onSelectDate = {

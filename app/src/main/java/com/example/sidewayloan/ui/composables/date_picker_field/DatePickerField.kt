@@ -1,4 +1,4 @@
-package com.example.sidewayloan.ui.composables
+package com.example.sidewayloan.ui.composables.date_picker_field
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EditCalendar
@@ -13,14 +13,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.example.sidewayloan.utils.convertDateToMillis
-import com.example.sidewayloan.utils.convertMillisToDate
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DateTextField(
+fun DatePickerField(
     modifier: Modifier = Modifier,
     initialSelectedDate: String,
     onSelectDate: (String) -> Unit
@@ -48,7 +44,7 @@ fun DateTextField(
     )
 
     if (showDatePickerDialog) {
-        CustomDatePicker(
+        DatePickerPopup(
             initialSelectedDate = initialSelectedDate,
             onDateSelected = {
                 onSelectDate(it)

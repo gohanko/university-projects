@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
-import com.example.sidewayloan.data.LoanType
+import com.example.sidewayloan.data.database.loan.LoanType
 import kotlin.enums.EnumEntries
 
 @Composable
@@ -25,6 +25,7 @@ fun ChipGroup(enumEntries: EnumEntries<LoanType>, onValueChange: (String) -> Uni
                 selected = selectedId == entry.ordinal,
                 onClick = {
                     selectedId = entry.ordinal
+                    onValueChange(selectedId.toString())
                 },
                 label = { Text(entry.getPrintable()) }
             )

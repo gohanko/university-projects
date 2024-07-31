@@ -1,11 +1,9 @@
 package com.example.sidewayloan.ui.composables
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -21,14 +19,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.breens.beetablescompose.BeeTablesCompose
-import com.example.sidewayloan.data.Loan
+import com.example.sidewayloan.data.database.loan.Loan
+import com.example.sidewayloan.ui.screens.history_screen.HistoryViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalculatorResultsBottomSheet(loan: Loan, onDismissRequest: () -> Unit) {
+fun LoanResultBottomSheet(
+    historyViewModel: HistoryViewModel,
+    loan: Loan, onDismissRequest: () -> Unit
+) {
     var showAmortisationTable by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
 
@@ -80,7 +81,9 @@ fun CalculatorResultsBottomSheet(loan: Loan, onDismissRequest: () -> Unit) {
             ) {
                 Button(
                     modifier = Modifier.weight(0.5f),
-                    onClick = { /*TODO*/ }
+                    onClick = {
+                        historyViewModel.upsertLoan(loan)
+                    }
                 ) {
                     Text("Save Loan")
                 }

@@ -86,11 +86,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.runtime.livedata)
-    annotationProcessor(libs.androidx.room.compiler)
-    ksp(libs.room.compiler)
-
-    // Splash Screen API
-    implementation(libs.androidx.core.splashscreen)
+    ksp(libs.androidx.room.room.compiler)
 
     // Android Studio Preview support
     implementation(libs.androidx.ui.tooling.preview)

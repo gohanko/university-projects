@@ -1,4 +1,4 @@
-package com.example.sidewayloan.ui.screens
+package com.example.sidewayloan.ui.screens.calculator_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,19 +21,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.datastore.core.DataStore
 import androidx.navigation.NavHostController
-import com.example.sidewayloan.data.Loan
-import com.example.sidewayloan.data.LoanType
-import com.example.sidewayloan.data.user_settings.UserSettings
-import com.example.sidewayloan.ui.composables.CalculatorResultsBottomSheet
-import com.example.sidewayloan.ui.composables.CalculatorTopAppBar
+import com.example.sidewayloan.data.database.loan.Loan
+import com.example.sidewayloan.data.database.loan.LoanType
 import com.example.sidewayloan.ui.composables.ChipGroup
-import com.example.sidewayloan.ui.composables.DateTextField
+import com.example.sidewayloan.ui.composables.LoanResultBottomSheet
+import com.example.sidewayloan.ui.composables.date_picker_field.DatePickerField
+import com.example.sidewayloan.ui.screens.history_screen.HistoryViewModel
 import com.example.sidewayloan.utils.convertDateToMillis
 import com.example.sidewayloan.utils.convertMillisToDate
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import java.time.Instant
 import java.time.LocalDate
 import java.time.Period
@@ -42,6 +38,7 @@ import java.time.ZoneId
 @Composable
 fun CalculatorScreen(
     navHostController: NavHostController,
+    historyViewModel: HistoryViewModel,
 ) {
     var type by remember { mutableStateOf(LoanType.PERSONAL) }
     var amount by remember { mutableStateOf("") }
@@ -89,7 +86,7 @@ fun CalculatorScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CalculatorTopAppBar { navHostController.popBackStack() }
+            CalculatorTopbar { navHostController.popBackStack() }
         }
     ) { innerPadding ->
         Column(
@@ -140,7 +137,7 @@ fun CalculatorScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
-            DateTextField(
+            DatePickerField(
                 modifier = Modifier.fillMaxWidth(),
                 initialSelectedDate = startDate,
                 onSelectDate = {
@@ -165,7 +162,8 @@ fun CalculatorScreen(
         }
 
         if (showBottomSheet) {
-            CalculatorResultsBottomSheet(
+            LoanResultBottomSheet(
+                historyViewModel = historyViewModel,
                 loan = Loan(
                     type = type,
                     amount = amount.toFloat(),
