@@ -46,7 +46,7 @@ fun CalculatorScreen(
     var type by remember { mutableStateOf(LoanType.PERSONAL) }
     var amount by remember { mutableStateOf("") }
     var interestRate by remember { mutableStateOf("") }
-    var repaymentPeriod by remember { mutableStateOf("") }
+    var numberOfInstalment by remember { mutableStateOf("") }
 
     val currentTime = System.currentTimeMillis()
     var startDate by remember { mutableStateOf(convertMillisToDate(currentTime)) }
@@ -112,7 +112,7 @@ fun CalculatorScreen(
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Amount") },
+                label = { Text("Loan Amount") },
                 value = amount,
                 onValueChange = {
                     amount = it
@@ -122,7 +122,7 @@ fun CalculatorScreen(
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Interest Rate (%)") },
+                label = { Text("Interest Rate (% per annum)") },
                 value = interestRate,
                 onValueChange = {
                     interestRate = it
@@ -132,10 +132,10 @@ fun CalculatorScreen(
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Repayment Period") },
-                value = repaymentPeriod,
+                label = { Text("Loan Tenure (months)") },
+                value = numberOfInstalment,
                 onValueChange = {
-                    repaymentPeriod = it
+                    numberOfInstalment = it
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -168,9 +168,9 @@ fun CalculatorScreen(
             CalculatorResultsBottomSheet(
                 loan = Loan(
                     type = type,
-                    amount = amount.toBigDecimal(),
-                    interestRate = interestRate.toFloat() / 100,
-                    repaymentPeriod = repaymentPeriod.toShort(),
+                    amount = amount.toFloat(),
+                    interestRate = interestRate.toFloat(),
+                    numberOfInstalment = numberOfInstalment.toInt(),
                     startDateUnixTime = convertDateToMillis(startDate)
                 ),
                 onDismissRequest = {
