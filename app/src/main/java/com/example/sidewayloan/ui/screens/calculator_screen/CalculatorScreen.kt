@@ -25,8 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.sidewayloan.data.database.loan.Loan
 import com.example.sidewayloan.data.database.loan.LoanType
+import com.example.sidewayloan.navigation.HistoryRoute
+import com.example.sidewayloan.navigation.MainRoute
+import com.example.sidewayloan.ui.composables.CalculationResultSheet
 import com.example.sidewayloan.ui.composables.ChipGroup
-import com.example.sidewayloan.ui.composables.LoanResultBottomSheet
 import com.example.sidewayloan.ui.composables.date_picker_field.DatePickerField
 import com.example.sidewayloan.ui.screens.history_screen.HistoryViewModel
 import com.example.sidewayloan.utils.convertDateToMillis
@@ -171,16 +173,15 @@ fun CalculatorScreen(
                 startDateUnixTime = convertDateToMillis(startDate)
             )
 
-            LoanResultBottomSheet(
+            CalculationResultSheet(
                 content = {
-                    Row(
-                        modifier = Modifier,
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         Button(
                             modifier = Modifier.weight(0.5f),
                             onClick = {
                                 historyViewModel.upsertLoan(loan)
+                                showBottomSheet = false
+                                navHostController.navigate(MainRoute)
                             }
                         ) {
                             Text("Save Loan")
@@ -188,7 +189,10 @@ fun CalculatorScreen(
 
                         Button(
                             modifier = Modifier.weight(0.5f),
-                            onClick = { /*TODO*/ }
+                            onClick = {
+                                showBottomSheet = false
+                                navHostController.navigate(MainRoute)
+                            }
                         ) {
                             Text("Back Home")
                         }

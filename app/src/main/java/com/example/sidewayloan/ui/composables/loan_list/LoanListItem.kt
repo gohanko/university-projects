@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sidewayloan.R
 import com.example.sidewayloan.data.database.loan.Loan
-import com.example.sidewayloan.ui.composables.LoanResultBottomSheet
+import com.example.sidewayloan.ui.composables.CalculationResultSheet
 import com.example.sidewayloan.ui.theme.outlineVariantLight
 import com.example.sidewayloan.ui.theme.primaryLight
 
@@ -94,7 +94,7 @@ fun LoanListItem(
     )
 
     if (showLoanResultBottomSheet) {
-        LoanResultBottomSheet(
+        CalculationResultSheet(
             content = {},
             loan = loan,
             onDismissRequest = {
