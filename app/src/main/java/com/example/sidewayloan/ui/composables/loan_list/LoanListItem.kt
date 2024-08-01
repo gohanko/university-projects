@@ -39,60 +39,59 @@ fun LoanListItem(
 ) {
     var showLoanResultBottomSheet by remember { mutableStateOf(false) }
 
-    Column (
+    Row (
         modifier = Modifier
-            .padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        Row (
-            modifier = Modifier.clickable {
+            .clickable(onClick={
                 showLoanResultBottomSheet = true
-            },
+            })
+            .padding(horizontal = 20.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Box(
+                modifier = Modifier
+                    .size(45.dp)
+                    .background(
+                        color = primaryLight,
+                        shape = RoundedCornerShape(5.dp)
+                    ),
+                contentAlignment = Alignment.Center
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(45.dp)
-                        .background(
-                            color = primaryLight,
-                            shape = RoundedCornerShape(5.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.cash_flow),
-                        contentDescription = ""
-                    )
-                }
-
-                Column {
-                    Text(
-                        text = loan.type.toString(),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
-                    )
-                    Text(
-                        text = loan.amount.toString(),
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 12.sp,
-                    )
-                }
+                Image(
+                    painter = painterResource(id = R.drawable.cash_flow),
+                    contentDescription = ""
+                )
             }
 
-            Spacer(modifier = Modifier.weight(1f))
-
-            Icon(
-                imageVector = Icons.Default.ChevronRight,
-                contentDescription = "",
-            )
+            Column {
+                Text(
+                    text = loan.type.toString(),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                )
+                Text(
+                    text = loan.amount.toString(),
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp,
+                )
+            }
         }
 
-        HorizontalDivider(color = outlineVariantLight)
+        Spacer(modifier = Modifier.weight(1f))
+
+        Icon(
+            imageVector = Icons.Default.ChevronRight,
+            contentDescription = "",
+        )
     }
+
+    HorizontalDivider(
+        modifier = Modifier.padding(horizontal = 20.dp),
+        color = outlineVariantLight
+    )
 
     if (showLoanResultBottomSheet) {
         LoanResultBottomSheet(

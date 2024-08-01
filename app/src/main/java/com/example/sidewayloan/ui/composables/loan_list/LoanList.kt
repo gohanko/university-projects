@@ -25,7 +25,13 @@ fun LoanList(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Row (modifier = Modifier.padding(start = 20.dp, top = 20.dp, end = 20.dp)) {
+        Row (
+            modifier = Modifier.padding(
+                start = 20.dp,
+                top = 20.dp,
+                end = 20.dp
+            )
+        ) {
             Text(
                 text = "Loan History",
                 fontWeight = FontWeight.Medium,
@@ -33,9 +39,7 @@ fun LoanList(
             )
         }
 
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(15.dp)
-        ) {
+        LazyColumn {
             items(loanList.value) { item ->
                 LoanListItem(item)
             }
