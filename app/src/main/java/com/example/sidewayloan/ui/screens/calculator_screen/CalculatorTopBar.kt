@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalculatorTopbar(
+fun CalculatorTopBar(
     navigateBack: () -> Unit
 ) {
     CenterAlignedTopAppBar(

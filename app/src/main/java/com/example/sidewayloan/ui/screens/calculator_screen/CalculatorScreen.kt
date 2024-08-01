@@ -87,7 +87,7 @@ fun CalculatorScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CalculatorTopbar { navHostController.popBackStack() }
+            CalculatorTopBar { navHostController.popBackStack() }
         }
     ) { innerPadding ->
         Column(
