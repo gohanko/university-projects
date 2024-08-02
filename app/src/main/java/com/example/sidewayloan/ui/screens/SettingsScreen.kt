@@ -33,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -132,24 +133,20 @@ fun SettingsScreen(
         )
 
         ListItem(
-            icon = Icons.Outlined.Palette,
-            label = "Change Theme",
-            description = "Are you on the light side or the dark side?",
-            onClick = {}
-        )
-
-        ListItem(
             icon = Icons.Outlined.Info,
             label = "About",
             description = "",
             onClick = {}
         )
 
+        val uriHandler = LocalUriHandler.current
         ListItem(
             icon = Icons.AutoMirrored.Outlined.HelpOutline,
             label = "Help",
-            description = "",
-            onClick = {}
+            description = "Redirects you to CatGPT for all your meowy questions",
+            onClick = {
+                uriHandler.openUri("https://catgpt.wvd.io/")
+            }
         )
     }
 

@@ -68,12 +68,12 @@ fun LoanListItem(
 
             Column {
                 Text(
-                    text = loan.type.toString(),
+                    text = "RM ${loan.amount}",
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                 )
                 Text(
-                    text = loan.amount.toString(),
+                    text = loan.type.toString(),
                     fontWeight = FontWeight.Normal,
                     fontSize = 12.sp,
                 )
