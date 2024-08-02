@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.example.sidewayloan.data.database.loan.LoanViewModel
 import com.example.sidewayloan.data.datastore.user_settings.UserSettings
 import com.example.sidewayloan.ui.screens.HistoryScreen
+import com.example.sidewayloan.ui.screens.SettingsScreen
 
 @Composable
 fun MainGraph(
@@ -30,7 +31,7 @@ fun MainGraph(
         }
 
         composable<SettingsRoute> {
-            Text(text="aaaaa")
+            SettingsScreen()
         }
     }
 }
