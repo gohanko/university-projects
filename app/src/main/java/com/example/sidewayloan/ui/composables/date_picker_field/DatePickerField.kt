@@ -13,11 +13,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.example.sidewayloan.utils.dateFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerField(
     modifier: Modifier = Modifier,
+    label: String,
     initialSelectedDate: String,
     onSelectDate: (String) -> Unit
 ) {
@@ -25,16 +27,18 @@ fun DatePickerField(
 
     OutlinedTextField(
         modifier = modifier,
-        label={ Text("Date") },
+        label={ Text(label) },
         value=initialSelectedDate,
-        placeholder={ Text("dd/MM/yyyy") },
+        placeholder={ Text(dateFormat) },
         onValueChange = {
             onSelectDate(it)
         },
         trailingIcon = {
-            IconButton(onClick = {
-                showDatePickerDialog = true
-            }) {
+            IconButton(
+                onClick = {
+                    showDatePickerDialog = true
+                }
+            ) {
                 Icon(
                     imageVector = Icons.Outlined.EditCalendar,
                     contentDescription = "Edit the date"

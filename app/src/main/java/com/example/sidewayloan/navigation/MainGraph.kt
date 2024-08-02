@@ -7,16 +7,16 @@ import androidx.datastore.core.DataStore
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.sidewayloan.ui.screens.history_screen.HistoryViewModel
+import com.example.sidewayloan.data.database.loan.LoanViewModel
 import com.example.sidewayloan.data.datastore.user_settings.UserSettings
-import com.example.sidewayloan.ui.screens.history_screen.HistoryScreen
+import com.example.sidewayloan.ui.screens.HistoryScreen
 
 @Composable
 fun MainGraph(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
     userSettingsDataStore: DataStore<UserSettings>,
-    historyViewModel: HistoryViewModel,
+    loanViewModel: LoanViewModel,
     openCalculator: () -> Unit,
     openUserSettings: () -> Unit,
 ) {
@@ -26,7 +26,7 @@ fun MainGraph(
         startDestination = HistoryRoute
     ) {
         composable<HistoryRoute> {
-            HistoryScreen(historyViewModel, openCalculator)
+            HistoryScreen(loanViewModel, openCalculator)
         }
 
         composable<SettingsRoute> {

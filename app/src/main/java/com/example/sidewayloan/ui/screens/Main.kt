@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.datastore.core.DataStore
 import androidx.navigation.compose.rememberNavController
-import com.example.sidewayloan.ui.screens.history_screen.HistoryViewModel
+import com.example.sidewayloan.data.database.loan.LoanViewModel
 import com.example.sidewayloan.data.datastore.user_settings.UserSettings
 import com.example.sidewayloan.ui.composables.BottomNavigationBar
 import kotlinx.coroutines.flow.first
@@ -16,7 +16,7 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun MainScreen(
     userSettingsDataStore: DataStore<UserSettings>,
-    historyViewModel: HistoryViewModel,
+    loanViewModel: LoanViewModel,
     openCalculator: () -> Unit,
     openUserSettings: () -> Unit,
 ) {
@@ -27,14 +27,16 @@ fun MainScreen(
 
     val navController = rememberNavController()
 
-    Scaffold(bottomBar = {
-        BottomNavigationBar(navController)
-    }) { padding ->
+    Scaffold(
+        bottomBar = {
+            BottomNavigationBar(navController)
+        }
+    ) { padding ->
         MainGraph(
             modifier = Modifier.padding(padding),
             navController,
             userSettingsDataStore,
-            historyViewModel,
+            loanViewModel,
             openCalculator,
             openUserSettings
         )

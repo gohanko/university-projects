@@ -1,4 +1,4 @@
-package com.example.sidewayloan.ui.screens.calculator_screen
+package com.example.sidewayloan.ui.composables
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -11,16 +11,18 @@ import androidx.compose.runtime.Composable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalculatorTopBar(
+fun TopAppBarWithReturn(
+    title: String,
+    description: String,
     navigateBack: () -> Unit
 ) {
     CenterAlignedTopAppBar(
-        title = { Text("Loan Calculator") },
+        title = { Text(title) },
         navigationIcon = {
             IconButton(onClick = navigateBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Localized description"
+                    contentDescription = description
                 )
             }
         },

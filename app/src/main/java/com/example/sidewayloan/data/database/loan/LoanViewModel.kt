@@ -1,13 +1,11 @@
-package com.example.sidewayloan.ui.screens.history_screen
+package com.example.sidewayloan.data.database.loan
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sidewayloan.data.database.loan.Loan
-import com.example.sidewayloan.data.database.loan.LoanDAO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class HistoryViewModel(
+class LoanViewModel(
     private val loanDao: LoanDAO
 ): ViewModel() {
     fun getLoansOrderedByID(): Flow<List<Loan>> {

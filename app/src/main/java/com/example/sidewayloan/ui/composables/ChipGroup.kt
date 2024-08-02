@@ -14,20 +14,28 @@ import com.example.sidewayloan.data.database.loan.LoanType
 import kotlin.enums.EnumEntries
 
 @Composable
-fun ChipGroup(enumEntries: EnumEntries<LoanType>, onValueChange: (Int) -> Unit) {
+fun ChipGroup(
+    label: String,
+    options: EnumEntries<LoanType>,
+    onValueChange: (Int) -> Unit
+) {
     var selectedId by remember { mutableIntStateOf(0) }
+
+    if (label.isNotEmpty()) {
+        Text(text = label)
+    }
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        for (entry in enumEntries) {
+        for (option in options) {
             FilterChip(
-                selected = selectedId == entry.ordinal,
+                selected = selectedId == option.ordinal,
                 onClick = {
-                    selectedId = entry.ordinal
+                    selectedId = option.ordinal
                     onValueChange(selectedId)
                 },
-                label = { Text(entry.getPrintable()) }
+                label = { Text(option.getPrintable()) }
             )
         }
     }

@@ -20,7 +20,7 @@ import com.example.sidewayloan.data.database.loan.LoanRoomDatabase
 import com.example.sidewayloan.data.datastore.user_settings.UserSettings
 import com.example.sidewayloan.data.datastore.user_settings.UserSettingsSerializer
 import com.example.sidewayloan.theme.SidewayLoanTheme
-import com.example.sidewayloan.ui.screens.history_screen.HistoryViewModel
+import com.example.sidewayloan.data.database.loan.LoanViewModel
 
 val Context.userSettingsDataStore: DataStore<UserSettings> by dataStore(
     "user-settings.json",
@@ -36,11 +36,11 @@ class MainActivity : ComponentActivity() {
         ).build()
     }
 
-    private val viewModel by viewModels<HistoryViewModel>(
+    private val viewModel by viewModels<LoanViewModel>(
         factoryProducer = {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return HistoryViewModel(db.dao) as T
+                    return LoanViewModel(db.dao) as T
                 }
             }
         }
@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier,
                         navController,
                         userSettingsDataStore = userSettingsDataStore,
-                        historyViewModel = viewModel
+                        loanViewModel = viewModel
                     )
                 }
             }

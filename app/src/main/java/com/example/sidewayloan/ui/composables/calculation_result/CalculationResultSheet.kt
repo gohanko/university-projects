@@ -1,4 +1,4 @@
-package com.example.sidewayloan.ui.composables
+package com.example.sidewayloan.ui.composables.calculation_result
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,9 +14,9 @@ import com.example.sidewayloan.data.database.loan.Loan
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalculationResultSheet(
+    loan: Loan, onDismissRequest: () -> Unit,
     content: @Composable () -> Unit,
-    loan: Loan, onDismissRequest: () -> Unit
-) {
+    ) {
     val sheetState = rememberModalBottomSheetState()
 
     ModalBottomSheet(

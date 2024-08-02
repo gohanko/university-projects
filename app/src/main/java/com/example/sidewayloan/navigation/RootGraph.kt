@@ -6,18 +6,18 @@ import androidx.datastore.core.DataStore
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.sidewayloan.ui.screens.history_screen.HistoryViewModel
+import com.example.sidewayloan.data.database.loan.LoanViewModel
 import com.example.sidewayloan.data.datastore.user_settings.UserSettings
-import com.example.sidewayloan.ui.screens.calculator_screen.CalculatorScreen
+import com.example.sidewayloan.ui.screens.CalculatorScreen
 import com.example.sidewayloan.ui.screens.MainScreen
-import com.example.sidewayloan.ui.screens.user_settings_screen.UserSettingsScreen
+import com.example.sidewayloan.ui.screens.UserSettingsScreen
 
 @Composable
 fun RootGraph(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
     userSettingsDataStore: DataStore<UserSettings>,
-    historyViewModel: HistoryViewModel,
+    loanViewModel: LoanViewModel,
 ) {
     NavHost(
         modifier = modifier,
@@ -31,14 +31,14 @@ fun RootGraph(
         composable<MainRoute> {
             MainScreen(
                 userSettingsDataStore = userSettingsDataStore,
-                historyViewModel = historyViewModel,
+                loanViewModel = loanViewModel,
                 openCalculator = { navHostController.navigate(CalculatorRoute) },
                 openUserSettings = { navHostController.navigate(UserSettingsRoute)}
             )
         }
 
         composable<CalculatorRoute> {
-            CalculatorScreen(navHostController, historyViewModel = historyViewModel,)
+            CalculatorScreen(navHostController, loanViewModel = loanViewModel)
         }
     }
 }

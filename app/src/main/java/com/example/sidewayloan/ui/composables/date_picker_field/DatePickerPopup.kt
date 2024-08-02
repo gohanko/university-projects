@@ -21,9 +21,10 @@ fun DatePickerPopup(
         initialSelectedDateMillis = convertDateToMillis(initialSelectedDate),
     )
 
-    val newSelectedDate = datePickerState.selectedDateMillis?.let {
-        convertMillisToDate(it)
-    } ?: ""
+    val newSelectedDate = datePickerState
+        .selectedDateMillis
+        ?.let { convertMillisToDate(it) }
+        ?: ""
 
     DatePickerDialog(
         onDismissRequest = { onDismiss() },
@@ -36,15 +37,11 @@ fun DatePickerPopup(
             }
         },
         dismissButton = {
-            Button(onClick = {
-                onDismiss()
-            }) {
+            Button(onClick = { onDismiss() }) {
                 Text(text = "Cancel")
             }
         }
     ) {
-        DatePicker(
-            state = datePickerState
-        )
+        DatePicker(state = datePickerState)
     }
 }

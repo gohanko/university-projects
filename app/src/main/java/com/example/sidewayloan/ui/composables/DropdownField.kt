@@ -18,11 +18,11 @@ import androidx.compose.ui.Modifier
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropdownField(
+    modifier: Modifier = Modifier,
     selectedValue: String,
     options: List<String>,
     label: String,
     onValueChangedEvent: (String) -> Unit,
-    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -32,6 +32,9 @@ fun DropdownField(
         modifier = modifier
     ) {
         OutlinedTextField(
+            modifier = Modifier
+                .menuAnchor()
+                .fillMaxWidth(),
             readOnly = true,
             value = selectedValue,
             onValueChange = {},
@@ -40,9 +43,6 @@ fun DropdownField(
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
             colors = OutlinedTextFieldDefaults.colors(),
-            modifier = Modifier
-                .menuAnchor()
-                .fillMaxWidth()
         )
 
         ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {

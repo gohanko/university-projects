@@ -1,4 +1,4 @@
-package com.example.sidewayloan.ui.screens.history_screen
+package com.example.sidewayloan.ui.screens
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -9,11 +9,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import com.example.sidewayloan.data.database.loan.LoanViewModel
 import com.example.sidewayloan.ui.composables.loan_list.LoanList
 
 @Composable
 fun HistoryScreen(
-    historyViewModel: HistoryViewModel,
+    loanViewModel: LoanViewModel,
     openCalculator: () -> Unit
 ) {
     Scaffold(
@@ -23,7 +24,7 @@ fun HistoryScreen(
             }
         }
     ) { padding ->
-        val loanList = historyViewModel.getLoansOrderedByID().collectAsState(initial = emptyList())
+        val loanList = loanViewModel.getLoansOrderedByID().collectAsState(initial = emptyList())
 
         LoanList(
             modifier = Modifier.padding(padding),

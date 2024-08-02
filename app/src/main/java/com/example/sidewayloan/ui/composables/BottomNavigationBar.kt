@@ -1,6 +1,5 @@
 package com.example.sidewayloan.ui.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Article
 import androidx.compose.material.icons.automirrored.outlined.Article
@@ -11,17 +10,14 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.sidewayloan.data.BottomNavigationItem
+import com.example.sidewayloan.data.BottomNavigationBarItem
 import com.example.sidewayloan.navigation.HistoryRoute
 import com.example.sidewayloan.navigation.SettingsRoute
-import com.example.sidewayloan.ui.theme.surfaceContainerLight
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -30,13 +26,13 @@ fun BottomNavigationBar(navController: NavController) {
     }
 
     val items = listOf(
-        BottomNavigationItem(
+        BottomNavigationBarItem(
             route = HistoryRoute,
             text = "History",
             selectedIcon = Icons.AutoMirrored.Filled.Article,
             unselectedIcon = Icons.AutoMirrored.Outlined.Article
         ),
-        BottomNavigationItem(
+        BottomNavigationBarItem(
             route = SettingsRoute,
             text = "Settings",
             selectedIcon = Icons.Outlined.Settings,

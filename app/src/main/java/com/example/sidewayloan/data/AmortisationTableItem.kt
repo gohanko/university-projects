@@ -2,7 +2,7 @@ package com.example.sidewayloan.data
 
 import java.math.BigDecimal
 
-data class AmortisationItem(
+data class AmortisationTableItem(
     val paymentNumber: Int,
     val beginningBalance: BigDecimal,
     val monthlyRepayment: BigDecimal,
