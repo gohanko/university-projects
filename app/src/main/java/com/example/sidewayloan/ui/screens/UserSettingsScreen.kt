@@ -16,7 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.datastore.core.DataStore
 import androidx.navigation.NavHostController
 import com.example.sidewayloan.data.datastore.user_settings.UserSettings
@@ -50,8 +52,15 @@ fun UserSettingsScreen(
     Column(
         Modifier.padding(horizontal = 20.dp, vertical = 20.dp)
     ) {
+        Text(
+            modifier = Modifier.padding(vertical = 20.dp),
+            text = "Please select your birthdate",
+            fontWeight = FontWeight.Medium,
+            fontSize = 25.sp
+        )
+
         DatePickerField(
-            label = "Please enter your birthdate",
+            label = "Birthdate",
             modifier = Modifier.fillMaxWidth(),
             initialSelectedDate = birthday,
             onSelectDate = {

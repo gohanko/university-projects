@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sidewayloan.data.database.loan.Loan
+import com.example.sidewayloan.ui.composables.status.NotFound
 
 @Composable
 fun LoanList(
@@ -35,13 +36,17 @@ fun LoanList(
             Text(
                 text = "Loan History",
                 fontWeight = FontWeight.Medium,
-                fontSize = 14.sp
+                fontSize = 20.sp
             )
         }
 
-        LazyColumn {
-            items(loanList.value) { item ->
-                LoanListItem(item)
+        if (loanList.value.isEmpty()) {
+            NotFound()
+        } else {
+            LazyColumn {
+                items(loanList.value) { item ->
+                    LoanListItem(item)
+                }
             }
         }
     }
