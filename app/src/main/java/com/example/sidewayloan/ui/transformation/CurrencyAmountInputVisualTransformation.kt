@@ -7,41 +7,40 @@ import androidx.compose.ui.text.input.VisualTransformation
 import java.lang.Integer.max
 import java.text.DecimalFormat
 
-fun transformNumberTextToCurrency(
-    inputText: String,
-    numberOfDecimals: Int = 2
-): String {
-    val symbols = DecimalFormat().decimalFormatSymbols
-    val decimalSeparator = symbols.decimalSeparator
-    val zero = symbols.zeroDigit
-
-    val intPart: String = inputText
-        .dropLast(numberOfDecimals)
-        .reversed()
-        .reversed()
-        .ifEmpty {
-            zero.toString()
-        }
-
-    val fractionPart = inputText.takeLast(numberOfDecimals).let {
-        if (it.length != numberOfDecimals) {
-            List(numberOfDecimals - it.length) {
-                zero
-            }.joinToString("") + it
-        } else {
-            it
-        }
-    }
-
-    val formattedNumber = intPart + decimalSeparator + fractionPart
-
-    return formattedNumber
-}
-
 class CurrencyAmountInputVisualTransformation(
     private val fixedCursorAtTheEnd: Boolean = true,
     private val numberOfDecimals: Int = 2
 ) : VisualTransformation {
+    private fun transformNumberTextToCurrency(
+        inputText: String,
+    ): String {
+        val symbols = DecimalFormat().decimalFormatSymbols
+        val decimalSeparator = symbols.decimalSeparator
+        val zero = symbols.zeroDigit
+
+        val intPart: String = inputText
+            .dropLast(numberOfDecimals)
+            .reversed()
+            .reversed()
+            .ifEmpty {
+                zero.toString()
+            }
+
+        val fractionPart = inputText.takeLast(numberOfDecimals).let {
+            if (it.length != numberOfDecimals) {
+                List(numberOfDecimals - it.length) {
+                    zero
+                }.joinToString("") + it
+            } else {
+                it
+            }
+        }
+
+        val formattedNumber = intPart + decimalSeparator + fractionPart
+
+        return formattedNumber
+    }
+
     override fun filter(text: AnnotatedString): TransformedText {
         val inputText = text.text
         val formattedNumber = transformNumberTextToCurrency(inputText)
