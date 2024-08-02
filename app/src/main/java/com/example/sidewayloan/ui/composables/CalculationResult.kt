@@ -18,6 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.breens.beetablescompose.BeeTablesCompose
 import com.example.sidewayloan.data.database.loan.Loan
+import com.example.sidewayloan.data.database.loan.LoanType
+import com.example.sidewayloan.utils.getHousingLoanTableDataset
+import com.example.sidewayloan.utils.getLastPaymentDate
+import com.example.sidewayloan.utils.getMonthlyInstalment
+import com.example.sidewayloan.utils.getPersonalLoanTableDataset
+import com.example.sidewayloan.utils.getTotalAmountPaid
 
 @Composable
 fun CalculationResult(
@@ -25,13 +31,13 @@ fun CalculationResult(
 ) {
     var showAmortisationTable by remember { mutableStateOf(false) }
 
-    val monthlyInstallment = loan.getMonthlyInstalment()
+    val monthlyInstallment = getMonthlyInstalment(loan)
     Text(text = "Monthly Instalment: $monthlyInstallment")
 
-    val lastRepaymentDate = loan.getLastPaymentDate()
+    val lastRepaymentDate = getLastPaymentDate(loan)
     Text(text="Final Payment Date: $lastRepaymentDate")
 
-    val totalAmountPaid = loan.getTotalAmountPaid()
+    val totalAmountPaid = getTotalAmountPaid(loan)
 
     Text(text="Total Amount Paid: $totalAmountPaid")
 
@@ -54,7 +60,7 @@ fun CalculationResult(
     if (showAmortisationTable) {
         val headerTitles = listOf("Payment Number", "Beginning Balance (RM)", "Monthly Repayment (RM)", "Interest Paid (RM)", "Principal Paid (RM)")
         BeeTablesCompose(
-            data = loan.getTableDataset(),
+            data = if (loan.type == LoanType.PERSONAL) getPersonalLoanTableDataset(loan) else getHousingLoanTableDataset(loan),
             headerTableTitles = headerTitles
         )
     }

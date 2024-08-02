@@ -14,7 +14,7 @@ import com.example.sidewayloan.data.database.loan.LoanType
 import kotlin.enums.EnumEntries
 
 @Composable
-fun ChipGroup(enumEntries: EnumEntries<LoanType>, onValueChange: (String) -> Unit) {
+fun ChipGroup(enumEntries: EnumEntries<LoanType>, onValueChange: (Int) -> Unit) {
     var selectedId by remember { mutableIntStateOf(0) }
 
     Row(
@@ -25,7 +25,7 @@ fun ChipGroup(enumEntries: EnumEntries<LoanType>, onValueChange: (String) -> Uni
                 selected = selectedId == entry.ordinal,
                 onClick = {
                     selectedId = entry.ordinal
-                    onValueChange(selectedId.toString())
+                    onValueChange(selectedId)
                 },
                 label = { Text(entry.getPrintable()) }
             )

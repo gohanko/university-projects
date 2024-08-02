@@ -106,7 +106,7 @@ fun CalculatorScreen(
             ChipGroup(
                 LoanType.entries,
                 onValueChange = {
-                    type = LoanType.valueOf(it)
+                    type = LoanType.values()[it]
                 }
             )
 
@@ -167,8 +167,8 @@ fun CalculatorScreen(
         if (showBottomSheet) {
             val loan = Loan(
                 type = type,
-                amount = amount.toFloat(),
-                interestRate = interestRate.toFloat(),
+                amount = amount.toBigDecimal(),
+                interestRate = interestRate.toBigDecimal(),
                 numberOfInstalment = numberOfInstalment.toInt(),
                 startDateUnixTime = convertDateToMillis(startDate)
             )
