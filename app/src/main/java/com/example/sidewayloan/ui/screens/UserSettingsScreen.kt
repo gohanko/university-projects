@@ -73,7 +73,7 @@ fun UserSettingsScreen(
             onClick = {
                 scope.launch {
                     setBirthday(convertDateToMillis(birthday))
-                    navHostController.navigate(MainRoute)
+                    navHostController.popBackStack()
                 }
             }
         )

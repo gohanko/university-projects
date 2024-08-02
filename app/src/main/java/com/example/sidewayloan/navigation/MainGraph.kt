@@ -31,7 +31,9 @@ fun MainGraph(
         }
 
         composable<SettingsRoute> {
-            SettingsScreen()
+            SettingsScreen(
+                openUserSettings = openUserSettings
+            )
         }
     }
 }

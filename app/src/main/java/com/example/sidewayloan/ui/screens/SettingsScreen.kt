@@ -104,7 +104,9 @@ fun ListItem(
 }
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    openUserSettings: () -> Unit
+) {
     List {
         Box(
             modifier = Modifier
@@ -126,7 +128,7 @@ fun SettingsScreen() {
             icon = Icons.Outlined.EditCalendar,
             label = "Edit Birthday",
             description = "Edit your birthday",
-            onClick = {}
+            onClick = { openUserSettings() }
         )
 
         ListItem(
