@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.sidewayloan.ui.transformation.CurrencyAmountInputVisualTransformation
-import com.example.sidewayloan.ui.transformation.transformNumberTextToCurrency
 
 @Composable
 fun CurrencyField(
