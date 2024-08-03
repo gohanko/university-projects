@@ -19,7 +19,7 @@ import androidx.room.Room
 import com.example.sidewayloan.data.database.loan.LoanRoomDatabase
 import com.example.sidewayloan.data.datastore.user_settings.UserSettings
 import com.example.sidewayloan.data.datastore.user_settings.UserSettingsSerializer
-import com.example.sidewayloan.theme.SidewayLoanTheme
+import com.example.sidewayloan.theme.AppTheme
 import com.example.sidewayloan.data.database.loan.LoanViewModel
 
 val Context.userSettingsDataStore: DataStore<UserSettings> by dataStore(
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SidewayLoanTheme {
+            AppTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

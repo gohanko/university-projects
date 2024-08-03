@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.sp
 import com.example.sidewayloan.R
 import com.example.sidewayloan.data.database.loan.Loan
 import com.example.sidewayloan.ui.composables.calculation_result.CalculationResultSheet
-import com.example.sidewayloan.ui.theme.outlineVariantLight
-import com.example.sidewayloan.ui.theme.primaryLight
+import com.example.sidewayloan.theme.outlineVariantLight
+import com.example.sidewayloan.theme.primaryLight
 
 @Composable
 fun LoanListItem(
