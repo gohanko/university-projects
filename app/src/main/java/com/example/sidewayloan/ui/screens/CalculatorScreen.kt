@@ -11,6 +11,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
+import androidx.datastore.core.DataStore
 import androidx.navigation.NavHostController
 import com.example.sidewayloan.data.database.loan.Loan
 import com.example.sidewayloan.data.database.loan.LoanType
@@ -27,6 +29,7 @@ import com.example.sidewayloan.ui.composables.ChipGroup
 import com.example.sidewayloan.ui.composables.TopAppBarWithReturn
 import com.example.sidewayloan.ui.composables.date_picker_field.DatePickerField
 import com.example.sidewayloan.data.database.loan.LoanViewModel
+import com.example.sidewayloan.data.datastore.user_settings.UserSettings
 import com.example.sidewayloan.ui.composables.BottomButton
 import com.example.sidewayloan.ui.composables.CurrencyField
 import com.example.sidewayloan.ui.composables.OutlinedNumberField
@@ -36,11 +39,12 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.Period
 import java.time.ZoneId
+import java.time.ZoneOffset
 
 fun calculateMaximumTenure(type: LoanType, birthday: Long): Int {
     val instant = Instant.ofEpochMilli(birthday)
     val age = Period.between(
-        instant.atZone(ZoneId.of("utc")).toLocalDate(),
+        instant.atZone(ZoneOffset.UTC).toLocalDate(),
         LocalDate.now()
     ).years
 
@@ -74,6 +78,7 @@ fun calculateMaximumTenure(type: LoanType, birthday: Long): Int {
 fun CalculatorScreen(
     navHostController: NavHostController,
     loanViewModel: LoanViewModel,
+    userSettingsDataStore: DataStore<UserSettings>
 ) {
     var type by remember { mutableStateOf(LoanType.PERSONAL) }
     var amount by remember { mutableStateOf("") }
@@ -86,6 +91,14 @@ fun CalculatorScreen(
     }
 
     var showBottomSheet by remember { mutableStateOf(false) }
+
+    val storedBirthday = userSettingsDataStore
+        .data
+        .collectAsState(
+            initial = UserSettings()
+        )
+        .value
+        .birthday
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -125,12 +138,19 @@ fun CalculatorScreen(
                 onValueChange = { interestRate = it }
             )
 
+            val maximumTenure = storedBirthday?.let { calculateMaximumTenure(type, it) }
             OutlinedNumberField(
-                label="Loan Tenure (months)",
+                label="Loan Tenure (months - maximum = $maximumTenure)",
                 value = numberOfInstalment,
                 onValueChange = {
                     if (it.isDigitsOnly()) {
-                        numberOfInstalment = it
+                        val inputToInt = if (it.isNotEmpty()) it.toInt() else 0
+
+                        if (maximumTenure != null) {
+                            if (maximumTenure >= inputToInt) {
+                                numberOfInstalment = it
+                            }
+                        }
                     }
                 }
             )
@@ -138,7 +158,7 @@ fun CalculatorScreen(
             DatePickerField(
                 modifier = Modifier.fillMaxWidth(),
                 label = "Loan Start Date",
-                initialSelectedDate = startDate,
+                selectedDate = startDate,
                 onSelectDate = { startDate = it }
             )
 

@@ -38,7 +38,11 @@ fun RootGraph(
         }
 
         composable<CalculatorRoute> {
-            CalculatorScreen(navHostController, loanViewModel = loanViewModel)
+            CalculatorScreen(
+                navHostController,
+                loanViewModel = loanViewModel,
+                userSettingsDataStore
+            )
         }
     }
 }

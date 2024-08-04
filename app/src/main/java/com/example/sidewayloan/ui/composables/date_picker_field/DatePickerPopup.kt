@@ -13,12 +13,12 @@ import com.example.sidewayloan.utils.convertMillisToDate
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerPopup(
-    initialSelectedDate: String,
+    selectedDate: String,
     onDateSelected: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = convertDateToMillis(initialSelectedDate),
+        initialSelectedDateMillis = convertDateToMillis(selectedDate),
     )
 
     val newSelectedDate = datePickerState

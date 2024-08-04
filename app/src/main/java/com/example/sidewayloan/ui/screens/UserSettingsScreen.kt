@@ -34,7 +34,7 @@ fun UserSettingsScreen(
     navHostController: NavHostController,
     userSettingsDataStore: DataStore<UserSettings>
 ) {
-    val storedBirthday = userSettingsDataStore
+    var storedBirthday = userSettingsDataStore
         .data
         .collectAsState(
             initial = UserSettings()
@@ -42,7 +42,6 @@ fun UserSettingsScreen(
         .value
         .birthday ?: System.currentTimeMillis()
 
-    var birthday by remember { mutableStateOf(convertMillisToDate(storedBirthday)) }
     val scope = rememberCoroutineScope()
 
     suspend fun setBirthday(birthdayUnix: Long) {
@@ -62,17 +61,18 @@ fun UserSettingsScreen(
         DatePickerField(
             label = "Birthdate",
             modifier = Modifier.fillMaxWidth(),
-            initialSelectedDate = birthday,
+            selectedDate = convertMillisToDate(storedBirthday),
             onSelectDate = {
-                birthday = it
+                scope.launch {
+                    setBirthday(convertDateToMillis(it))
+                }
             }
         )
 
         BottomButton(
-            label = "Save",
+            label = "Back",
             onClick = {
                 scope.launch {
-                    setBirthday(convertDateToMillis(birthday))
                     navHostController.popBackStack()
                 }
             }

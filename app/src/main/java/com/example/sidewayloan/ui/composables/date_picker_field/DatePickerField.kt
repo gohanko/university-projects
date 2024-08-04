@@ -20,7 +20,7 @@ import com.example.sidewayloan.utils.dateFormat
 fun DatePickerField(
     modifier: Modifier = Modifier,
     label: String,
-    initialSelectedDate: String,
+    selectedDate: String,
     onSelectDate: (String) -> Unit
 ) {
     var showDatePickerDialog by remember { mutableStateOf(false) }
@@ -28,7 +28,7 @@ fun DatePickerField(
     OutlinedTextField(
         modifier = modifier,
         label={ Text(label) },
-        value=initialSelectedDate,
+        value=selectedDate,
         placeholder={ Text(dateFormat) },
         onValueChange = {
             onSelectDate(it)
@@ -49,7 +49,7 @@ fun DatePickerField(
 
     if (showDatePickerDialog) {
         DatePickerPopup(
-            initialSelectedDate = initialSelectedDate,
+            selectedDate = selectedDate,
             onDateSelected = {
                 onSelectDate(it)
             },
