@@ -1,27 +1,19 @@
-import databaseConfig from "../configs/datababse.config";
 import { Sequelize } from "sequelize";
+import user from '../models/user.model'
+import tokenBlacklist from "../models/tokenBlacklist.model";
 
 const sequelize = new Sequelize(
-    databaseConfig.DB,
-    databaseConfig.USER,
-    databaseConfig.PASSWORD, 
     {
-        host: databaseConfig.HOST,
-        dialect: databaseConfig.dialect,
-        operatorAliases: false,
-        pool: {
-            max: databaseConfig.pool.max,
-            min: databaseConfig.pool.min,
-            acquire: databaseConfig.pool.acquire,
-            idle: databaseConfig.pool.idle
-        }
+        dialect: 'sqlite',
+        storage: 'database.sqlite3'
     }
 )
 
-const databaseInstance = {
+const databaseService = {
     Sequelize: Sequelize,
     sequelize: sequelize,
-    user: require("../models/user.model.js")(sequelize)
+    user: user(sequelize),
+    tokenBlacklist: tokenBlacklist(sequelize)
 }
 
-export default databaseInstance
+export default databaseService

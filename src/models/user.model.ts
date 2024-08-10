@@ -15,7 +15,7 @@ const user = (sequelize: Sequelize) => {
             password: {
                 type: DataTypes.STRING,
             }
-        }
+        },
     )
 
     return User

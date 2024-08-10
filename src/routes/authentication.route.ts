@@ -7,10 +7,9 @@ import {
 } from '../controllers/authentication.controller'
 
 const authenticationRouter = express.Router()
-
-authenticationRouter.get('/register/', register)
-authenticationRouter.get('/login/', login)
-authenticationRouter.get('/logout/', logout)
-authenticationRouter.get('/reset/', resetPassword)
+authenticationRouter.post('/register/', register)
+authenticationRouter.post('/login/', login)
+authenticationRouter.post('/logout/', logout)
+authenticationRouter.post('/reset/', resetPassword)
 
 export default authenticationRouter

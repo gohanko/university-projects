@@ -1,30 +1,34 @@
-import dotenv from 'dotenv'
 import express, { Express, Request, Response } from 'express'
 import bodyParser from 'body-parser'
-import cors from 'cors';
 import helmet from 'helmet'
 import morgan from 'morgan'
+import databaseService from './services/database.service';
 import authenticationRouter from './routes/authentication.route'
+import { API_PORT } from './configs/'
 
-dotenv.config()
-
-const port = process.env.PORT
 const app: Express = express()
 
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(cors);
 app.use(morgan('combined'))
 
-app.use('/auth/', authenticationRouter)
+databaseService.sequelize
+    .sync()
+    .then(() => {
+        console.log("Synced db.");
+    }).catch((err) => {
+        console.log("Failed to sync db: " + err.message);
+    });
+
+app.use('/api/', authenticationRouter)
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Hello world!")  
 })
 
 app.listen(
-    port,
+    API_PORT,
     () => {
-        console.log(`[server] : Server is running on http://localhost:${port}`)
+        console.log(`[server] : Server is running on http://localhost:${API_PORT}`)
     }
 )
