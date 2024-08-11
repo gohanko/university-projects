@@ -1,26 +1,26 @@
 import express, { Express, Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
-import morgan from 'morgan'
 import databaseService from './services/database.service';
 import authenticationRouter from './routes/authentication.route'
 import { API_PORT } from './configs/'
+import eventRouter from './routes/event.route';
 
 const app: Express = express()
 
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(morgan('combined'))
 
 databaseService.sequelize
     .sync()
     .then(() => {
-        console.log("Synced db.");
+        console.log("[server] : Synced database");
     }).catch((err) => {
-        console.log("Failed to sync db: " + err.message);
+        console.log("[server] : Failed to sync database: " + err.message);
     });
 
 app.use('/api/', authenticationRouter)
+app.use('/api/', eventRouter)
 
 app.get('/', (req: Request, res: Response) => {
     res.send("Hello world!")  
