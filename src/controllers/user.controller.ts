@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import databaseService from "../services/database.service"
-import { generateAccessToken } from '../utils'
+import { generateAccessToken } from '../utils/generateAccessToken.util'
 
 const User = databaseService.user
 const TokenBlacklist = databaseService.tokenBlacklist
@@ -10,22 +10,6 @@ const register = async (
     res: Response,
 ) => {
     const { email, password } = req.body;
-
-    if (!email) {
-        res.status(400).json({
-            status: "Failed",
-            message: "Email are required.",
-            data: [],
-        })
-    }
-
-    if (!password) {
-        res.status(400).json({
-            status: "Failed",
-            message: "Password are required.",
-            data: [],
-        })
-    }
 
     try {
         const existingUser = await User.findOne({ where: { email: email } })

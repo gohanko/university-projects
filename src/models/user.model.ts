@@ -15,15 +15,6 @@ const user = (sequelize: Sequelize) => {
             password: {
                 type: DataTypes.STRING,
             },
-            firstName: {
-                type: DataTypes.STRING,
-            },
-            lastName: {
-                type: DataTypes.STRING,
-            },
-            birthday: {
-                type: DataTypes.DATE,
-            },
         },
     )
 

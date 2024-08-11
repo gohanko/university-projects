@@ -7,8 +7,8 @@ const User = databaseService.user
 const TokenBlacklist = databaseService.tokenBlacklist
 
 const verifyToken = async (
-    res: Response,
     req: Request,
+    res: Response,
     next: NextFunction
 ) => {
     try {
