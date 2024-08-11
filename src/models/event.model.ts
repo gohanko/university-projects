@@ -21,6 +21,10 @@ const event = (sequelize: Sequelize) => {
             endDate: {
                 type: DataTypes.DATE
             },
+            code: {
+                type: DataTypes.UUID,
+                defaultValue: DataTypes.UUIDV4,
+            }
         }
     )
 
@@ -30,6 +34,7 @@ const event = (sequelize: Sequelize) => {
             allowNull: true,
         }
     })
+
     Event.belongsTo(Event, {
         foreignKey: {
         name: "parentEventId",
