@@ -2,9 +2,10 @@ import express, { Express, Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import databaseService from './services/database.service';
-import authenticationRouter from './routes/authentication.route'
+import userRouter from './routes/user.route'
 import { API_PORT } from './configs/'
 import eventRouter from './routes/event.route';
+import eventParticipationRouter from './routes/eventParticipation.route';
 
 const app: Express = express()
 
@@ -19,16 +20,11 @@ databaseService.sequelize
         console.log("[server] : Failed to sync database: " + err.message);
     });
 
-app.use('/api/', authenticationRouter)
+app.use('/api/', userRouter)
 app.use('/api/', eventRouter)
-
-app.get('/', (req: Request, res: Response) => {
-    res.send("Hello world!")  
-})
+app.use('/api/', eventParticipationRouter)
 
 app.listen(
     API_PORT,
-    () => {
-        console.log(`[server] : Server is running on http://localhost:${API_PORT}`)
-    }
+    () => console.log(`[server] : Server is running on http://localhost:${API_PORT}`)
 )

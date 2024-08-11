@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import databaseService from "../services/database.service"
-import { generateAccessToken } from '../utils/'
+import { generateAccessToken } from '../utils'
 
 const User = databaseService.user
 const TokenBlacklist = databaseService.tokenBlacklist
@@ -8,7 +8,6 @@ const TokenBlacklist = databaseService.tokenBlacklist
 const register = async (
     req: Request,
     res: Response,
-    next: NextFunction
 ) => {
     const { email, password } = req.body;
 
@@ -66,7 +65,6 @@ const register = async (
 const login = async (
     req: Request,
     res: Response,
-    next: NextFunction
 ) => {
     const { email, password } = req.body;
 
@@ -133,7 +131,6 @@ const login = async (
 const logout = async (
     req: Request,
     res: Response,
-    next: NextFunction
 ) => {
     try {
         const authHeader = req.headers['cookie'];
@@ -164,10 +161,9 @@ const logout = async (
     res.end();
 }
 
-const resetPassword = (
+const changePassword = (
     req: Request,
     res: Response,
-    next: NextFunction
 ) => {
 }
 
@@ -175,5 +171,5 @@ export {
     register,
     login,
     logout,
-    resetPassword
+    changePassword
 }
