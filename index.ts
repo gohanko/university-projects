@@ -1,6 +1,6 @@
-import databaseService from './src/services/database.service';
-import expressApp from './src/espressApp'
-import { API_PORT } from './src/configs'
+import databaseService from './services/database.service';
+import expressApp from './espressApp'
+import { API_PORT } from './configs'
 
 databaseService.sequelize.sync()
     .then(() => {

@@ -1,6 +1,6 @@
 import request from 'supertest'
-import expressApp from "../../src/espressApp";
-import databaseService from '../../src/services/database.service';
+import expressApp from "../../espressApp";
+import databaseService from '../../services/database.service';
 
 describe('POST /api/user/register/', () => {
     beforeEach(() => {
