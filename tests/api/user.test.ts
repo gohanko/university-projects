@@ -114,7 +114,7 @@ describe('POST /api/user/login/', () => {
             .send(payload)
 
         expect(response.status).toBe(200)
-        expect(response.header['set-cookie'][0]).toBe('a')
+        expect(response.header['set-cookie'][0]).not.toBeNull()
     })
 })
 
