@@ -30,10 +30,14 @@ const verifyToken = async (
                 return res.status(401).json({ message: "This session has expired. Please login" });
             }
 
-            const { id } = decoded; // get user id from the decoded token
-            const user = await User.findByPk(id); // find user by that `id`
-            const { password, ...data } = user?.dataValues; // return user object without the password
-            req.user = data; // put the data object into req.user
+            const { id }: any = decoded;            
+            const user = await User.findByPk(id);
+            const {
+                password,
+                ...data
+            } = user?.dataValues;
+            
+            req.user = data;
             next();
         });
     } catch (err) {

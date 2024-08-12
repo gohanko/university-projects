@@ -12,16 +12,16 @@ import verifyToken from '../middlewares/verifyToken.middleware'
 const userRouter = express.Router()
 userRouter.post(
     '/user/register/',
-    check('email').notEmpty().isEmail(),
-    check('password').notEmpty().isStrongPassword(),
+    check('email').notEmpty().isEmail().withMessage("Email is invalid."),
+    check('password').notEmpty().isString().withMessage("Password is invalid."),
     inputValidation,
     register
 )
 
 userRouter.post(
     '/user/login/',
-    check('email').notEmpty().isEmail(),
-    check('password').notEmpty().isStrongPassword(),
+    check('email').notEmpty().isEmail().withMessage("Email is invalid."),
+    check('password').notEmpty().isString().withMessage("Password is invalid."),
     inputValidation,
     login
 )
