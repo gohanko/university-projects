@@ -1,4 +1,5 @@
 import { DataTypes, Sequelize } from "sequelize";
+import user from "./user.model";
 
 const event = (sequelize: Sequelize) => {
     const Event = sequelize.define(
@@ -37,8 +38,14 @@ const event = (sequelize: Sequelize) => {
 
     Event.belongsTo(Event, {
         foreignKey: {
-        name: "parentEventId",
-        allowNull: false,
+            name: "parentEventId",
+            allowNull: false,
+        }
+    })
+
+    Event.belongsTo(user(sequelize), {
+        foreignKey: {
+            name: "createdByUserId",
         }
     })
 

@@ -3,11 +3,11 @@ import databaseService from "../services/database.service"
 
 const Event = databaseService.event
 
-const getEvents = async (
+const getAllEvents = async (
     req: Request,
     res: Response
 ) => {
-    const events = await Event.findAll()
+    const events = await Event.findAll({ where: { createdByUserId: req.user.id }})
 
     return res.status(200).json({
         status: "Success",
@@ -40,12 +40,15 @@ const createEvent = async (
         parentEventId,
     } = req.body;
 
+    const createdByUserId = req.user.id
+
     const newEvent = await Event.create({
         name,
         description,
         startDate,
         endDate,
-        parentEventId
+        parentEventId,
+        createdByUserId
     })
 
     return res.status(201).json({
@@ -118,7 +121,7 @@ const deleteEvent = async (
 }
 
 export {
-    getEvents,
+    getAllEvents,
     getEventDetail,
     createEvent,
     updateEvent,

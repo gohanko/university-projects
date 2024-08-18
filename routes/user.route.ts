@@ -7,7 +7,7 @@ import {
 } from '../controllers/user.controller'
 import { check } from 'express-validator'
 import inputValidation from '../middlewares/inputValidation.middleware'
-import verifyToken from '../middlewares/verifyToken.middleware'
+import { mustBeAuthorized } from '../middlewares/mustBeAuthorized.middleware'
 
 const userRouter = express.Router()
 userRouter.post(
@@ -33,7 +33,7 @@ userRouter.post(
 
 userRouter.post(
     '/user/change_password/',
-    verifyToken,
+    mustBeAuthorized,
     changePassword
 )
 

@@ -11,11 +11,23 @@ const eventParticipation = (sequelize: Sequelize) => {
                 primaryKey: true,
                 autoIncrement: true,
             },
+            isAttended: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+            }
         }
     )
 
-    EventParticipation.belongsTo(user(sequelize))
-    EventParticipation.belongsTo(event(sequelize))
+    EventParticipation.belongsTo(user(sequelize), {
+        foreignKey: {
+            name: "participatedByUserId",
+        }
+    })
+    EventParticipation.belongsTo(event(sequelize), {
+        foreignKey: {
+            name: "eventId",
+        }
+    })
     
     return EventParticipation
 }

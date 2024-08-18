@@ -1,22 +1,49 @@
 import express from 'express'
-import { getEventCode, verifyParticipation } from '../controllers/eventParticipation.controller'
+import {
+    getEventParticipations,
+    createEventParticipation,
+    deleteEventParticipation,
+    getEventCode,
+    verifyParticipation
+} from '../controllers/eventParticipation.controller'
 import { check, param } from 'express-validator'
-import verifyToken from '../middlewares/verifyToken.middleware'
+import { mustBeAuthorized } from '../middlewares/mustBeAuthorized.middleware'
 
 const eventParticipationRouter = express.Router()
 
 eventParticipationRouter.get(
-    '/eventParticipation/:eventId',
+    '/event/participation/',
     param('eventId').notEmpty().isInt(),
-    verifyToken,
+    mustBeAuthorized,
+    getEventParticipations,
+)
+
+eventParticipationRouter.post(
+    '/event/participation/:eventId/join',
+    param('eventId').notEmpty().isInt(),
+    mustBeAuthorized,
+    createEventParticipation
+)
+
+eventParticipationRouter.delete(
+    '/event/participation/:eventParticipationId',
+    param('eventParticipationId').notEmpty().isInt(),
+    mustBeAuthorized,
+    deleteEventParticipation
+)
+
+eventParticipationRouter.get(
+    '/event/participation/:eventId/getCode/',
+    param('eventId').notEmpty().isInt(),
+    mustBeAuthorized,
     getEventCode,
 )
 
 eventParticipationRouter.post(
-    '/eventParticipation/',
-    check('eventId').notEmpty().isInt(),
-    check('userId').notEmpty().isInt(),
-    verifyToken,
+    '/event/participation/:eventId/verify',
+    param('eventId').notEmpty().isInt(),
+    check('eventCode').notEmpty().isInt(),
+    mustBeAuthorized,
     verifyParticipation,
 )
 

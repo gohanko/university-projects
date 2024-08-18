@@ -1,24 +1,24 @@
 import express from 'express'
-import { createEvent, deleteEvent, getEventDetail, getEvents, updateEvent } from '../controllers/event.controller'
+import {
+    createEvent,
+    deleteEvent,
+    getEventDetail,
+    getAllEvents,
+    updateEvent
+} from '../controllers/event.controller'
 import inputValidation from '../middlewares/inputValidation.middleware'
 import { check, param } from 'express-validator'
-import verifyToken from '../middlewares/verifyToken.middleware'
+import {
+    mustBeAuthorized 
+} from '../middlewares/mustBeAuthorized.middleware'
 
 const eventRouter = express.Router()
 
 eventRouter.get(
     '/events/',
     inputValidation,
-    verifyToken,
-    getEvents
-)
-
-eventRouter.get(
-    '/events/:id',
-    param('id').notEmpty().isInt(),
-    inputValidation,
-    verifyToken,
-    getEventDetail
+    mustBeAuthorized,
+    getAllEvents
 )
 
 eventRouter.post(
@@ -29,8 +29,16 @@ eventRouter.post(
     check('endDate').notEmpty().isISO8601().toDate(),
     check('parentEventId').isInt().optional({ nullable: true }),
     inputValidation,
-    verifyToken,
+    mustBeAuthorized,
     createEvent
+)
+
+eventRouter.get(
+    '/events/:id',
+    param('id').notEmpty().isInt(),
+    inputValidation,
+    mustBeAuthorized,
+    getEventDetail
 )
 
 eventRouter.put(
@@ -42,7 +50,7 @@ eventRouter.put(
     check('endDate').notEmpty().isDate(),
     check('parentEventId').isInt().optional({ nullable: true }),
     inputValidation,
-    verifyToken,
+    mustBeAuthorized,
     updateEvent
 )
 
@@ -50,7 +58,7 @@ eventRouter.delete(
     '/events/:id',
     param('id').notEmpty().isInt(),
     inputValidation,
-    verifyToken,
+    mustBeAuthorized,
     deleteEvent
 )
 

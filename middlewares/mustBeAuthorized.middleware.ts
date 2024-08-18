@@ -6,7 +6,7 @@ import { SECRET_ACCESS_TOKEN } from "../configs";
 const User = databaseService.user
 const TokenBlacklist = databaseService.tokenBlacklist
 
-const verifyToken = async (
+const mustBeAuthorized = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -50,4 +50,6 @@ const verifyToken = async (
     }
 }
 
-export default verifyToken
+export {
+    mustBeAuthorized
+}

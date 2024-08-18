@@ -2,5 +2,7 @@
     "appService.zipIgnorePattern": [
         "node_modules{,/**}",
         ".vscode{,/**}"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/4212c0d9-4a85-4d4e-ac20-0b7977cdf993/resourceGroups/SidewayQR_Group/providers/Microsoft.Web/sites/SidewayQR-API",
+    "appService.deploySubpath": "src"
 }
