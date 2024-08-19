@@ -50,15 +50,33 @@ android {
 }
 
 dependencies {
-
+    // Kotlin
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // Jetpack Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+
+    // Android Stuff
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+
+    // Material 3
     implementation(libs.androidx.material3)
+
+    // Material 3 Icons Extended
+    implementation(libs.androidx.material.icons.extended)
+    
+    // Quick Response (QR) Code Scanning Libraries
+    implementation(libs.quickie.bundled)
+
+    // RetroFit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
