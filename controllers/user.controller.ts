@@ -106,7 +106,7 @@ const login = async (
             status: "error",
             code: 500,
             data: [],
-            message: "Internal Server Error",
+            message: `Internal Server Error: ${err}`,
         });
     }
 
