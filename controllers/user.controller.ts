@@ -5,7 +5,7 @@ import { generateAccessToken } from '../utils/generateAccessToken.util'
 const User = databaseService.user
 const TokenBlacklist = databaseService.tokenBlacklist
 
-const register = async (
+export const registerUser = async (
     req: Request,
     res: Response,
 ) => {
@@ -17,8 +17,7 @@ const register = async (
             return res
                 .status(400)
                 .json({
-                    status: "Failed",
-                    data: [],
+                    status: "failed",
                     message: "It seems you already have an account, please log in instead.",
                 })
         }
@@ -30,7 +29,7 @@ const register = async (
 
         const { role, ...userData } = newUser.dataValues
         res.status(201).json({
-            status: "Success",
+            status: "success",
             data: [userData],
             message: "Thank you for registering with us. Your account has been successfully created."
         })
@@ -38,7 +37,6 @@ const register = async (
         res.status(500).json({
             status: "error",
             code: 500,
-            data: [],
             message: "Internal Server Error",
         });
     }
@@ -46,66 +44,47 @@ const register = async (
     res.end()
 }
 
-const login = async (
+export const loginUser = async (
     req: Request,
     res: Response,
 ) => {
     const { email, password } = req.body;
 
-    if (!email) {
-        res.status(400).json({
-            status: "Failed",
-            data: [],
-            message: "Email are required.",
-        })
-    }
-
-    if (!password) {
-        res.status(400).json({
-            status: "Failed",
-            data: [],
-            message: "Password are required.",
-        })
-    }
-
     try {
         const existingUser = await User.findOne({ where: { email: email } })
         if (!existingUser) {
-            res.status(400).json({
-                status: "Failed",
-                data: [],
+            return res.status(400).json({
+                status: "failed",
                 message: "User does not exist."
             })
         }
 
-        if (existingUser?.dataValues.email == email && existingUser?.dataValues.password == password) {
-            const token = generateAccessToken(existingUser?.dataValues.id)
-            const options = {
-                maxAge: 20 * 60 * 1000, // would expire in 20 minutes
-                httpOnly: true, // The cookie is only accessible by the web server
-                secure: true,
-                sameSite: true,
-            };
-
-            res.cookie("SessionID", token, options)
-            res.status(200).json({
-                status: "Success",
-                accessToken: token,
-                data: [],
-                message: "You have successfully logged in."
-            })
-        } else {
-            res.status(400).json({
-                status: "Failed",
-                data: [],
+        if (existingUser?.dataValues.email !== email
+            || existingUser?.dataValues.password !== password) {
+            return res.status(400).json({
+                status: "failed",
                 message: "Invalid username or password."
             })
         }
+
+        const token = generateAccessToken(existingUser?.dataValues.id)
+        const options = {
+            maxAge: 20 * 60 * 1000, // would expire in 20 minutes
+            httpOnly: true, // The cookie is only accessible by the web server
+            secure: true,
+            sameSite: true,
+        };
+
+        res.cookie("SessionID", token, options)
+        return res.status(200).json({
+            status: "success",
+            accessToken: token,
+            message: "You have successfully logged in."
+        })
     } catch (err) {
         res.status(500).json({
             status: "error",
             code: 500,
-            data: [],
             message: `Internal Server Error: ${err}`,
         });
     }
@@ -113,7 +92,7 @@ const login = async (
     res.end()
 }
 
-const logout = async (
+export const logoutUser = async (
     req: Request,
     res: Response,
 ) => {
@@ -146,15 +125,18 @@ const logout = async (
     res.end();
 }
 
-const changePassword = (
+export const changeUserPassword = async (
     req: Request,
     res: Response,
 ) => {
-}
+    const { new_password } = req.body
 
-export {
-    register,
-    login,
-    logout,
-    changePassword
+    const userId = req.user.id
+    const user = await User.findByPk(userId)
+    user?.update({ password: new_password})
+
+    return res.status(200).json({
+        status: 'success',
+        message: "User password has been updated."
+    })
 }

@@ -44,7 +44,6 @@ const mustBeAuthorized = async (
         res.status(500).json({
             status: "error",
             code: 500,
-            data: [],
             message: "Internal Server Error",
         });
     }

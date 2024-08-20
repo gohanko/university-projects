@@ -1,10 +1,14 @@
 import express from 'express'
 import {
     createEvent,
+    readEvent,
+    updateEvent,
     deleteEvent,
-    getEventDetail,
     getAllEvents,
-    updateEvent
+    getEventCode,
+    joinEvent,
+    leaveEvent,
+    attendEvent,
 } from '../controllers/event.controller'
 import inputValidation from '../middlewares/inputValidation.middleware'
 import { check, param } from 'express-validator'
@@ -14,52 +18,69 @@ import {
 
 const eventRouter = express.Router()
 
-eventRouter.get(
-    '/events/',
-    inputValidation,
-    mustBeAuthorized,
-    getAllEvents
-)
+eventRouter.use(inputValidation, mustBeAuthorized)
 
 eventRouter.post(
-    '/events/',
+    '/event/',
     check('name').notEmpty().isString(),
     check('description').notEmpty().isString(),
     check('startDate').notEmpty().isISO8601().toDate(),
     check('endDate').notEmpty().isISO8601().toDate(),
     check('parentEventId').isInt().optional({ nullable: true }),
-    inputValidation,
-    mustBeAuthorized,
     createEvent
 )
 
 eventRouter.get(
-    '/events/:id',
-    param('id').notEmpty().isInt(),
-    inputValidation,
-    mustBeAuthorized,
-    getEventDetail
+    '/event/:eventId',
+    param('eventId').notEmpty().isInt(),
+    readEvent
 )
 
 eventRouter.put(
-    '/events/:id',
-    param('id').notEmpty().isInt(),
+    '/event/:eventId',
+    param('eventId').notEmpty().isInt(),
     check('name').notEmpty().isString(),
     check('description').notEmpty().isString(),
     check('startDate').notEmpty().isDate(),
     check('endDate').notEmpty().isDate(),
     check('parentEventId').isInt().optional({ nullable: true }),
-    inputValidation,
-    mustBeAuthorized,
     updateEvent
 )
 
 eventRouter.delete(
-    '/events/:id',
-    param('id').notEmpty().isInt(),
-    inputValidation,
-    mustBeAuthorized,
+    '/event/:eventId',
+    param('eventId').notEmpty().isInt(),
     deleteEvent
+)
+
+eventRouter.get(
+    '/event/:eventId/code',
+    param('eventId').notEmpty().isInt(),
+    getEventCode
+)
+
+eventRouter.get(
+    '/event/:eventId/join',
+    param('eventId').notEmpty().isInt(),
+    joinEvent
+)
+
+eventRouter.get(
+    '/event/:eventId/leave',
+    param('eventId').notEmpty().isInt(),
+    leaveEvent
+)
+
+eventRouter.get(
+    '/event/:eventId/attend',
+    param('eventId').notEmpty().isInt(),
+    attendEvent
+)
+
+// TODO later
+eventRouter.get(
+    '/event/all/',
+    getAllEvents
 )
 
 export default eventRouter

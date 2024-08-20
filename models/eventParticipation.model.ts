@@ -20,9 +20,10 @@ const eventParticipation = (sequelize: Sequelize) => {
 
     EventParticipation.belongsTo(user(sequelize), {
         foreignKey: {
-            name: "participatedByUserId",
+            name: "userId",
         }
     })
+
     EventParticipation.belongsTo(event(sequelize), {
         foreignKey: {
             name: "eventId",

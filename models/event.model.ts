@@ -29,23 +29,9 @@ const event = (sequelize: Sequelize) => {
         }
     )
 
-    Event.hasMany(Event, {
-        foreignKey: {
-            name: "parentEventId",
-            allowNull: true,
-        }
-    })
-
-    Event.belongsTo(Event, {
-        foreignKey: {
-            name: "parentEventId",
-            allowNull: false,
-        }
-    })
-
     Event.belongsTo(user(sequelize), {
         foreignKey: {
-            name: "createdByUserId",
+            name: "createdBy",
         }
     })
 
