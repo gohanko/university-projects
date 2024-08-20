@@ -1,4 +1,4 @@
-package com.example.sidewayqr.ui.screens.ScanHistoryScreen
+package com.example.sidewayqr.ui.screens.scan_history
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -6,13 +6,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sidewayqr.data.Event
+import com.example.sidewayqr.data.model.Event
 import com.example.sidewayqr.network.SidewayQRAPIService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ScanHistoryViewModel: ViewModel() {
+class ScanHistoryViewModel(
+    private val sidewayQRAPIService: SidewayQRAPIService
+): ViewModel() {
     private val _isSearching = MutableStateFlow(false)
     val isSearching = _isSearching.asStateFlow()
 
@@ -38,7 +40,6 @@ class ScanHistoryViewModel: ViewModel() {
 
     fun loadEvents() {
         viewModelScope.launch {
-            val sidewayQRAPIService = SidewayQRAPIService.getInstance()
             try {
                 _eventsList.clear()
                 _eventsList.addAll(sidewayQRAPIService.getEvents())

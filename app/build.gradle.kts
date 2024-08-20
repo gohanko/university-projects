@@ -68,7 +68,10 @@ dependencies {
 
     // Material 3 Icons Extended
     implementation(libs.androidx.material.icons.extended)
-    
+
+    // Proto DataStore
+    implementation(libs.androidx.datastore)
+
     // Quick Response (QR) Code Scanning Libraries
     implementation(libs.quickie.bundled)
 

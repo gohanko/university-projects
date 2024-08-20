@@ -1,4 +1,4 @@
-package com.example.sidewayqr.data
+package com.example.sidewayqr.data.model
 
 import java.util.Date
 import java.util.UUID

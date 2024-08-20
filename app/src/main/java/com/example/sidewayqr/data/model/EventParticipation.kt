@@ -1,4 +1,4 @@
-package com.example.sidewayqr.data
+package com.example.sidewayqr.data.model
 
 data class EventParticipation(
     val id: Number,

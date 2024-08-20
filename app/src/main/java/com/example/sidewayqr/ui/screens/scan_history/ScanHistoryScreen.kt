@@ -1,6 +1,5 @@
-package com.example.sidewayqr.ui.screens.ScanHistoryScreen
+package com.example.sidewayqr.ui.screens.scan_history
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -20,14 +19,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.composables.ScanHistoryList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScanHistoryScreen() {
-    val viewModel = ScanHistoryViewModel()
+fun ScanHistoryScreen(
+    sidewayQRAPIService: SidewayQRAPIService
+) {
+    val viewModel = ScanHistoryViewModel(sidewayQRAPIService)
 
     val searchText by viewModel.searchText.collectAsState()
     val isSearching by viewModel.isSearching.collectAsState()
@@ -66,11 +67,11 @@ fun ScanHistoryScreen() {
     ) { innerPadding ->
         if (errorMessage.isNotEmpty()) {
             Text(text = errorMessage)
+        } else {
+            ScanHistoryList(
+                modifier = Modifier.padding(innerPadding),
+                eventsList = eventsList
+            )
         }
-
-        ScanHistoryList(
-            modifier = Modifier.padding(innerPadding),
-            eventsList = eventsList
-        )
     }
 }
