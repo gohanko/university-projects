@@ -90,7 +90,9 @@ const login = async (
             res.cookie("SessionID", token, options)
             res.status(200).json({
                 status: "Success",
-                data: [],
+                data: {
+                    accessToken: token
+                },
                 message: "You have successfully logged in."
             })
         } else {
