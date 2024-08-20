@@ -11,8 +11,6 @@ import { mustBeAuthorized } from '../middlewares/mustBeAuthorized.middleware'
 
 const userRouter = express.Router()
 
-userRouter.use(inputValidation)
-
 userRouter.post(
     '/user/register/',
     check('email')
@@ -23,6 +21,7 @@ userRouter.post(
         .notEmpty()
         .isString()
         .withMessage("Password is invalid."),
+        inputValidation,
         registerUser
 )
 
@@ -36,6 +35,7 @@ userRouter.post(
         .notEmpty()
         .isString()
         .withMessage("Password is invalid."),
+    inputValidation,
     loginUser
 )
 
@@ -50,6 +50,7 @@ userRouter.post(
         .notEmpty()
         .isString()
         .withMessage("new_message must not be empty."),
+    inputValidation,
     mustBeAuthorized,
     changeUserPassword
 )
