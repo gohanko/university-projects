@@ -39,8 +39,10 @@ userRouter.post(
     loginUser
 )
 
-userRouter.post(
+userRouter.get(
     '/user/logout/',
+    inputValidation,
+    mustBeAuthorized,
     logoutUser
 )
 

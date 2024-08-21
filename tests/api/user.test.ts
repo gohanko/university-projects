@@ -2,8 +2,9 @@ import request from 'supertest'
 import expressApp from "../../espressApp";
 import databaseService from '../../services/database.service';
 
-beforeAll(() => {
-    databaseService.user.truncate()
+beforeAll(async () => {
+    await databaseService.sequelize.sync()
+    await databaseService.user.truncate()
 })
 
 describe('POST /api/user/register/', () => {
@@ -114,31 +115,68 @@ describe('POST /api/user/login/', () => {
 
         expect(response.status).toBe(200)
         expect(response.body.accessToken).not.toBeNull()
-        expect(response.header['set-cookie'][0]).not.toBeNull()
         authCookie = response.header['set-cookie']
+        expect(authCookie).not.toBeNull()
     })
 })
 
-describe('POST /api/user/logout/', () => {
+describe('GET /api/user/logout/', () => {
     it('Should logout and return 200', async () => {
         const response = await request(expressApp)
-            .post('/api/user/logout/')
+            .get('/api/user/logout/')
             .set('Cookie', authCookie)
-        
+            .send()
+            
         expect(response.status).toBe(200)
     })
 
     it('Should return 204 when user try to logout with same token', async () => {
         const response = await request(expressApp)
-            .post('/api/user/logout/')
+            .get('/api/user/logout/')
             .set('Cookie', authCookie)
+            .send()
         
-        expect(response.status).toBe(204)
+        expect(response.status).toBe(401)
     })
 })
 
 describe('POST /api/user/change_password/', () => {
-    it('', async () => {
+    it('Should change user password.', async () => {
+        const userPayload = {
+            email: "email@email.com",
+            password: "emailPassword"
+        }
+
+        // Register an account
+        const registerResponse = await request(expressApp)
+        .post('/api/user/register/')
+        .send(userPayload)
+
+        expect(registerResponse.status).toBe(201)
+
+        // Login to get auth token
+        const loginResponse = await request(expressApp)
+            .post('/api/user/login/')
+            .send(userPayload)
+        const authCookie = loginResponse.header['set-cookie']
         
+        // Change password.
+        const new_password = 'new_password'
+        const changePasswordResponse = await request(expressApp)
+            .post('/api/user/change_password/')
+            .set('Cookie', authCookie)
+            .send({
+                new_password
+            })
+
+        expect(changePasswordResponse.status).toBe(200)
+
+        // Verify that the password is changed by loggin in.
+        userPayload.password = new_password
+        const loginWithNewPasswordResponse = await request(expressApp)
+            .post('/api/user/login/')
+            .send(userPayload)
+
+        expect(loginWithNewPasswordResponse.status).toBe(200)
     })
 })

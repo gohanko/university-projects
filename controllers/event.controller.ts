@@ -14,18 +14,15 @@ export const createEvent = async (
         description,
         startDate,
         endDate,
-        parentEventId,
     } = req.body;
-
-    const createdByUserId = req.user.id
+    const createdBy = req.user.id
 
     const newEvent = await Event.create({
         name,
         description,
         startDate,
         endDate,
-        parentEventId,
-        createdByUserId
+        createdBy
     })
 
     return res.status(201).json({
