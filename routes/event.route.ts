@@ -42,8 +42,8 @@ eventRouter.put(
     param('eventId').notEmpty().isInt(),
     check('name').notEmpty().isString(),
     check('description').notEmpty().isString(),
-    check('startDate').notEmpty().isDate(),
-    check('endDate').notEmpty().isDate(),
+    check('startDate').notEmpty().isISO8601().toDate(),
+    check('endDate').notEmpty().isISO8601().toDate(),
     inputValidation,
     mustBeAuthorized,
     updateEvent
@@ -81,9 +81,10 @@ eventRouter.get(
     leaveEvent
 )
 
-eventRouter.get(
+eventRouter.put(
     '/event/:eventId/attend',
     param('eventId').notEmpty().isInt(),
+    check('eventCode').notEmpty(),
     inputValidation,
     mustBeAuthorized,
     attendEvent

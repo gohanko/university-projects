@@ -3,8 +3,7 @@ import expressApp from "../../espressApp";
 import databaseService from '../../services/database.service';
 
 beforeAll(async () => {
-    await databaseService.sequelize.sync()
-    await databaseService.user.truncate()
+    await databaseService.sequelize.sync({ force: true })
 })
 
 describe('POST /api/user/register/', () => {

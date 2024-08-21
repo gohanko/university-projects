@@ -40,6 +40,13 @@ export const readEvent = async (
     const eventId = req.params.eventId
 
     const event = await Event.findByPk(eventId)
+    if (!event) {
+        return res.status(404).json({
+            status: "failure",
+            message: "The system failed to find event."
+        })
+    }
+
     return res.status(200).json({
         status: "success",
         data: event?.dataValues
@@ -113,7 +120,7 @@ export const getEventCode = async (
 
     const event = await Event.findByPk(eventId)
     if (!event) {
-        res.status(404).json({
+        return res.status(404).json({
             status: 'Failed',
             message: "Event not found",
         })
@@ -158,7 +165,7 @@ export const leaveEvent = async (
     res: Response,
 ) => {
     const eventId = req.params.eventId
-    const userId = req.params.userId
+    const userId = req.user.id
 
     await EventParticipation.destroy({
         where: {
