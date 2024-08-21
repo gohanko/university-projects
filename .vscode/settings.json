@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/4212c0d9-4a85-4d4e-ac20-0b7977cdf993/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/sidewayqr-api",
+    "appService.deploySubpath": "."
+}
