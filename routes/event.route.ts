@@ -11,7 +11,7 @@ import {
     attendEvent,
 } from '../controllers/event.controller'
 import inputValidation from '../middlewares/inputValidation.middleware'
-import { check, param } from 'express-validator'
+import { body, check, param } from 'express-validator'
 import {
     mustBeAuthorized 
 } from '../middlewares/mustBeAuthorized.middleware'
@@ -20,10 +20,10 @@ const eventRouter = express.Router()
 
 eventRouter.post(
     '/event/',
-    check('name').notEmpty().isString(),
-    check('description').notEmpty().isString(),
-    check('startDate').notEmpty().isISO8601().toDate(),
-    check('endDate').notEmpty().isISO8601().toDate(),
+    body('name').notEmpty().isString(),
+    body('description').notEmpty().isString(),
+    body('startDate').notEmpty().isISO8601().toDate(),
+    body('endDate').notEmpty().isISO8601().toDate(),
     inputValidation,
     mustBeAuthorized,
     createEvent
@@ -40,10 +40,10 @@ eventRouter.get(
 eventRouter.put(
     '/event/:eventId',
     param('eventId').notEmpty().isInt(),
-    check('name').notEmpty().isString(),
-    check('description').notEmpty().isString(),
-    check('startDate').notEmpty().isISO8601().toDate(),
-    check('endDate').notEmpty().isISO8601().toDate(),
+    body('name').notEmpty().isString(),
+    body('description').notEmpty().isString(),
+    body('startDate').notEmpty().isISO8601().toDate(),
+    body('endDate').notEmpty().isISO8601().toDate(),
     inputValidation,
     mustBeAuthorized,
     updateEvent
@@ -84,7 +84,7 @@ eventRouter.get(
 eventRouter.put(
     '/event/:eventId/attend',
     param('eventId').notEmpty().isInt(),
-    check('eventCode').notEmpty(),
+    body('eventCode').notEmpty(),
     inputValidation,
     mustBeAuthorized,
     attendEvent

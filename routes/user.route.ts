@@ -5,7 +5,7 @@ import {
     logoutUser,
     changeUserPassword
 } from '../controllers/user.controller'
-import { check } from 'express-validator'
+import { body } from 'express-validator'
 import inputValidation from '../middlewares/inputValidation.middleware'
 import { mustBeAuthorized } from '../middlewares/mustBeAuthorized.middleware'
 
@@ -13,11 +13,11 @@ const userRouter = express.Router()
 
 userRouter.post(
     '/user/register/',
-    check('email')
+    body('email')
         .notEmpty()
         .isEmail()
         .withMessage("Email is invalid."),
-    check('password')
+    body('password')
         .notEmpty()
         .isString()
         .withMessage("Password is invalid."),
@@ -27,11 +27,11 @@ userRouter.post(
 
 userRouter.post(
     '/user/login/',
-    check('email')
+    body('email')
         .notEmpty()
         .isEmail()
         .withMessage("Email is invalid."),
-    check('password')
+    body('password')
         .notEmpty()
         .isString()
         .withMessage("Password is invalid."),
@@ -48,7 +48,7 @@ userRouter.get(
 
 userRouter.post(
     '/user/change_password/',
-    check("new_password")
+    body("new_password")
         .notEmpty()
         .isString()
         .withMessage("new_message must not be empty."),
