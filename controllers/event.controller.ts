@@ -220,12 +220,23 @@ export const attendEvent = async (
     })
 }
 
-// TODO
-export const getAllEvents = async (
+export const getEvents = async (
     req: Request,
     res: Response
 ) => {
-    const events = await Event.findAll({ where: { createdByUserId: req.user.id }})
+    const eventsCreatedByUser = await Event.findAll({ where: { createdBy: req.user.id }})
+    const eventsParticipatedByUser = await EventParticipation.findAll({
+        where: { userId: req.user.id },
+        include: [{
+            model: Event
+        }]
+    })
+
+    const events: any = eventsCreatedByUser
+    eventsParticipatedByUser.map((eventParticipation) => {
+        events.push(eventParticipation.dataValues.event)
+    })
+
 
     return res.status(200).json({
         status: "success",

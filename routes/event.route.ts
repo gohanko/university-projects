@@ -4,11 +4,11 @@ import {
     readEvent,
     updateEvent,
     deleteEvent,
-    getAllEvents,
     getEventCode,
     joinEvent,
     leaveEvent,
     attendEvent,
+    getEvents,
 } from '../controllers/event.controller'
 import inputValidation from '../middlewares/inputValidation.middleware'
 import { body, check, param } from 'express-validator'
@@ -90,12 +90,11 @@ eventRouter.put(
     attendEvent
 )
 
-// TODO later
 eventRouter.get(
-    '/event/all/',
+    '/events/',
     inputValidation,
     mustBeAuthorized,
-    getAllEvents
+    getEvents
 )
 
 export default eventRouter
