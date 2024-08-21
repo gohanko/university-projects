@@ -18,10 +18,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2 # Step 1: Check out the source code from the repository.
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Set up Node.js version
       uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '20.x'
         cache: 'npm' # Step 2: Use npm caching for faster dependency installs.
 
     - name: Install Node.js dependencies
