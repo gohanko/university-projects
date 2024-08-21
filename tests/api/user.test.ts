@@ -1,14 +1,5 @@
 import request from 'supertest'
 import expressApp from "../../espressApp";
-import databaseService from '../../services/database.service';
-
-beforeAll(() => {
-    databaseService.user.truncate()
-})
-
-afterAll(() => {
-    databaseService.user.truncate()
-})
 
 describe('POST /api/user/register/', () => {
     it('Should not register when email set to nothing.', async () => {
