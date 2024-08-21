@@ -7,7 +7,7 @@ import eventParticipation from "../models/eventParticipation.model";
 const sequelize = new Sequelize(
     {
         dialect: 'sqlite',
-        storage: ':memory',
+        storage: 'database.sqlite3',
         logging: false
     }
 )
