@@ -6,6 +6,10 @@ beforeAll(() => {
     databaseService.user.truncate()
 })
 
+afterAll(() => {
+    databaseService.user.truncate()
+})
+
 describe('POST /api/user/register/', () => {
     it('Should not register when email set to nothing.', async () => {
         const payload = {
