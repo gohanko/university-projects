@@ -12,16 +12,16 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x] # Define a matrix of Node.js versions to test.There would be 3 jobs for 12.x, 14.x, 16.x
+        node-version: [20.x] # Define a matrix of Node.js versions to test.There would be 3 jobs for 12.x, 14.x, 16.x
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2 # Step 1: Check out the source code from the repository.
 
-    - name: Set up Node.js version
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
-        node-version: '20.x'
+        node-version: ${{ matrix.node-version }}
         cache: 'npm' # Step 2: Use npm caching for faster dependency installs.
 
     - name: Install Node.js dependencies
