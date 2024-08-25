@@ -1,8 +1,8 @@
-package com.example.sidewayqr.data.api
+package com.example.sidewayqr.data.api.authentication
 
 import com.google.gson.annotations.SerializedName
 
-data class AuthenticationRequest(
+data class RegisterLoginRequest(
     @SerializedName("email")
     val email: String,
 

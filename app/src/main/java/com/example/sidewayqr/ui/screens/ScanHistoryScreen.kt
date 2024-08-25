@@ -1,5 +1,6 @@
-package com.example.sidewayqr.ui.screens.scan_history
+package com.example.sidewayqr.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -20,24 +21,28 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.composables.ScanHistoryList
+import com.example.sidewayqr.ui.composables.status.NotFound
+import com.example.sidewayqr.viewmodel.ScanHistorySearchViewModel
+import com.example.sidewayqr.viewmodel.SidewayQRViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScanHistoryScreen(
-    sidewayQRAPIService: SidewayQRAPIService
+    sidewayQRAPIService: SidewayQRAPIService,
+    sidewayQRViewModel: SidewayQRViewModel,
+    cookieRepository: CookieRepository
 ) {
-    val viewModel = ScanHistoryViewModel(sidewayQRAPIService)
+    val searchViewmodel = ScanHistorySearchViewModel(sidewayQRAPIService)
 
-    val searchText by viewModel.searchText.collectAsState()
-    val isSearching by viewModel.isSearching.collectAsState()
+    val searchText by searchViewmodel.searchText.collectAsState()
+    val errorMessage by sidewayQRViewModel.errorMessage.collectAsState()
+    val eventsList = sidewayQRViewModel.eventsList
 
-    val eventsList = viewModel.eventsList
-    val errorMessage = viewModel.errorMessage
-    
     LaunchedEffect(Unit) {
-        viewModel.loadEvents()
+        sidewayQRViewModel.getEvents()
     }
 
     Scaffold(
@@ -50,10 +55,10 @@ fun ScanHistoryScreen(
                     .padding(horizontal = 10.dp, vertical = 5.dp)
                     .fillMaxWidth(),
                 query = searchText ,
-                onQueryChange = viewModel::onSearchTextChange,
-                onSearch = viewModel::onSearchTextChange,
+                onQueryChange = searchViewmodel::onSearchTextChange,
+                onSearch = searchViewmodel::onSearchTextChange,
                 active = false,
-                onActiveChange = { viewModel.onToggleSearch() },
+                onActiveChange = { searchViewmodel.onToggleSearch() },
                 placeholder = { Text(text = "Search for events")},
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
@@ -66,7 +71,9 @@ fun ScanHistoryScreen(
         }
     ) { innerPadding ->
         if (errorMessage.isNotEmpty()) {
-            Text(text = errorMessage)
+            Text(text = errorMessage, modifier = Modifier.padding(innerPadding))
+        } else if (eventsList.isEmpty()) {
+            NotFound()
         } else {
             ScanHistoryList(
                 modifier = Modifier.padding(innerPadding),

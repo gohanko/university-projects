@@ -1,13 +1,9 @@
-package com.example.sidewayqr.data.model
+package com.example.sidewayqr.data.api.event
 
 import com.google.gson.annotations.SerializedName
 import java.util.Date
-import java.util.UUID
 
-data class Event(
-    @SerializedName("id")
-    val id: Number,
-
+data class CreateUpdateEventRequest(
     @SerializedName("name")
     val name: String,
 
@@ -19,10 +15,4 @@ data class Event(
 
     @SerializedName("endDate")
     val endDate: Date,
-
-    @SerializedName("code")
-    val code: UUID,
-
-    @SerializedName("createBy")
-    val createdBy: Number
 )

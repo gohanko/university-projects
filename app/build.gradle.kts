@@ -70,7 +70,7 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
 
     // Proto DataStore
-    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.datastore.preferences)
 
     // Quick Response (QR) Code Scanning Libraries
     implementation(libs.quickie.bundled)
