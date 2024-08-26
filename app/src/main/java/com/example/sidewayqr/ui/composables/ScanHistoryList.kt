@@ -23,9 +23,7 @@ fun ScanHistoryList(
     ) {
         items(eventsList) {
             ScanHistoryListItem(
-                name = it.name,
-                startTime = it.startDate.time.toString(),
-                endTime = it.endDate.time.toString()
+                event = it
             )
         }
     }

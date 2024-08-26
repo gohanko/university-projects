@@ -30,25 +30,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.sidewayqr.data.model.Event
+import com.example.sidewayqr.utility.convertDateTimeToReadable
 
 @Composable
 fun ScanHistoryListItem(
-    name: String,
-    startTime: String,
-    endTime: String
+    event: Event,
 ) {
     Card (
         modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
         ),
     ) {
         Row {
+            val color = if (event.isAttended) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
             Column(
                 modifier = Modifier
-                    .background(color = Color.Green)
+                    .background(color = color)
                     .fillMaxHeight()
                     .width(10.dp)
             ) {}
@@ -66,7 +67,7 @@ fun ScanHistoryListItem(
             ) {
                 Row {
                     Text(
-                        text = name,
+                        text = event.name,
                         fontWeight = FontWeight.ExtraBold,
                     )
                 }
@@ -83,14 +84,13 @@ fun ScanHistoryListItem(
                         Icon(
                             modifier = Modifier
                                 .clip(shape = RoundedCornerShape(5.dp))
-                                .background(Color.LightGray)
                                 .padding(5.dp)
                                 .size(15.dp),
                             imageVector = Icons.AutoMirrored.Outlined.Login,
                             contentDescription = "Icon for event's starting time."
                         )
 
-                        Text(text = startTime)
+                        Text(text = convertDateTimeToReadable(event.startDate))
                     }
                     Row(
                         modifier = Modifier
@@ -102,14 +102,13 @@ fun ScanHistoryListItem(
                         Icon(
                             modifier = Modifier
                                 .clip(shape = RoundedCornerShape(5.dp))
-                                .background(Color.LightGray)
                                 .padding(5.dp)
                                 .size(15.dp),
                             imageVector = Icons.AutoMirrored.Outlined.Logout,
                             contentDescription = "Icon for event's ending time."
                         )
 
-                        Text(text = endTime)
+                        Text(text = convertDateTimeToReadable(event.endDate))
                     }
                 }
             }

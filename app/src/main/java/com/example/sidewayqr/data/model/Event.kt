@@ -24,5 +24,8 @@ data class Event(
     val code: UUID,
 
     @SerializedName("createdBy")
-    val createdBy: Number
+    val createdBy: Number,
+
+    @SerializedName("isAttended")
+    val isAttended: Boolean = false
 )

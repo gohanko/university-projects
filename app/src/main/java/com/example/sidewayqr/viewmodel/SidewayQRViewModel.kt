@@ -37,6 +37,13 @@ class SidewayQRViewModel(
         }
     }
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+    fun setIsLoading(isLoading: Boolean) {
+        _isLoading.value = isLoading
+    }
+
     private val _errorMessage = MutableStateFlow("")
     val errorMessage = _errorMessage.asStateFlow()
 
@@ -100,10 +107,12 @@ class SidewayQRViewModel(
                 _eventsList.clear()
                 val call = sidewayQRAPIService.getEvents()
 
+                setIsLoading(true)
                 call.enqueue(object : Callback<GetEventResponse> {
                     override fun onResponse(call: Call<GetEventResponse>, response: Response<GetEventResponse>) {
                         Log.d("getEvents onResponse", response.body().toString())
                         response.body()?.let { _eventsList.addAll(it.data) }
+                        setIsLoading(false)
                     }
 
                     override fun onFailure(response: Call<GetEventResponse>, t: Throwable) {
