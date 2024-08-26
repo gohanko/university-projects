@@ -23,6 +23,6 @@ data class Event(
     @SerializedName("code")
     val code: UUID,
 
-    @SerializedName("createBy")
+    @SerializedName("createdBy")
     val createdBy: Number
 )

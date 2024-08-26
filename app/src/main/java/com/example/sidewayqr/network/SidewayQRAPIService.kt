@@ -3,8 +3,10 @@ package com.example.sidewayqr.network
 import com.example.sidewayqr.data.api.authentication.RegisterLoginRequest
 import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.data.api.authentication.ChangePasswordRequest
+import com.example.sidewayqr.data.api.authentication.LoginResponse
 import com.example.sidewayqr.data.api.event.AttendEventRequest
 import com.example.sidewayqr.data.api.event.CreateUpdateEventRequest
+import com.example.sidewayqr.data.api.event.GetEventResponse
 import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.interceptor.AddSavedCookiesInterceptor
 import com.example.sidewayqr.network.interceptor.SaveReceivedCookiesInterceptor
@@ -48,7 +50,7 @@ interface SidewayQRAPIService {
     fun register(@Body request: RegisterLoginRequest): Call<GenericAPIResponse>
 
     @POST("/api/user/login/")
-    fun login(@Body request: RegisterLoginRequest): Call<GenericAPIResponse>
+    fun login(@Body request: RegisterLoginRequest): Call<LoginResponse>
 
     @GET("/api/user/logout/")
     fun logout(): Call<GenericAPIResponse>
@@ -88,5 +90,5 @@ interface SidewayQRAPIService {
     ): Call<GenericAPIResponse>
 
     @GET("/api/events/")
-    fun getEvents(): Call<GenericAPIResponse>
+    fun getEvents(): Call<GetEventResponse>
 }

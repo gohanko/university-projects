@@ -1,10 +1,12 @@
 package com.example.sidewayqr.data.datastore
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 class CookieRepository(private val dataStore: DataStore<Preferences>) {
@@ -16,6 +18,11 @@ class CookieRepository(private val dataStore: DataStore<Preferences>) {
         dataStore.data.map { preferences ->
             preferences[COOKIE] ?: ""
         }
+
+    suspend fun getCookie(): String {
+        val preferences = dataStore.data.first()
+        return preferences[COOKIE] ?: ""
+    }
 
     suspend fun saveCookie(cookie: String) {
         dataStore.edit { preferences ->

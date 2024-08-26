@@ -28,8 +28,8 @@ class MainActivity : ComponentActivity() {
         sidewayQRViewModel = SidewayQRViewModel(sidewayQRAPIService)
 
         sidewayQRViewModel.login(
-            email = "student2@email.com",
-            password = "student2"
+            email = "student1@email.com",
+            password = "student1"
         )
 
         enableEdgeToEdge()

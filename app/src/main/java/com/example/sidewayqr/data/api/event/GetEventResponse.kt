@@ -1,9 +1,9 @@
-package com.example.sidewayqr.data.api
+package com.example.sidewayqr.data.api.event
 
 import com.example.sidewayqr.data.model.Event
 import com.google.gson.annotations.SerializedName
 
-data class GenericAPIResponse(
+data class GetEventResponse(
     @SerializedName("status")
     var status: String,
 
@@ -11,11 +11,8 @@ data class GenericAPIResponse(
     var code: Int,
 
     @SerializedName("data")
-    var data: Any,
+    var data: Collection<Event>,
 
     @SerializedName("message")
     var message: String,
-
-    @SerializedName("accessToken")
-    var accessToken: String?,
 )

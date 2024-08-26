@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.sidewayqr.data.datastore.CookieRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -19,9 +20,8 @@ class AddSavedCookiesInterceptor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
         runBlocking {
-            _cookieRepository.cookie.collect { cookie ->
-                builder.addHeader("Cookie", cookie)
-            }
+            val cookie = _cookieRepository.getCookie()
+            builder.addHeader("Cookie", cookie.toString())
         }
         return chain.proceed(builder.build())
     }
