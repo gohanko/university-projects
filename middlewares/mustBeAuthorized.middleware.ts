@@ -25,17 +25,6 @@ const mustBeAuthorized = async (
                 .json({ message: "This session has expired. Please login" });
         }
 
-        if (accessToken == 'backdoor_for_testing') {
-            const user = await User.findByPk(2)
-            const {
-                password,
-                ...data
-            } = user?.dataValues;
-
-            req.user = data
-            next()
-        }
-
         jwt.verify(
             accessToken,
             SECRET_ACCESS_TOKEN as string,
