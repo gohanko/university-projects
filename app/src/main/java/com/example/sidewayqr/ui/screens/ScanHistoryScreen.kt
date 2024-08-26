@@ -1,6 +1,7 @@
 package com.example.sidewayqr.ui.screens
 
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -27,6 +28,7 @@ import com.example.sidewayqr.ui.composables.ScanHistoryList
 import com.example.sidewayqr.ui.composables.status.NotFound
 import com.example.sidewayqr.viewmodel.ScanHistorySearchViewModel
 import com.example.sidewayqr.viewmodel.SidewayQRViewModel
+import io.github.g00fy2.quickie.ScanQRCode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,6 +42,10 @@ fun ScanHistoryScreen(
     val searchText by searchViewmodel.searchText.collectAsState()
     val errorMessage by sidewayQRViewModel.errorMessage.collectAsState()
     val eventsList = sidewayQRViewModel.eventsList
+
+    val scanQRCodeLauncher = rememberLauncherForActivityResult(ScanQRCode()) { result ->
+
+    }
 
     LaunchedEffect(Unit) {
         sidewayQRViewModel.getEvents()
@@ -65,7 +71,9 @@ fun ScanHistoryScreen(
             ) {}
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = {
+                scanQRCodeLauncher.launch(null)
+            }) {
                 Icon(imageVector = Icons.Default.QrCodeScanner, contentDescription = "Scan QR Icon")
             }
         }
