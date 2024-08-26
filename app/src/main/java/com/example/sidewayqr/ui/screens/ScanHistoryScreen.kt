@@ -26,7 +26,6 @@ import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.composables.ScanHistoryList
 import com.example.sidewayqr.ui.composables.status.NotFound
-import com.example.sidewayqr.viewmodel.ScanHistorySearchViewModel
 import com.example.sidewayqr.viewmodel.SidewayQRViewModel
 import io.github.g00fy2.quickie.ScanQRCode
 
@@ -37,9 +36,8 @@ fun ScanHistoryScreen(
     sidewayQRViewModel: SidewayQRViewModel,
     cookieRepository: CookieRepository
 ) {
-    val searchViewmodel = ScanHistorySearchViewModel(sidewayQRAPIService)
-
-    val searchText by searchViewmodel.searchText.collectAsState()
+    val searchText by sidewayQRViewModel.searchText.collectAsState()
+    val isSearching by sidewayQRViewModel.isSearching.collectAsState()
     val errorMessage by sidewayQRViewModel.errorMessage.collectAsState()
     val eventsList = sidewayQRViewModel.eventsList
 
@@ -61,14 +59,16 @@ fun ScanHistoryScreen(
                     .padding(horizontal = 10.dp, vertical = 5.dp)
                     .fillMaxWidth(),
                 query = searchText ,
-                onQueryChange = searchViewmodel::onSearchTextChange,
-                onSearch = searchViewmodel::onSearchTextChange,
-                active = false,
-                onActiveChange = { searchViewmodel.onToggleSearch() },
+                onQueryChange = sidewayQRViewModel::onSearchTextChange,
+                onSearch = sidewayQRViewModel::onSearchTextChange,
+                active = isSearching,
+                onActiveChange = { sidewayQRViewModel.onToggleSearch() },
                 placeholder = { Text(text = "Search for events")},
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
-            ) {}
+            ) {
+
+            }
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
