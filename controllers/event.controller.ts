@@ -224,7 +224,12 @@ export const getEvents = async (
     req: Request,
     res: Response
 ) => {
-    const eventsCreatedByUser = await Event.findAll({ where: { createdBy: req.user.id }})
+    const eventsCreatedByUser = await Event.findAll({
+        where: {
+            createdBy: req.user.id
+        }
+    })
+
     const eventsParticipatedByUser = await EventParticipation.findAll({
         where: { userId: req.user.id },
         include: [{
@@ -234,9 +239,10 @@ export const getEvents = async (
 
     const events: any = eventsCreatedByUser
     eventsParticipatedByUser.map((eventParticipation) => {
-        events.push(eventParticipation.dataValues.event)
+        const event = structuredClone(eventParticipation.dataValues.event.dataValues)
+        event.isAttended = eventParticipation.dataValues.isAttended
+        events.push(event)
     })
-
 
     return res.status(200).json({
         status: "success",
