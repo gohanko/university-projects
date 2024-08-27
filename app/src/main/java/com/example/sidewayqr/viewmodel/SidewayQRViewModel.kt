@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.data.api.authentication.LoginResponse
 import com.example.sidewayqr.data.api.authentication.RegisterLoginRequest
+import com.example.sidewayqr.data.api.event.AttendEventRequest
 import com.example.sidewayqr.data.api.event.GetEventResponse
 import com.example.sidewayqr.data.model.Event
 import com.example.sidewayqr.network.SidewayQRAPIService
@@ -101,6 +102,30 @@ class SidewayQRViewModel(
         }
     }
 
+    fun attendEvent(
+        eventId: Int,
+        eventCode: String,
+        onResponse: (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) -> Unit
+    ) {
+        viewModelScope.launch {
+            val call = sidewayQRAPIService.attendEvent(
+                eventId=eventId,
+                AttendEventRequest(eventCode = eventCode)
+            )
+
+            call.enqueue(object : Callback<GenericAPIResponse> {
+                override fun onResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
+                    Log.d("attendEvent onResponse", "${response.code()}")
+                    onResponse(call, response)
+                }
+
+                override fun onFailure(response: Call<GenericAPIResponse>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
+        }
+    }
+
     fun getEvents() {
         viewModelScope.launch {
             try {
@@ -119,8 +144,6 @@ class SidewayQRViewModel(
                         t.printStackTrace()
                     }
                 })
-
-
             } catch (e: Exception) {
                 Log.d("ERRRRROR", e.message.toString())
                 _errorMessage.value = e.message.toString()

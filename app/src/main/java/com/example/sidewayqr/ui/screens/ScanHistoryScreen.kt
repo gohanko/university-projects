@@ -1,6 +1,7 @@
 package com.example.sidewayqr.ui.screens
 
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,31 +23,64 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.composables.ScanHistoryList
 import com.example.sidewayqr.ui.composables.status.NotFound
 import com.example.sidewayqr.viewmodel.SidewayQRViewModel
+import io.github.g00fy2.quickie.QRResult
 import io.github.g00fy2.quickie.ScanQRCode
+import retrofit2.Call
+import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScanHistoryScreen(
-    sidewayQRAPIService: SidewayQRAPIService,
     sidewayQRViewModel: SidewayQRViewModel,
-    cookieRepository: CookieRepository
 ) {
+    val context = LocalContext.current
+
     val searchText by sidewayQRViewModel.searchText.collectAsState()
     val isSearching by sidewayQRViewModel.isSearching.collectAsState()
     val errorMessage by sidewayQRViewModel.errorMessage.collectAsState()
     val eventsList = sidewayQRViewModel.eventsList
 
-    val pullRefreshState = rememberPullToRefreshState()
+    fun handleOnResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
+        if (response.code() == 201) {
+            // refresh the page
+            sidewayQRViewModel.getEvents()
+            Toast.makeText(context, "Successfully attended class!", Toast.LENGTH_LONG).show()
+        } else {
 
-    val scanQRCodeLauncher = rememberLauncherForActivityResult(ScanQRCode()) { result ->
-
+        }
     }
+
+    fun handleQRCode(result: QRResult) {
+        val text = when (result) {
+            is QRResult.QRSuccess -> result.content.rawValue
+            QRResult.QRUserCanceled -> "User canceled"
+            QRResult.QRMissingPermission -> "Missing Permission"
+            is QRResult.QRError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"
+        }
+
+        if (result is QRResult.QRSuccess) {
+            val eventId = text?.split(':')?.get(0)
+            val code = text?.split(":")?.get(1)
+
+            if (eventId != null && code != null) {
+                sidewayQRViewModel.attendEvent(
+                    eventId = eventId.toInt(),
+                    eventCode = code,
+                    onResponse = ::handleOnResponse
+                )
+            }
+        }
+    }
+
+    val scanQRCodeLauncher = rememberLauncherForActivityResult(ScanQRCode(), ::handleQRCode)
 
     LaunchedEffect(Unit) {
         sidewayQRViewModel.getEvents()
@@ -69,9 +103,7 @@ fun ScanHistoryScreen(
                 placeholder = { Text(text = "Search for events")},
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
-            ) {
-
-            }
+            ) {}
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
@@ -83,13 +115,17 @@ fun ScanHistoryScreen(
     ) { innerPadding ->
         if (errorMessage.isNotEmpty()) {
             Text(text = errorMessage, modifier = Modifier.padding(innerPadding))
-        } else if (eventsList.isEmpty()) {
-            NotFound()
-        } else {
-            ScanHistoryList(
-                modifier = Modifier.padding(innerPadding),
-                eventsList = eventsList
-            )
+            return@Scaffold
         }
+
+        if (eventsList.isEmpty()) {
+            NotFound()
+            return@Scaffold
+        }
+
+        ScanHistoryList(
+            modifier = Modifier.padding(innerPadding),
+            eventsList = eventsList
+        )
     }
 }

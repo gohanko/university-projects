@@ -35,11 +35,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SidewayQRTheme {
-                ScanHistoryScreen(
-                    sidewayQRAPIService,
-                    sidewayQRViewModel,
-                    cookieRepository
-                )
+                ScanHistoryScreen(sidewayQRViewModel)
             }
         }
     }

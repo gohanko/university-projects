@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.sidewayqr.data.model.Event
+import com.example.sidewayqr.ui.composables.status.NotFound
 
 @Composable
 fun ScanHistoryList(

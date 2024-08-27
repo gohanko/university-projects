@@ -21,7 +21,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-const val BASE_URL = "https://sidewayqr-api.azurewebsites.net/"
+const val BASE_URL = "https://sidewayqr-qpi-ergwc2dyczhbhmcv.southeastasia-01.azurewebsites.net/"
 
 interface SidewayQRAPIService {
     companion object {
@@ -73,9 +73,6 @@ interface SidewayQRAPIService {
 
     @DELETE("/api/event/{eventId}")
     fun deleteEvent(@Path("eventId") eventId: Int): Call<GenericAPIResponse>
-
-    @GET("/api/event/{eventId}/code")
-    fun getEventCode(@Path("eventId") eventId: Int): Call<GenericAPIResponse>
 
     @GET("/api/event/{eventId}/join")
     fun joinEvent(@Path("eventId") eventId: Int): Call<GenericAPIResponse>

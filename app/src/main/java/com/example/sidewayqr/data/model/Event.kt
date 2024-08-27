@@ -21,7 +21,7 @@ data class Event(
     val endDate: Date,
 
     @SerializedName("code")
-    val code: UUID,
+    val code: String,
 
     @SerializedName("createdBy")
     val createdBy: Number,
