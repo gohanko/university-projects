@@ -28,7 +28,8 @@ const loadFixtures = async () => {
             description: event.description,
             startDate: event.startDate,
             endDate: event.endDate,
-            createdBy: event.createdBy
+            code: event.code,
+            createdBy: event.createdBy,
         })
     })
 
