@@ -58,7 +58,7 @@ eventRouter.delete(
 )
 
 eventRouter.get(
-    '/event/:eventId/qrcode',
+    '/event/:eventId/qrCode',
     param('eventId').notEmpty().isInt(),
     inputValidation,
     mustBeAuthorized,
