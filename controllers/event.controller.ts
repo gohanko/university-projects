@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import databaseService from "../services/database.service"
+import QRCode from 'qrcode';
 
 const User = databaseService.user
 const Event = databaseService.event
@@ -112,7 +113,7 @@ export const deleteEvent = async (
     })
 }
 
-export const getEventCode = async (
+export const getEventQRCode = async (
     req: Request,
     res: Response
 ) => {
@@ -126,11 +127,8 @@ export const getEventCode = async (
         })
     }
 
-    return res.status(200).json({
-        status: 'Status',
-        message: "Event code here",
-        data: event?.dataValues.code,
-    })
+    const qrCodeImage = await QRCode.toDataURL(event.dataValues.code)
+    return res.send(`<img src="${qrCodeImage}" alt="QR Code" />`)
 }
 
 export const joinEvent = async (

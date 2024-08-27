@@ -4,7 +4,7 @@ import {
     readEvent,
     updateEvent,
     deleteEvent,
-    getEventCode,
+    getEventQRCode,
     joinEvent,
     leaveEvent,
     attendEvent,
@@ -58,11 +58,11 @@ eventRouter.delete(
 )
 
 eventRouter.get(
-    '/event/:eventId/code',
+    '/event/:eventId/qrcode',
     param('eventId').notEmpty().isInt(),
     inputValidation,
     mustBeAuthorized,
-    getEventCode
+    getEventQRCode
 )
 
 eventRouter.get(
