@@ -127,7 +127,7 @@ export const getEventQRCode = async (
         })
     }
 
-    const qrCodeImage = await QRCode.toDataURL(event.dataValues.code)
+    const qrCodeImage = await QRCode.toDataURL(`${event.dataValues.id}:${event.dataValues.code}`)
     return res.send(`<img src="${qrCodeImage}" alt="QR Code" />`)
 }
 
