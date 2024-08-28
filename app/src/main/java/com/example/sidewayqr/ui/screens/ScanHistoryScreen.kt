@@ -28,7 +28,8 @@ import androidx.compose.ui.unit.dp
 import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.composables.FullPageLoadingIndicator
-import com.example.sidewayqr.ui.composables.ScanHistoryList
+import com.example.sidewayqr.ui.composables.PullToRefreshLazyColumn
+import com.example.sidewayqr.ui.composables.ScanHistoryListItem
 import com.example.sidewayqr.ui.composables.status.NotFound
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
 import com.example.sidewayqr.viewmodel.SearchEventViewModel
@@ -40,7 +41,8 @@ import retrofit2.Response
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScanHistoryScreen(
-    sidewayQRAPIService: SidewayQRAPIService
+    sidewayQRAPIService: SidewayQRAPIService,
+    eventOperationViewModel: EventOperationViewModel
 ) {
     val context = LocalContext.current
 
@@ -48,9 +50,7 @@ fun ScanHistoryScreen(
     val searchText by searchEventViewModel.searchText.collectAsState()
     val isSearching by searchEventViewModel.isSearching.collectAsState()
 
-    val eventOperationViewModel = EventOperationViewModel(sidewayQRAPIService)
     val isLoading by eventOperationViewModel.isLoading.collectAsState()
-    val errorMessage by eventOperationViewModel.errorMessage.collectAsState()
     val eventsList = eventOperationViewModel.eventsList
 
     fun handleOnResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
@@ -97,7 +97,7 @@ fun ScanHistoryScreen(
                 query = searchText ,
                 onQueryChange = searchEventViewModel::onSearchTextChange,
                 onSearch = searchEventViewModel::onSearchTextChange,
-                active = isSearching,
+                active = false,
                 onActiveChange = { searchEventViewModel.onToggleSearch() },
                 placeholder = { Text(text = "Search for events")},
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
@@ -112,33 +112,25 @@ fun ScanHistoryScreen(
             }
         }
     ) { innerPadding ->
-        if (isLoading) {
-            FullPageLoadingIndicator(modifier = Modifier.padding(innerPadding))
-            return@Scaffold
-        }
-
-        if (errorMessage.isNotEmpty()) {
-            Column(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(text = errorMessage, modifier = Modifier.padding(innerPadding))
-            }
-
-            return@Scaffold
-        }
-
-        if (eventsList.isEmpty()) {
+        if (eventsList.isEmpty() && !isLoading) {
             NotFound()
             return@Scaffold
         }
-
-        ScanHistoryList(
+        
+        PullToRefreshLazyColumn(
             modifier = Modifier.padding(innerPadding),
-            eventsList = eventsList
+            listItems = eventsList,
+            content = {
+                ScanHistoryListItem(
+                    event = it
+                )
+            },
+            isRefreshing = isLoading,
+            onRefresh = {
+                eventOperationViewModel.setIsLoading(true)
+                eventOperationViewModel.getEvents()
+                eventOperationViewModel.setIsLoading(false)
+            }
         )
     }
 }

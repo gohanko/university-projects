@@ -21,12 +21,9 @@ class EventOperationViewModel(
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
-    private fun setIsLoading(isLoading: Boolean) {
-        _isLoading.value = isLoading
+    fun setIsLoading(newIsLoading: Boolean) {
+        _isLoading.value = newIsLoading
     }
-
-    private val _errorMessage = MutableStateFlow("")
-    val errorMessage = _errorMessage.asStateFlow()
 
     private var _eventsList = mutableStateListOf<Event>()
     val eventsList: List<Event>
@@ -63,12 +60,13 @@ class EventOperationViewModel(
     }
 
     fun getEvents() {
+        setIsLoading(true)
+
         viewModelScope.launch {
             try {
                 _eventsList.clear()
                 val call = sidewayQRAPIService.getEvents()
 
-                setIsLoading(true)
                 call.enqueue(object : Callback<GetEventResponse> {
                     override fun onResponse(call: Call<GetEventResponse>, response: Response<GetEventResponse>) {
                         setIsLoading(false)
@@ -80,8 +78,7 @@ class EventOperationViewModel(
                         t.printStackTrace()
                     }
                 })
-            } catch (e: Exception) {
-                _errorMessage.value = e.message.toString()
+            } catch (_: Exception) {
             } finally {
                 setIsLoading(false)
             }

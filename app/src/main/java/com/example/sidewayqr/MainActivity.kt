@@ -21,12 +21,14 @@ class MainActivity : ComponentActivity() {
     private lateinit var cookieRepository: CookieRepository
     private lateinit var sidewayQRAPIService: SidewayQRAPIService
     private lateinit var authenticationViewModel: AuthenticationViewModel
+    private lateinit var eventOperationViewModel: EventOperationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         cookieRepository = CookieRepository(dataStore)
         sidewayQRAPIService = SidewayQRAPIService.getInstance(cookieRepository)
         authenticationViewModel = AuthenticationViewModel(sidewayQRAPIService)
+        eventOperationViewModel = EventOperationViewModel(sidewayQRAPIService)
 
         authenticationViewModel.login(
             email = "student1@email.com",
@@ -36,7 +38,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SidewayQRTheme {
-                ScanHistoryScreen(sidewayQRAPIService)
+                ScanHistoryScreen(sidewayQRAPIService, eventOperationViewModel)
             }
         }
     }
