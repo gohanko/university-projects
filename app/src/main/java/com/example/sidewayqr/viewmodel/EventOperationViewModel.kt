@@ -32,6 +32,10 @@ class EventOperationViewModel(
     val eventsList: List<Event>
         get() = _eventsList
 
+    init {
+        getEvents()
+    }
+
     fun attendEvent(
         eventId: Int,
         eventCode: String,
