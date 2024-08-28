@@ -35,10 +35,9 @@ fun <T> PullToRefreshLazyColumn(
         modifier = Modifier.nestedScroll(pullToRefreshState.nestedScrollConnection)
     ) {
         LazyColumn(
-            modifier = modifier,
+            modifier = modifier.padding(horizontal = 10.dp),
             state = lazyListState,
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(15.dp),
         ) {
             items(listItems) {
                 content(it)
@@ -60,8 +59,7 @@ fun <T> PullToRefreshLazyColumn(
         }
 
         PullToRefreshContainer(
-            modifier = Modifier
-                .padding(110.dp)
+            modifier = modifier
                 .align(Alignment.TopCenter),
             state = pullToRefreshState,
         )

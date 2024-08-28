@@ -15,9 +15,11 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,6 +32,7 @@ import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.composables.FullPageLoadingIndicator
 import com.example.sidewayqr.ui.composables.PullToRefreshLazyColumn
 import com.example.sidewayqr.ui.composables.ScanHistoryListItem
+import com.example.sidewayqr.ui.composables.ScanHistoryTopAppBar
 import com.example.sidewayqr.ui.composables.status.NotFound
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
 import com.example.sidewayqr.viewmodel.SearchEventViewModel
@@ -90,19 +93,7 @@ fun ScanHistoryScreen(
             .fillMaxSize()
             .imePadding(),
         topBar = {
-            SearchBar(
-                modifier = Modifier
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-                    .fillMaxWidth(),
-                query = searchText ,
-                onQueryChange = searchEventViewModel::onSearchTextChange,
-                onSearch = searchEventViewModel::onSearchTextChange,
-                active = false,
-                onActiveChange = { searchEventViewModel.onToggleSearch() },
-                placeholder = { Text(text = "Search for events")},
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                trailingIcon = { Icon(Icons.Default.MoreVert, contentDescription = null) },
-            ) {}
+            ScanHistoryTopAppBar()
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
