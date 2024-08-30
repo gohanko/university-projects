@@ -20,7 +20,6 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -89,7 +88,7 @@ fun SettingsScreen(navController: NavController) {
                     SettingsOption(
                         "General",
                         Icons.Default.Settings
-                    ) { /* Navigate to General */ }
+                    ) { navController.navigate("general_settings") }
                 }
                 item { Spacer(modifier = Modifier.height(16.dp)) }
                 item {
@@ -122,23 +121,36 @@ fun SettingsOption(title: String, icon: ImageVector, onClick: () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutPage() {
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(
-            text = "SidewayQR Code Scanner",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        Text(
-            text = "This app allows you to scan QR codes quickly and easily.",
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Text(
-            text = "Version: 1.0",
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("About") }
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "SidewayQR Code Scanner",
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = "This app allows you to scan QR codes quickly and easily.",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = "Version: 1.0",
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
     }
 }
 
@@ -147,5 +159,6 @@ fun AppNavigation(navController: NavHostController) {
     NavHost(navController, startDestination = "settings_screen") {
         composable("settings_screen") { SettingsScreen(navController) }
         composable("about_page") { AboutPage() }
+        composable("general_settings") { GeneralSettingsScreen(navController) }
     }
 }

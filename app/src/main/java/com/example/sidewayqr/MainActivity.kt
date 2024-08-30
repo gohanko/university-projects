@@ -14,9 +14,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.screens.AboutPage
+import com.example.sidewayqr.ui.screens.GeneralSettingsScreen
 import com.example.sidewayqr.ui.screens.ScanHistoryScreen
 import com.example.sidewayqr.ui.screens.SettingsScreen
 import com.example.sidewayqr.ui.theme.SidewayQRTheme
+import com.example.sidewayqr.ui.theme.ThemeManager
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
 
@@ -40,6 +42,8 @@ class MainActivity : ComponentActivity() {
             password = "student1"
         )
 
+        ThemeManager.applyTheme(ThemeManager.getSavedTheme(this))
+
         enableEdgeToEdge()
         setContent {
             SidewayQRTheme {
@@ -57,6 +61,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("about_page") {
                         AboutPage()
+                    }
+                    composable("general_settings") {
+                        GeneralSettingsScreen(navController)
                     }
                 }
             }

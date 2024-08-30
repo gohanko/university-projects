@@ -78,6 +78,7 @@ dependencies {
     // RetroFit
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
+    implementation(libs.androidx.appcompat)
 
     // Testing
     testImplementation(libs.junit)
