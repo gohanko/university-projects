@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.composables.FullPageLoadingIndicator
@@ -44,6 +45,7 @@ import retrofit2.Response
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScanHistoryScreen(
+    navController: NavController,
     sidewayQRAPIService: SidewayQRAPIService,
     eventOperationViewModel: EventOperationViewModel
 ) {
@@ -93,7 +95,7 @@ fun ScanHistoryScreen(
             .fillMaxSize()
             .imePadding(),
         topBar = {
-            ScanHistoryTopAppBar()
+            ScanHistoryTopAppBar(navController = navController)
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {

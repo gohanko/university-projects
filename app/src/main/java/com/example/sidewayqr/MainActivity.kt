@@ -8,9 +8,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
+import com.example.sidewayqr.ui.screens.AboutPage
 import com.example.sidewayqr.ui.screens.ScanHistoryScreen
+import com.example.sidewayqr.ui.screens.SettingsScreen
 import com.example.sidewayqr.ui.theme.SidewayQRTheme
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
@@ -38,7 +43,22 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SidewayQRTheme {
-                ScanHistoryScreen(sidewayQRAPIService, eventOperationViewModel)
+                val navController = rememberNavController()
+                NavHost(navController, startDestination = "scan_history_screen") {
+                    composable("scan_history_screen") {
+                        ScanHistoryScreen(
+                            navController,
+                            sidewayQRAPIService,
+                            eventOperationViewModel
+                        )
+                    }
+                    composable("settings_screen") {
+                        SettingsScreen(navController)
+                    }
+                    composable("about_page") {
+                        AboutPage()
+                    }
+                }
             }
         }
     }

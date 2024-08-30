@@ -19,10 +19,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScanHistoryTopAppBar() {
+fun ScanHistoryTopAppBar(navController: NavController) {
     var isSearching by remember { mutableStateOf(false) }
 
     TopAppBar(
@@ -69,7 +70,7 @@ fun ScanHistoryTopAppBar() {
                 }
             }
 
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { navController.navigate("settings_screen") }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = "Settings"
