@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Notifications
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,9 +37,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.sidewayqr.ui.theme.SidewayQRTheme
 
 class SettingsScreen : ComponentActivity() {
@@ -59,6 +61,11 @@ fun SettingsScreen(navController: NavController) {
         topBar = {
             TopAppBar(
                 title = { Text("Settings") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
         },
         content = { paddingValues -> // Add paddingValues parameter
@@ -74,14 +81,14 @@ fun SettingsScreen(navController: NavController) {
                     SettingsOption(
                         "Account",
                         Icons.Default.Person
-                    ) { /* Navigate to Account */ }
+                    ) { navController.navigate("account_settings") }
                 }
                 item { HorizontalDivider() }
                 item {
                     SettingsOption(
                         "Notifications",
                         Icons.Default.Notifications
-                    ) { /* Navigate to Notifications */ }
+                    ) { navController.navigate("notification_settings") }
                 }
                 item { HorizontalDivider() }
                 item {
@@ -120,11 +127,16 @@ fun SettingsOption(title: String, icon: ImageVector, onClick: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutPage() {
+fun AboutPage(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("About") }
+                title = { Text("About") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
         }
     ) { paddingValues ->
@@ -157,8 +169,16 @@ fun AboutPage() {
 @Composable
 fun AppNavigation(navController: NavHostController) {
     NavHost(navController, startDestination = "settings_screen") {
+        composable("account_settings") {
+            AccountSettingsScreen(navController) {
+                logoutHandler(navController.context)
+            }
+        }
         composable("settings_screen") { SettingsScreen(navController) }
-        composable("about_page") { AboutPage() }
+        composable("about_page") { AboutPage(navController) }
+        composable("notification_settings") { NotificationSettingsScreen(navController) }
         composable("general_settings") { GeneralSettingsScreen(navController) }
+        composable("language_selection") { LanguageSelectionScreen(navController) }
+        composable("data_usage") { DataUsageScreen(navController) }
     }
 }

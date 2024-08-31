@@ -14,9 +14,15 @@ import androidx.navigation.compose.rememberNavController
 import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.screens.AboutPage
+import com.example.sidewayqr.ui.screens.AccountSettingsScreen
+import com.example.sidewayqr.ui.screens.DataUsageScreen
 import com.example.sidewayqr.ui.screens.GeneralSettingsScreen
+import com.example.sidewayqr.ui.screens.LanguageSelectionScreen
+import com.example.sidewayqr.ui.screens.NotificationSettingsScreen
 import com.example.sidewayqr.ui.screens.ScanHistoryScreen
 import com.example.sidewayqr.ui.screens.SettingsScreen
+import com.example.sidewayqr.ui.screens.logoutHandler
+import com.example.sidewayqr.ui.screens.setLanguage
 import com.example.sidewayqr.ui.theme.SidewayQRTheme
 import com.example.sidewayqr.ui.theme.ThemeManager
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
@@ -44,6 +50,12 @@ class MainActivity : ComponentActivity() {
 
         ThemeManager.applyTheme(ThemeManager.getSavedTheme(this))
 
+        val preferences = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+        val selectedLanguage = preferences.getString("selected_language", "English")
+        selectedLanguage?.let {
+            setLanguage(it, this)
+        }
+
         enableEdgeToEdge()
         setContent {
             SidewayQRTheme {
@@ -56,15 +68,17 @@ class MainActivity : ComponentActivity() {
                             eventOperationViewModel
                         )
                     }
-                    composable("settings_screen") {
-                        SettingsScreen(navController)
+                    composable("account_settings") {
+                        AccountSettingsScreen(navController) {
+                            logoutHandler(navController.context)
+                        }
                     }
-                    composable("about_page") {
-                        AboutPage()
-                    }
-                    composable("general_settings") {
-                        GeneralSettingsScreen(navController)
-                    }
+                    composable("settings_screen") { SettingsScreen(navController) }
+                    composable("about_page") { AboutPage(navController) }
+                    composable("notification_settings") { NotificationSettingsScreen(navController) }
+                    composable("general_settings") { GeneralSettingsScreen(navController) }
+                    composable("language_selection") { LanguageSelectionScreen(navController) }
+                    composable("data_usage") { DataUsageScreen(navController) }
                 }
             }
         }
