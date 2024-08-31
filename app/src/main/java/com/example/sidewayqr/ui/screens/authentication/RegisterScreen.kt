@@ -34,7 +34,7 @@ fun RegisterScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Please log in",
+                        text = "Please register",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                     )
