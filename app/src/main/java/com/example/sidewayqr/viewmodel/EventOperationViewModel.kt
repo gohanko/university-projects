@@ -31,10 +31,6 @@ class EventOperationViewModel(
     val eventsList: List<Event>
         get() = _eventsList
 
-    init {
-        getEvents()
-    }
-
     fun createEvent(
         name: String,
         description: String,

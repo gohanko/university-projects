@@ -15,11 +15,11 @@ import com.example.sidewayqr.ui.screens.authentication.RegisterScreen
 import com.example.sidewayqr.ui.screens.settings.NotificationSettingsScreen
 import com.example.sidewayqr.ui.screens.ScanHistoryScreen
 import com.example.sidewayqr.ui.screens.authentication.ChangePasswordScreen
+import com.example.sidewayqr.ui.screens.Onboarding
 import com.example.sidewayqr.ui.screens.settings.LanguageSelectionScreen
 import com.example.sidewayqr.ui.screens.settings.SettingsScreen
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
-import kotlinx.coroutines.runBlocking
 
 @Composable
 fun NavigationGraph(
@@ -31,8 +31,15 @@ fun NavigationGraph(
 ) {
     NavHost(
         navHostController,
-        startDestination = "scan_history_screen"
+        startDestination = "onboarding_screen"
     ) {
+        composable("onboarding_screen") {
+            Onboarding(
+                navHostController,
+                cookieRepository,
+            )
+        }
+
         composable("login_screen") {
                LoginScreen(
                    authenticationViewModel = authenticationViewModel,
@@ -57,18 +64,23 @@ fun NavigationGraph(
         composable("scan_history_screen") {
             ScanHistoryScreen(
                 navHostController,
-                sidewayQRAPIService,
                 eventOperationViewModel,
-                cookieRepository
             )
         }
 
         composable("account_settings") {
-            AccountSettingsScreen(navHostController, authenticationViewModel, cookieRepository)
+            AccountSettingsScreen(
+                navHostController,
+                authenticationViewModel,
+                cookieRepository
+            )
         }
 
         composable("settings_screen") {
-            SettingsScreen(navHostController, authenticationViewModel)
+            SettingsScreen(
+                navHostController,
+                authenticationViewModel
+            )
         }
 
         composable("about_page") {

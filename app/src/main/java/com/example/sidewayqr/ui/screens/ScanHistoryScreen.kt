@@ -12,6 +12,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -38,9 +39,7 @@ import retrofit2.Response
 @Composable
 fun ScanHistoryScreen(
     navHostController: NavHostController,
-    sidewayQRAPIService: SidewayQRAPIService,
     eventOperationViewModel: EventOperationViewModel,
-    cookieRepository: CookieRepository
 ) {
     val context = LocalContext.current
 
@@ -50,6 +49,10 @@ fun ScanHistoryScreen(
 
     val isLoading by eventOperationViewModel.isLoading.collectAsState()
     val eventsList = eventOperationViewModel.eventsList
+
+    LaunchedEffect(true) {
+        eventOperationViewModel.getEvents()
+    }
 
     fun handleResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
         if (response.code() == 201) {
@@ -82,14 +85,6 @@ fun ScanHistoryScreen(
     }
 
     val scanQRCodeLauncher = rememberLauncherForActivityResult(ScanQRCode(), ::handleQRCode)
-
-    runBlocking {
-        val cookie = cookieRepository.getCookie()
-
-        if (cookie.isBlank()) {
-            navHostController.navigate("login_screen")
-        }
-    }
 
     Scaffold(
         modifier = Modifier
