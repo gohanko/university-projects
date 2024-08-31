@@ -9,7 +9,7 @@ import com.example.sidewayqr.ui.screens.settings.AboutPage
 import com.example.sidewayqr.ui.screens.settings.AccountSettingsScreen
 import com.example.sidewayqr.ui.screens.settings.DataUsageScreen
 import com.example.sidewayqr.ui.screens.settings.GeneralSettingsScreen
-import com.example.sidewayqr.ui.screens.LanguageSelectionScreen
+import com.example.sidewayqr.ui.screens.settings.LanguageSelectionScreen
 import com.example.sidewayqr.ui.screens.settings.NotificationSettingsScreen
 import com.example.sidewayqr.ui.screens.ScanHistoryScreen
 import com.example.sidewayqr.ui.screens.settings.SettingsScreen

@@ -58,7 +58,7 @@ fun ScanHistoryScreen(
     val isLoading by eventOperationViewModel.isLoading.collectAsState()
     val eventsList = eventOperationViewModel.eventsList
 
-    fun handleOnResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
+    fun handleResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
         if (response.code() == 201) {
             // refresh the page
             eventOperationViewModel.getEvents()
@@ -82,7 +82,7 @@ fun ScanHistoryScreen(
                 eventOperationViewModel.attendEvent(
                     eventId = eventId.toInt(),
                     eventCode = code,
-                    handleResponse = ::handleOnResponse
+                    handleResponse = ::handleResponse
                 )
             }
         }
