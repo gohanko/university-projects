@@ -2,6 +2,9 @@ package com.example.sidewayqr.ui.theme
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 
 object ThemeManager {
@@ -11,6 +14,9 @@ object ThemeManager {
     const val LIGHT_MODE = "Light"
     const val DARK_MODE = "Dark"
     const val SYSTEM_DEFAULT = "System Default"
+
+    var currentTheme by mutableStateOf(SYSTEM_DEFAULT)
+        private set
 
     fun applyTheme(theme: String) {
         when (theme) {

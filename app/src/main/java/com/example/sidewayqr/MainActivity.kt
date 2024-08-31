@@ -14,7 +14,7 @@ import com.example.sidewayqr.data.api.authentication.LoginResponse
 import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.navigation.NavigationGraph
 import com.example.sidewayqr.network.SidewayQRAPIService
-import com.example.sidewayqr.ui.screens.setLanguage
+import com.example.sidewayqr.ui.screens.settings.setLanguage
 import com.example.sidewayqr.ui.theme.SidewayQRTheme
 import com.example.sidewayqr.ui.theme.ThemeManager
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
