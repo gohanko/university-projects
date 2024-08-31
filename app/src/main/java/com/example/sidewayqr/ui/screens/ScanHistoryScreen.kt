@@ -54,7 +54,7 @@ fun ScanHistoryScreen(
         eventOperationViewModel.getEvents()
     }
 
-    fun handleResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
+    fun handleAttendEventResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
         if (response.code() == 201) {
             // refresh the page
             eventOperationViewModel.getEvents()
@@ -78,7 +78,7 @@ fun ScanHistoryScreen(
                 eventOperationViewModel.attendEvent(
                     eventId = eventId.toInt(),
                     eventCode = code,
-                    handleResponse = ::handleResponse,
+                    handleResponse = ::handleAttendEventResponse,
                 )
             }
         }
