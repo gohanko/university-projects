@@ -10,22 +10,38 @@ import com.example.sidewayqr.ui.screens.settings.AccountSettingsScreen
 import com.example.sidewayqr.ui.screens.settings.DataUsageScreen
 import com.example.sidewayqr.ui.screens.settings.GeneralSettingsScreen
 import com.example.sidewayqr.ui.screens.LanguageSelectionScreen
+import com.example.sidewayqr.ui.screens.LoginScreen
+import com.example.sidewayqr.ui.screens.RegisterScreen
 import com.example.sidewayqr.ui.screens.settings.NotificationSettingsScreen
 import com.example.sidewayqr.ui.screens.ScanHistoryScreen
 import com.example.sidewayqr.ui.screens.settings.SettingsScreen
 import com.example.sidewayqr.ui.screens.settings.logoutHandler
+import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
 
 @Composable
 fun NavigationGraph(
     navHostController: NavHostController,
     sidewayQRAPIService: SidewayQRAPIService,
-    eventOperationViewModel: EventOperationViewModel
+    eventOperationViewModel: EventOperationViewModel,
+    authenticationViewModel: AuthenticationViewModel,
+
 ) {
     NavHost(
         navHostController,
         startDestination = "scan_history_screen"
     ) {
+        composable("LoginScreen") {
+               LoginScreen(authenticationViewModel = authenticationViewModel,
+                   navHostController = navHostController)
+            }
+
+        composable("RegisterScreen") {
+            RegisterScreen(authenticationViewModel = authenticationViewModel,
+                navHostController = navHostController)
+        }
+
+
         composable("scan_history_screen") {
             ScanHistoryScreen(
                 navHostController,
