@@ -1,4 +1,4 @@
-package com.example.sidewayqr.ui.screens
+package com.example.sidewayqr.ui.screens.settings
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column

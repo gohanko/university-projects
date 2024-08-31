@@ -1,4 +1,4 @@
-package com.example.sidewayqr.ui.screens
+package com.example.sidewayqr.ui.screens.settings
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -40,6 +40,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.sidewayqr.ui.screens.LanguageSelectionScreen
 import com.example.sidewayqr.ui.theme.SidewayQRTheme
 
 class SettingsScreen : ComponentActivity() {

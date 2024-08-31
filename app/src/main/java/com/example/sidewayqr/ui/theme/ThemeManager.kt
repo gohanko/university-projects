@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatDelegate
 
 
 object ThemeManager {
-    const val THEME_PREFERENCE = "theme_preference"
-    const val THEME_KEY = "theme_key"
+    private const val THEME_PREFERENCE = "theme_preference"
+    private const val THEME_KEY = "theme_key"
 
     const val LIGHT_MODE = "Light"
     const val DARK_MODE = "Dark"

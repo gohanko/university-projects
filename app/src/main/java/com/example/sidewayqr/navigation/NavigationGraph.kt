@@ -5,15 +5,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.sidewayqr.network.SidewayQRAPIService
-import com.example.sidewayqr.ui.screens.AboutPage
-import com.example.sidewayqr.ui.screens.AccountSettingsScreen
-import com.example.sidewayqr.ui.screens.DataUsageScreen
-import com.example.sidewayqr.ui.screens.GeneralSettingsScreen
+import com.example.sidewayqr.ui.screens.settings.AboutPage
+import com.example.sidewayqr.ui.screens.settings.AccountSettingsScreen
+import com.example.sidewayqr.ui.screens.settings.DataUsageScreen
+import com.example.sidewayqr.ui.screens.settings.GeneralSettingsScreen
 import com.example.sidewayqr.ui.screens.LanguageSelectionScreen
-import com.example.sidewayqr.ui.screens.NotificationSettingsScreen
+import com.example.sidewayqr.ui.screens.settings.NotificationSettingsScreen
 import com.example.sidewayqr.ui.screens.ScanHistoryScreen
-import com.example.sidewayqr.ui.screens.SettingsScreen
-import com.example.sidewayqr.ui.screens.logoutHandler
+import com.example.sidewayqr.ui.screens.settings.SettingsScreen
+import com.example.sidewayqr.ui.screens.settings.logoutHandler
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
 
 @Composable

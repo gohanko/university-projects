@@ -1,4 +1,4 @@
-package com.example.sidewayqr.ui.screens
+package com.example.sidewayqr.ui.screens.settings
 
 import android.app.Activity
 import android.content.Context
