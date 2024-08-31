@@ -7,14 +7,17 @@ import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.data.api.authentication.ChangePasswordRequest
 import com.example.sidewayqr.data.api.authentication.LoginResponse
 import com.example.sidewayqr.data.api.authentication.RegisterLoginRequest
+import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AuthenticationViewModel(
-    private val sidewayQRAPIService: SidewayQRAPIService
+    private val sidewayQRAPIService: SidewayQRAPIService,
+    private val cookieRepository: CookieRepository,
 ): ViewModel() {
     fun register(
         email: String,

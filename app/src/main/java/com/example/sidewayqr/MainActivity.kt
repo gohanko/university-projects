@@ -34,13 +34,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         cookieRepository = CookieRepository(dataStore)
         sidewayQRAPIService = SidewayQRAPIService.getInstance(cookieRepository)
-        authenticationViewModel = AuthenticationViewModel(sidewayQRAPIService)
+        authenticationViewModel = AuthenticationViewModel(sidewayQRAPIService, cookieRepository)
         eventOperationViewModel = EventOperationViewModel(sidewayQRAPIService)
-
-        authenticationViewModel.login(
-            email = "student1@email.com",
-            password = "student1",
-        )
 
         ThemeManager.applyTheme(ThemeManager.getSavedTheme(this))
 
@@ -59,7 +54,8 @@ class MainActivity : ComponentActivity() {
                     navController,
                     sidewayQRAPIService,
                     eventOperationViewModel,
-                    authenticationViewModel
+                    authenticationViewModel,
+                    cookieRepository
                 )
             }
         }

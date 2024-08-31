@@ -29,18 +29,28 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.data.api.authentication.LoginResponse
+import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountSettingsScreen(navController: NavController, authenticationViewModel: AuthenticationViewModel) {
-    val context=LocalContext.current
+fun AccountSettingsScreen(
+    navController: NavController,
+    authenticationViewModel: AuthenticationViewModel,
+    cookieRepository: CookieRepository
+) {
+    val context = LocalContext.current
 
     fun handleResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
         if (response.code() == 200) {
             Toast.makeText(context, "Logout Successful!", Toast.LENGTH_LONG).show()
+            runBlocking {
+                cookieRepository.saveCookie("")
+            }
+
             navController.navigate("login_screen")
         }
     }

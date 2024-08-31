@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.screens.settings.AboutPage
 import com.example.sidewayqr.ui.screens.settings.AccountSettingsScreen
@@ -18,6 +19,7 @@ import com.example.sidewayqr.ui.screens.settings.LanguageSelectionScreen
 import com.example.sidewayqr.ui.screens.settings.SettingsScreen
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun NavigationGraph(
@@ -25,7 +27,7 @@ fun NavigationGraph(
     sidewayQRAPIService: SidewayQRAPIService,
     eventOperationViewModel: EventOperationViewModel,
     authenticationViewModel: AuthenticationViewModel,
-
+    cookieRepository: CookieRepository
 ) {
     NavHost(
         navHostController,
@@ -56,12 +58,13 @@ fun NavigationGraph(
             ScanHistoryScreen(
                 navHostController,
                 sidewayQRAPIService,
-                eventOperationViewModel
+                eventOperationViewModel,
+                cookieRepository
             )
         }
 
         composable("account_settings") {
-            AccountSettingsScreen(navHostController, authenticationViewModel)
+            AccountSettingsScreen(navHostController, authenticationViewModel, cookieRepository)
         }
 
         composable("settings_screen") {

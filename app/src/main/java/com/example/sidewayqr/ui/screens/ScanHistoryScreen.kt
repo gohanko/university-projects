@@ -17,7 +17,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.sidewayqr.data.api.GenericAPIResponse
+import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.composables.PullToRefreshLazyColumn
 import com.example.sidewayqr.ui.composables.scan_history.ScanHistoryListItem
@@ -27,15 +29,18 @@ import com.example.sidewayqr.viewmodel.EventOperationViewModel
 import com.example.sidewayqr.viewmodel.SearchEventViewModel
 import io.github.g00fy2.quickie.QRResult
 import io.github.g00fy2.quickie.ScanQRCode
+import kotlinx.coroutines.runBlocking
+import okhttp3.Cookie
 import retrofit2.Call
 import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScanHistoryScreen(
-    navController: NavController,
+    navHostController: NavHostController,
     sidewayQRAPIService: SidewayQRAPIService,
-    eventOperationViewModel: EventOperationViewModel
+    eventOperationViewModel: EventOperationViewModel,
+    cookieRepository: CookieRepository
 ) {
     val context = LocalContext.current
 
@@ -78,12 +83,20 @@ fun ScanHistoryScreen(
 
     val scanQRCodeLauncher = rememberLauncherForActivityResult(ScanQRCode(), ::handleQRCode)
 
+    runBlocking {
+        val cookie = cookieRepository.getCookie()
+
+        if (cookie.isBlank()) {
+            navHostController.navigate("login_screen")
+        }
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .imePadding(),
         topBar = {
-            ScanHistoryTopAppBar(navController = navController)
+            ScanHistoryTopAppBar(navController = navHostController)
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
