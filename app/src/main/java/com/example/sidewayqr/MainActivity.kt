@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sidewayqr.data.datastore.CookieRepository
+import com.example.sidewayqr.navigation.NavigationGraph
 import com.example.sidewayqr.network.SidewayQRAPIService
 import com.example.sidewayqr.ui.screens.AboutPage
 import com.example.sidewayqr.ui.screens.AccountSettingsScreen
@@ -58,28 +59,14 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
+
             SidewayQRTheme {
-                val navController = rememberNavController()
-                NavHost(navController, startDestination = "scan_history_screen") {
-                    composable("scan_history_screen") {
-                        ScanHistoryScreen(
-                            navController,
-                            sidewayQRAPIService,
-                            eventOperationViewModel
-                        )
-                    }
-                    composable("account_settings") {
-                        AccountSettingsScreen(navController) {
-                            logoutHandler(navController.context)
-                        }
-                    }
-                    composable("settings_screen") { SettingsScreen(navController) }
-                    composable("about_page") { AboutPage(navController) }
-                    composable("notification_settings") { NotificationSettingsScreen(navController) }
-                    composable("general_settings") { GeneralSettingsScreen(navController) }
-                    composable("language_selection") { LanguageSelectionScreen(navController) }
-                    composable("data_usage") { DataUsageScreen(navController) }
-                }
+                NavigationGraph(
+                    navController,
+                    sidewayQRAPIService,
+                    eventOperationViewModel
+                )
             }
         }
     }
