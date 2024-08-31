@@ -2,38 +2,26 @@ package com.example.sidewayqr.ui.screens
 
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.QrCodeScanner
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.network.SidewayQRAPIService
-import com.example.sidewayqr.ui.composables.FullPageLoadingIndicator
 import com.example.sidewayqr.ui.composables.PullToRefreshLazyColumn
-import com.example.sidewayqr.ui.composables.ScanHistoryListItem
-import com.example.sidewayqr.ui.composables.ScanHistoryTopAppBar
+import com.example.sidewayqr.ui.composables.scan_history.ScanHistoryListItem
+import com.example.sidewayqr.ui.composables.scan_history.ScanHistoryTopAppBar
 import com.example.sidewayqr.ui.composables.status.NotFound
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
 import com.example.sidewayqr.viewmodel.SearchEventViewModel
@@ -82,7 +70,7 @@ fun ScanHistoryScreen(
                 eventOperationViewModel.attendEvent(
                     eventId = eventId.toInt(),
                     eventCode = code,
-                    handleResponse = ::handleResponse
+                    handleResponse = ::handleResponse,
                 )
             }
         }

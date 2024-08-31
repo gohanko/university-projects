@@ -41,22 +41,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sidewayqr.ui.theme.SidewayQRTheme
-
-class SettingsScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            SidewayQRTheme {
-                val navController = rememberNavController()
-                AppNavigation(navController)
-            }
-        }
-    }
-}
+import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(
+    navController: NavController,
+    authenticationViewModel: AuthenticationViewModel
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -163,22 +155,5 @@ fun AboutPage(navController: NavController) {
                 modifier = Modifier.padding(bottom = 8.dp)
             )
         }
-    }
-}
-
-@Composable
-fun AppNavigation(navController: NavHostController) {
-    NavHost(navController, startDestination = "settings_screen") {
-        composable("account_settings") {
-            AccountSettingsScreen(navController) {
-                logoutHandler(navController.context)
-            }
-        }
-        composable("settings_screen") { SettingsScreen(navController) }
-        composable("about_page") { AboutPage(navController) }
-        composable("notification_settings") { NotificationSettingsScreen(navController) }
-        composable("general_settings") { GeneralSettingsScreen(navController) }
-        composable("language_selection") { LanguageSelectionScreen(navController) }
-        composable("data_usage") { DataUsageScreen(navController) }
     }
 }

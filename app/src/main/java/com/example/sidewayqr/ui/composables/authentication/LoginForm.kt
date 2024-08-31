@@ -1,4 +1,4 @@
-package com.example.sidewayqr.ui.composables
+package com.example.sidewayqr.ui.composables.authentication
 
 import android.util.Log
 import android.widget.Toast
@@ -18,22 +18,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.sidewayqr.data.api.GenericAPIResponse
+import com.example.sidewayqr.data.api.authentication.LoginResponse
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import retrofit2.Call
 import retrofit2.Response
 
 @Composable
-fun RegisterForm ( authenticationViewModel: AuthenticationViewModel,
-                   navController: NavHostController
+fun LoginForm(
+    authenticationViewModel: AuthenticationViewModel,
+    navController:  NavHostController
 ) {
     val context = LocalContext.current
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    fun handleResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
-        Log.d("AAAAAAAAAAAAAAAa", response.toString())
+    fun handleResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+        if (response.code() == 200) {
+            Toast.makeText(context, "Login Successful!", Toast.LENGTH_LONG).show()
+            navController.navigate("scan_history_screen")
+        }
+
+        if (response.code() == 400) {
+            Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
+        }
+
+        Log.d("BBBB", response.toString())
     }
 
     Column(
@@ -62,30 +72,29 @@ fun RegisterForm ( authenticationViewModel: AuthenticationViewModel,
                 password = it
             }
         )
+
         Button(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
             onClick = {
-                authenticationViewModel.register(
+                authenticationViewModel.login(
                     email = email,
                     password = password,
                     handleResponse = ::handleResponse
                 )
             }
         ) {
-            Text("Register")
+            Text("Login")
         }
 
         Button(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
             onClick = {
-                navController.navigate("LoginScreen")
+                navController.navigate("register_screen")
             }
         ) {
-            Text("Login here")
+            Text("Register an Account")
         }
     }
 }
-
-

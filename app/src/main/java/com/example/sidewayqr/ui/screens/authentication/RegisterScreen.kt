@@ -1,4 +1,4 @@
-package com.example.sidewayqr.ui.screens
+package com.example.sidewayqr.ui.screens.authentication
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,14 +12,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.sidewayqr.ui.composables.LoginForm
+import com.example.sidewayqr.ui.composables.authentication.RegisterForm
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     authenticationViewModel: AuthenticationViewModel,
     navHostController: NavHostController
-
 ) {
     Column(
         modifier = Modifier
@@ -29,14 +28,12 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Please log in",
+            text = "Register an Account",
             fontSize = 24.sp, // Make the text bigger
             fontWeight = FontWeight.Bold, // Optional: Make the text bold
             modifier = Modifier.padding(bottom= 16.dp) // Optional: Add spacing below the text
         )
 
-        LoginForm(authenticationViewModel, navHostController)
+        RegisterForm(authenticationViewModel, navHostController)
     }
 }
-
-

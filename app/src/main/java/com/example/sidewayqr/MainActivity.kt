@@ -30,10 +30,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var authenticationViewModel: AuthenticationViewModel
     private lateinit var eventOperationViewModel: EventOperationViewModel
 
-    fun handleResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-        Log.d("AAAAAAAAAAAAAAAa", response.toString())
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         cookieRepository = CookieRepository(dataStore)
@@ -44,7 +40,6 @@ class MainActivity : ComponentActivity() {
         authenticationViewModel.login(
             email = "student1@email.com",
             password = "student1",
-            handleResponse = ::handleResponse
         )
 
         ThemeManager.applyTheme(ThemeManager.getSavedTheme(this))
@@ -65,8 +60,6 @@ class MainActivity : ComponentActivity() {
                     sidewayQRAPIService,
                     eventOperationViewModel,
                     authenticationViewModel
-
-
                 )
             }
         }

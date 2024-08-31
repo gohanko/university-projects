@@ -55,7 +55,7 @@ interface SidewayQRAPIService {
     @GET("/api/user/logout/")
     fun logout(): Call<GenericAPIResponse>
 
-    @GET("/api/user/change_password/")
+    @POST("/api/user/change_password/")
     fun changePassword(@Body request: ChangePasswordRequest): Call<GenericAPIResponse>
 
     // Event

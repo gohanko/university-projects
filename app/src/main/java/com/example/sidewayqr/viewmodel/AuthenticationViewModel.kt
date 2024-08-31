@@ -37,7 +37,6 @@ class AuthenticationViewModel(
                     call: Call<GenericAPIResponse>,
                     response: Response<GenericAPIResponse>
                 ) {
-                    Log.d("", "LOGIN RESPONSE HAPPENED")
                     handleResponse(call, response)
                 }
 
@@ -45,7 +44,6 @@ class AuthenticationViewModel(
                     response: Call<GenericAPIResponse>,
                     t: Throwable
                 ) {
-                    Log.d("", "AAAAAAAAAAAAAAAAAAAAAAAAA")
                     t.printStackTrace()
                     handleFailure(response, t)
                 }

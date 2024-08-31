@@ -1,9 +1,10 @@
-package com.example.sidewayqr.ui.composables
+package com.example.sidewayqr.ui.composables.authentication
 
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -18,23 +19,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.sidewayqr.data.api.authentication.LoginResponse
+import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import retrofit2.Call
 import retrofit2.Response
 
 @Composable
-fun LoginForm(
+fun RegisterForm (
     authenticationViewModel: AuthenticationViewModel,
-    navController:  NavHostController
+    navController: NavHostController
 ) {
     val context = LocalContext.current
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    fun handleResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-        Log.d("AAAAAAAAAAAAAAAa", response.toString())
+    fun handleResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
+        if (response.code() == 201) {
+            Toast.makeText(context, "Register Successful!", Toast.LENGTH_LONG).show()
+        }
+
+        if (response.code() == 400) {
+            Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
+        }
+
+        if (response.code() == 500) {
+            Toast.makeText(context, "Something went wrong with the servers.", Toast.LENGTH_LONG).show()
+        }
+
+        Log.d("BBBB", response.toString())
     }
 
     Column(
@@ -64,31 +77,28 @@ fun LoginForm(
             }
         )
 
-        Button(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-            onClick = {
-                Log.d("LLLLLLLLLL", "Clicked")
-                authenticationViewModel.login(
-                    email = email,
-                    password = password,
-                    handleResponse = ::handleResponse
-                )
+        Row {
+            Button(
+                onClick = {
+                    authenticationViewModel.register(
+                        email = email,
+                        password = password,
+                        handleResponse = ::handleResponse
+                    )
+                }
+            ) {
+                Text("Register")
             }
-        ) {
-            Text("Login")
-        }
 
-        Button(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-            onClick = {
-                navController.navigate("RegisterScreen")
+            Button(
+                onClick = {
+                    navController.navigate("login_screen")
+                }
+            ) {
+                Text("Login here")
             }
-        ) {
-
-            Text("Register an Account")
-
         }
     }
 }
+
+

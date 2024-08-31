@@ -2,6 +2,8 @@ package com.example.sidewayqr.ui.screens.settings
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,12 +24,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.sidewayqr.data.api.GenericAPIResponse
+import com.example.sidewayqr.data.api.authentication.LoginResponse
+import com.example.sidewayqr.viewmodel.AuthenticationViewModel
+import retrofit2.Call
+import retrofit2.Response
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountSettingsScreen(navController: NavController, onLogout: () -> Unit) {
+fun AccountSettingsScreen(navController: NavController, authenticationViewModel: AuthenticationViewModel) {
+    val context=LocalContext.current
+
+    fun handleResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
+        if (response.code() == 200) {
+            Toast.makeText(context, "Logout Successful!", Toast.LENGTH_LONG).show()
+            navController.navigate("login_screen")
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,6 +56,7 @@ fun AccountSettingsScreen(navController: NavController, onLogout: () -> Unit) {
                 }
             )
         }
+
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -65,8 +83,17 @@ fun AccountSettingsScreen(navController: NavController, onLogout: () -> Unit) {
 
             Button(
                 onClick = {
-                    // Handle logout logic
-                    onLogout()
+                    navController.navigate("change_password_screen")
+                },
+            ) {
+                Text(text = "Change Password")
+            }
+            
+            Button(
+                onClick = {
+                    authenticationViewModel.logout(
+                        handleResponse = ::handleResponse
+                    )
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                 modifier = Modifier.align(Alignment.End)
@@ -77,14 +104,3 @@ fun AccountSettingsScreen(navController: NavController, onLogout: () -> Unit) {
     }
 }
 
-fun logoutHandler(context: Context) {
-    // Clear user session data (e.g., tokens, user info)
-    val preferences = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-    preferences.edit().clear().apply()
-
-    // Navigate back to login screen or finish the activity
-    (context as? Activity)?.apply {
-        //startActivity(Intent(this, LoginActivity::class.java))
-        finish()
-    }
-}
