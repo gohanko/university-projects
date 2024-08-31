@@ -8,10 +8,7 @@ const generateAccessToken = (id: Number) => {
 
     return jwt.sign(
         payload,
-        SECRET_ACCESS_TOKEN as string,
-        {
-            expiresIn: '20m'
-        }
+        SECRET_ACCESS_TOKEN as string
     )
 }
 
