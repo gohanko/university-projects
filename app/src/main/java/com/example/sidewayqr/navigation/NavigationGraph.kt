@@ -22,7 +22,10 @@ fun NavigationGraph(
     sidewayQRAPIService: SidewayQRAPIService,
     eventOperationViewModel: EventOperationViewModel
 ) {
-    NavHost(navHostController, startDestination = "scan_history_screen") {
+    NavHost(
+        navHostController,
+        startDestination = "scan_history_screen"
+    ) {
         composable("scan_history_screen") {
             ScanHistoryScreen(
                 navHostController,
@@ -30,11 +33,13 @@ fun NavigationGraph(
                 eventOperationViewModel
             )
         }
+
         composable("account_settings") {
             AccountSettingsScreen(navHostController) {
                 logoutHandler(navHostController.context)
             }
         }
+
         composable("settings_screen") {
             SettingsScreen(navHostController)
         }

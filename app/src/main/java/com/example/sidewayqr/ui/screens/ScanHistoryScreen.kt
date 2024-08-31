@@ -82,7 +82,7 @@ fun ScanHistoryScreen(
                 eventOperationViewModel.attendEvent(
                     eventId = eventId.toInt(),
                     eventCode = code,
-                    onResponse = ::handleOnResponse
+                    handleResponse = ::handleOnResponse
                 )
             }
         }

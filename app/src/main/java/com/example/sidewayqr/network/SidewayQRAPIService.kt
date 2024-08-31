@@ -60,7 +60,7 @@ interface SidewayQRAPIService {
 
     // Event
     @POST("/api/event/")
-    fun createEvent()
+    fun createEvent(@Body request: CreateUpdateEventRequest): Call<GenericAPIResponse>
 
     @GET("/api/event/{eventId}")
     fun readEvent(@Path("eventId") eventId: Int): Call<GenericAPIResponse>

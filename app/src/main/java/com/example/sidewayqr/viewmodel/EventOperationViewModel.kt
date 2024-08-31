@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.data.api.event.AttendEventRequest
+import com.example.sidewayqr.data.api.event.CreateUpdateEventRequest
 import com.example.sidewayqr.data.api.event.GetEventResponse
 import com.example.sidewayqr.data.model.Event
 import com.example.sidewayqr.network.SidewayQRAPIService
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Date
 
 class EventOperationViewModel(
     private val sidewayQRAPIService: SidewayQRAPIService,
@@ -33,10 +35,207 @@ class EventOperationViewModel(
         getEvents()
     }
 
+    fun createEvent(
+        name: String,
+        description: String,
+        startDate: Date,
+        endDate: Date,
+        handleResponse:  (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Response<GenericAPIResponse> -> },
+        handleFailure: (response: Call<GenericAPIResponse>, t: Throwable)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
+    ) {
+        viewModelScope.launch {
+            val call = sidewayQRAPIService.createEvent(CreateUpdateEventRequest(
+                name = name,
+                description = description,
+                startDate = startDate,
+                endDate = endDate
+            ))
+
+            call.enqueue(object : Callback<GenericAPIResponse> {
+                override fun onResponse(
+                    call: Call<GenericAPIResponse>,
+                    response: Response<GenericAPIResponse>
+                ) {
+                    handleResponse(call, response)
+                }
+
+                override fun onFailure(
+                    response: Call<GenericAPIResponse>,
+                    t: Throwable
+                ) {
+                    t.printStackTrace()
+                    handleFailure(response, t)
+                }
+            })
+        }
+    }
+
+    fun readEvent(
+        eventId: Int,
+        handleResponse:  (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Response<GenericAPIResponse> -> },
+        handleFailure: (response: Call<GenericAPIResponse>, t: Throwable)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
+    ) {
+        viewModelScope.launch {
+            val call = sidewayQRAPIService.readEvent(eventId)
+
+            call.enqueue(object : Callback<GenericAPIResponse> {
+                override fun onResponse(
+                    call: Call<GenericAPIResponse>,
+                    response: Response<GenericAPIResponse>
+                ) {
+                    handleResponse(call, response)
+                }
+
+                override fun onFailure(
+                    response: Call<GenericAPIResponse>,
+                    t: Throwable
+                ) {
+                    t.printStackTrace()
+                    handleFailure(response, t)
+                }
+            })
+        }
+    }
+
+    fun updateEvent(
+        eventId: Int,
+        name: String,
+        description: String,
+        startDate: Date,
+        endDate: Date,
+        handleResponse:  (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Response<GenericAPIResponse> -> },
+        handleFailure: (response: Call<GenericAPIResponse>, t: Throwable)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
+    ) {
+        viewModelScope.launch {
+            val call = sidewayQRAPIService.updateEvent(
+                eventId,
+                CreateUpdateEventRequest(
+                    name = name,
+                    description = description,
+                    startDate = startDate,
+                    endDate = endDate
+                )
+            )
+
+            call.enqueue(object : Callback<GenericAPIResponse> {
+                override fun onResponse(
+                    call: Call<GenericAPIResponse>,
+                    response: Response<GenericAPIResponse>
+                ) {
+                    handleResponse(call, response)
+                }
+
+                override fun onFailure(
+                    response: Call<GenericAPIResponse>,
+                    t: Throwable
+                ) {
+                    t.printStackTrace()
+                    handleFailure(response, t)
+                }
+            })
+        }
+    }
+
+    fun deleteEvent(
+        eventId: Int,
+        handleResponse:  (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Response<GenericAPIResponse> -> },
+        handleFailure: (response: Call<GenericAPIResponse>, t: Throwable)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
+    ) {
+        viewModelScope.launch {
+            val call = sidewayQRAPIService.deleteEvent(eventId)
+
+            call.enqueue(object : Callback<GenericAPIResponse> {
+                override fun onResponse(
+                    call: Call<GenericAPIResponse>,
+                    response: Response<GenericAPIResponse>
+                ) {
+                    handleResponse(call, response)
+                }
+
+                override fun onFailure(
+                    response: Call<GenericAPIResponse>,
+                    t: Throwable
+                ) {
+                    t.printStackTrace()
+                    handleFailure(response, t)
+                }
+            })
+        }
+    }
+
+    fun joinEvent(
+        eventId: Int,
+        handleResponse:  (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Response<GenericAPIResponse> -> },
+        handleFailure: (response: Call<GenericAPIResponse>, t: Throwable)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
+    ) {
+        viewModelScope.launch {
+            val call = sidewayQRAPIService.joinEvent(eventId)
+
+            call.enqueue(object : Callback<GenericAPIResponse> {
+                override fun onResponse(
+                    call: Call<GenericAPIResponse>,
+                    response: Response<GenericAPIResponse>
+                ) {
+                    handleResponse(call, response)
+                }
+
+                override fun onFailure(
+                    response: Call<GenericAPIResponse>,
+                    t: Throwable
+                ) {
+                    t.printStackTrace()
+                    handleFailure(response, t)
+                }
+            })
+        }
+    }
+
+    fun leaveEvent(
+        eventId: Int,
+        handleResponse:  (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Response<GenericAPIResponse> -> },
+        handleFailure: (response: Call<GenericAPIResponse>, t: Throwable)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
+    ) {
+        viewModelScope.launch {
+            val call = sidewayQRAPIService.leaveEvent(eventId)
+
+            call.enqueue(object : Callback<GenericAPIResponse> {
+                override fun onResponse(
+                    call: Call<GenericAPIResponse>,
+                    response: Response<GenericAPIResponse>
+                ) {
+                    handleResponse(call, response)
+                }
+
+                override fun onFailure(
+                    response: Call<GenericAPIResponse>,
+                    t: Throwable
+                ) {
+                    t.printStackTrace()
+                    handleFailure(response, t)
+                }
+            })
+        }
+    }
+
     fun attendEvent(
         eventId: Int,
         eventCode: String,
-        onResponse: (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) -> Unit
+        handleResponse:  (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Response<GenericAPIResponse> -> },
+        handleFailure: (response: Call<GenericAPIResponse>, t: Throwable)
+            -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
     ) {
         viewModelScope.launch {
             val call = sidewayQRAPIService.attendEvent(
@@ -49,39 +248,48 @@ class EventOperationViewModel(
                     call: Call<GenericAPIResponse>,
                     response: Response<GenericAPIResponse>
                 ) {
-                    onResponse(call, response)
+                    handleResponse(call, response)
                 }
 
-                override fun onFailure(response: Call<GenericAPIResponse>, t: Throwable) {
+                override fun onFailure(
+                    response: Call<GenericAPIResponse>,
+                    t: Throwable
+                ) {
                     t.printStackTrace()
+                    handleFailure(response, t)
                 }
             })
         }
     }
 
-    fun getEvents() {
+    fun getEvents(
+        handleResponse:  (call: Call<GetEventResponse>, response: Response<GetEventResponse>)
+            -> Unit = { _: Call<GetEventResponse>, _: Response<GetEventResponse> -> },
+        handleFailure: (response: Call<GetEventResponse>, t: Throwable)
+            -> Unit = { _: Call<GetEventResponse>, _: Throwable -> },
+    ) {
         setIsLoading(true)
 
         viewModelScope.launch {
-            try {
-                _eventsList.clear()
-                val call = sidewayQRAPIService.getEvents()
+            _eventsList.clear()
+            val call = sidewayQRAPIService.getEvents()
 
-                call.enqueue(object : Callback<GetEventResponse> {
-                    override fun onResponse(call: Call<GetEventResponse>, response: Response<GetEventResponse>) {
-                        setIsLoading(false)
-                        response.body()?.let { _eventsList.addAll(it.data) }
-                    }
+            call.enqueue(object : Callback<GetEventResponse> {
+                override fun onResponse(call: Call<GetEventResponse>, response: Response<GetEventResponse>) {
+                    setIsLoading(false)
+                    response.body()?.let { _eventsList.addAll(it.data) }
+                    handleResponse(call, response)
+                }
 
-                    override fun onFailure(response: Call<GetEventResponse>, t: Throwable) {
-                        setIsLoading(false)
-                        t.printStackTrace()
-                    }
-                })
-            } catch (_: Exception) {
-            } finally {
-                setIsLoading(false)
-            }
+                override fun onFailure(
+                    response: Call<GetEventResponse>,
+                    t: Throwable
+                ) {
+                    setIsLoading(false)
+                    t.printStackTrace()
+                    handleFailure(response, t)
+                }
+            })
         }
     }
 }
