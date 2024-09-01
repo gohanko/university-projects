@@ -53,7 +53,7 @@ fun AccountSettingsScreen(
                 cookieRepository.saveCookie("")
             }
 
-            navController.navigate("login_screen")
+            navController.navigate("onboarding_screen")
         }
     }
 
