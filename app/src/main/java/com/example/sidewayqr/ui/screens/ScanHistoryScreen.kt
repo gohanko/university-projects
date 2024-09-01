@@ -27,7 +27,6 @@ import com.example.sidewayqr.ui.composables.scan_history.ScanHistoryListItem
 import com.example.sidewayqr.ui.composables.scan_history.ScanHistoryTopAppBar
 import com.example.sidewayqr.ui.composables.status.NotFound
 import com.example.sidewayqr.viewmodel.EventOperationViewModel
-import com.example.sidewayqr.viewmodel.SearchEventViewModel
 import io.github.g00fy2.quickie.QRResult
 import io.github.g00fy2.quickie.ScanQRCode
 import kotlinx.coroutines.runBlocking
@@ -43,15 +42,17 @@ fun ScanHistoryScreen(
 ) {
     val context = LocalContext.current
 
-    val searchEventViewModel = SearchEventViewModel()
-    val searchText by searchEventViewModel.searchText.collectAsState()
-    val isSearching by searchEventViewModel.isSearching.collectAsState()
-
     val isLoading by eventOperationViewModel.isLoading.collectAsState()
     val eventsList = eventOperationViewModel.eventsList
 
-    LaunchedEffect(true) {
+    fun onRefresh() {
+        eventOperationViewModel.setIsLoading(true)
         eventOperationViewModel.getEvents()
+        eventOperationViewModel.setIsLoading(false)
+    }
+
+    LaunchedEffect(true) {
+        onRefresh()
     }
 
     fun handleAttendEventResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
@@ -91,7 +92,10 @@ fun ScanHistoryScreen(
             .fillMaxSize()
             .imePadding(),
         topBar = {
-            ScanHistoryTopAppBar(navController = navHostController)
+            ScanHistoryTopAppBar(
+                navController = navHostController,
+                refresh = ::onRefresh
+            )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
@@ -110,11 +114,7 @@ fun ScanHistoryScreen(
                 )
             },
             isRefreshing = isLoading,
-            onRefresh = {
-                eventOperationViewModel.setIsLoading(true)
-                eventOperationViewModel.getEvents()
-                eventOperationViewModel.setIsLoading(false)
-            }
+            onRefresh = ::onRefresh
         )
     }
 }

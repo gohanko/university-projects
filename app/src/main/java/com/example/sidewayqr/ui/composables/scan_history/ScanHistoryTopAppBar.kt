@@ -1,73 +1,43 @@
 package com.example.sidewayqr.ui.composables.scan_history
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScanHistoryTopAppBar(navController: NavController) {
-    var isSearching by remember { mutableStateOf(false) }
-
+fun ScanHistoryTopAppBar(
+    navController: NavController,
+    refresh: () -> Unit,
+) {
     TopAppBar(
         title = {
-            if (isSearching) {
-                IconButton(
-                    onClick = {
-                        isSearching = false
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }
-            }
-
-            if (!isSearching) {
-                Text("Scan History")
-            }
+            Text("Scan History")
         },
         actions = {
-            if (isSearching) {
-                OutlinedTextField(
-                    modifier = Modifier.weight(1.0f),
-                    value = "",
-                    onValueChange = {},
-                    placeholder = {
-                        Text("Search Events")
-                    },
+            IconButton(
+                onClick = {
+                    refresh()
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "Refresh"
                 )
             }
 
-            if (!isSearching) {
-                IconButton(
-                    onClick = {
-                        isSearching = true
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Events"
-                    )
+            IconButton(
+                onClick = {
+                    navController.navigate("settings_screen")
                 }
-            }
-
-            IconButton(onClick = { navController.navigate("settings_screen") }) {
+            ) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
                     contentDescription = "Settings"
