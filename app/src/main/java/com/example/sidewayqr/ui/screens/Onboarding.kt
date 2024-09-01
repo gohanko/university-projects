@@ -77,6 +77,7 @@ fun Onboarding(
                 ) {
                     Text("Login")
                 }
+
                 Button(
                     modifier = Modifier.weight(1f),
                     onClick = {

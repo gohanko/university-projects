@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -92,8 +93,11 @@ fun AccountSettingsScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Row {
+            Row (
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
                 Button(
+                    modifier = Modifier.weight(1f),
                     onClick = {
                         navController.navigate("change_password_screen")
                     },
@@ -102,6 +106,7 @@ fun AccountSettingsScreen(
                 }
 
                 Button(
+                    modifier = Modifier.weight(1f),
                     onClick = {
                         authenticationViewModel.logout(
                             handleResponse = ::handleResponse
