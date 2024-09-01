@@ -21,7 +21,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 
-const val BASE_URL = "https://sidewayqr-qpi-ergwc2dyczhbhmcv.southeastasia-01.azurewebsites.net"
+const val BASE_URL = "https://sidewayqr-api.azurewebsites.net/"
 
 interface SidewayQRAPIService {
     companion object {

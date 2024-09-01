@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.sidewayqr.data.api.GenericAPIResponse
+import com.example.sidewayqr.data.api.authentication.LoginResponse
 import com.example.sidewayqr.ui.composables.PasswordOutlinedTextField
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import retrofit2.Call
@@ -53,6 +54,18 @@ fun RegisterForm (
         if (response.code() == 500) {
             Toast.makeText(context, "Something went wrong with the servers.", Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun handleRegisterFailure(
+        response: Call<GenericAPIResponse>,
+        t: Throwable
+    ) {
+        var message = t.message
+        if (t.message == "timeout") {
+            message = "Server timed out"
+        }
+
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     Column(
@@ -107,7 +120,8 @@ fun RegisterForm (
                 authenticationViewModel.register(
                     email = email,
                     password = password,
-                    handleResponse = ::handleRegisterResponse
+                    handleResponse = ::handleRegisterResponse,
+                    handleFailure = ::handleRegisterFailure
                 )
             }
         ) {

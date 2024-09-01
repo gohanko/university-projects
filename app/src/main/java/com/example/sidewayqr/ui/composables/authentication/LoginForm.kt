@@ -29,6 +29,7 @@ import com.example.sidewayqr.ui.composables.PasswordOutlinedTextField
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import retrofit2.Call
 import retrofit2.Response
+import java.net.SocketTimeoutException
 
 @Composable
 fun LoginForm(
@@ -50,6 +51,18 @@ fun LoginForm(
         if (response.code() == 400) {
             Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun handleLoginFailure(
+        response: Call<LoginResponse>,
+        t: Throwable
+    ) {
+        var message = t.message
+        if (t.message == "timeout") {
+            message = "Server timed out"
+        }
+
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     Column(
@@ -104,7 +117,8 @@ fun LoginForm(
                 authenticationViewModel.login(
                     email = email,
                     password = password,
-                    handleResponse = ::handleLoginResponse
+                    handleResponse = ::handleLoginResponse,
+                    handleFailure = ::handleLoginFailure
                 )
             }
         ) {
