@@ -15,7 +15,9 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class EventOperationViewModel(
     private val sidewayQRAPIService: SidewayQRAPIService,
@@ -34,19 +36,23 @@ class EventOperationViewModel(
     fun createEvent(
         name: String,
         description: String,
-        startDate: Date,
-        endDate: Date,
+        startDate: String,
+        endDate: String,
         handleResponse:  (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>)
             -> Unit = { _: Call<GenericAPIResponse>, _: Response<GenericAPIResponse> -> },
         handleFailure: (response: Call<GenericAPIResponse>, t: Throwable)
             -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
     ) {
         viewModelScope.launch {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            val parsedStartDate = dateFormat.parse(startDate)
+            val parsedEndDate = dateFormat.parse(endDate)
+
             val call = sidewayQRAPIService.createEvent(CreateUpdateEventRequest(
                 name = name,
                 description = description,
-                startDate = startDate,
-                endDate = endDate
+                startDate = parsedStartDate,
+                endDate = parsedEndDate
             ))
 
             call.enqueue(object : Callback<GenericAPIResponse> {
@@ -101,21 +107,25 @@ class EventOperationViewModel(
         eventId: Int,
         name: String,
         description: String,
-        startDate: Date,
-        endDate: Date,
+        startDate: String,
+        endDate: String,
         handleResponse:  (call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>)
             -> Unit = { _: Call<GenericAPIResponse>, _: Response<GenericAPIResponse> -> },
         handleFailure: (response: Call<GenericAPIResponse>, t: Throwable)
             -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
     ) {
         viewModelScope.launch {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            val parsedStartDate = dateFormat.parse(startDate)
+            val parsedEndDate = dateFormat.parse(endDate)
+
             val call = sidewayQRAPIService.updateEvent(
                 eventId,
                 CreateUpdateEventRequest(
                     name = name,
                     description = description,
-                    startDate = startDate,
-                    endDate = endDate
+                    startDate = parsedStartDate,
+                    endDate = parsedEndDate
                 )
             )
 
