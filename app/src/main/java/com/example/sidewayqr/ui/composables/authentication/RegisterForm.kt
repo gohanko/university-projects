@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.sidewayqr.data.api.GenericAPIResponse
+import com.example.sidewayqr.ui.composables.PasswordOutlinedTextField
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import retrofit2.Call
 import retrofit2.Response
@@ -89,7 +90,7 @@ fun RegisterForm (
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
-                OutlinedTextField(
+                PasswordOutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = password,
                     onValueChange = {
