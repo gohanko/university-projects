@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import com.example.sidewayqr.ui.composables.status.NotFound
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,6 +35,11 @@ fun <T> PullToRefreshLazyColumn(
     Box(
         modifier = Modifier.nestedScroll(pullToRefreshState.nestedScrollConnection)
     ) {
+        if (listItems.isEmpty()) {
+            NotFound()
+            return
+        }
+
         LazyColumn(
             modifier = modifier.padding(horizontal = 10.dp),
             state = lazyListState,

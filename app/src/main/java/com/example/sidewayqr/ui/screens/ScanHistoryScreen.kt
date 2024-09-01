@@ -101,11 +101,6 @@ fun ScanHistoryScreen(
             }
         }
     ) { innerPadding ->
-        if (eventsList.isEmpty() && !isLoading) {
-            NotFound()
-            return@Scaffold
-        }
-        
         PullToRefreshLazyColumn(
             modifier = Modifier.padding(innerPadding),
             listItems = eventsList,
