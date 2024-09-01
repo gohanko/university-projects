@@ -46,7 +46,7 @@ fun AccountSettingsScreen(
 ) {
     val context = LocalContext.current
 
-    fun handleResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
+    fun handleLogoutResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
         if (response.code() == 200) {
             Toast.makeText(context, "Logout Successful!", Toast.LENGTH_LONG).show()
             runBlocking {
@@ -109,7 +109,7 @@ fun AccountSettingsScreen(
                     modifier = Modifier.weight(1f),
                     onClick = {
                         authenticationViewModel.logout(
-                            handleResponse = ::handleResponse
+                            handleResponse = ::handleLogoutResponse
                         )
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Red),

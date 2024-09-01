@@ -1,8 +1,10 @@
 package com.example.sidewayqr.ui.screens.authentication
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -20,11 +22,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.sidewayqr.data.api.GenericAPIResponse
+import com.example.sidewayqr.data.datastore.CookieRepository
+import com.example.sidewayqr.ui.composables.PasswordOutlinedTextField
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Response
 
@@ -32,14 +41,18 @@ import retrofit2.Response
 @Composable
 fun ChangePasswordScreen(
     authenticationViewModel: AuthenticationViewModel,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    cookieRepository: CookieRepository
 ) {
     val context = LocalContext.current
 
     fun handleResponse(call: Call<GenericAPIResponse>, response: Response<GenericAPIResponse>) {
         if (response.code() == 200) {
             authenticationViewModel.logout()
-            navHostController.navigate("login_screen")
+            runBlocking {
+                cookieRepository.saveCookie("")
+            }
+            navHostController.navigate("onboarding_screen")
             Toast.makeText(context, "Password changed successfully", Toast.LENGTH_LONG).show()
         }
     }
@@ -68,9 +81,18 @@ fun ChangePasswordScreen(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .fillMaxSize()
+                .padding(horizontal = 50.dp, vertical = 50.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            TextField(
+            Text(
+                text = "New Password",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            PasswordOutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
                 value = newPassword,
                 onValueChange = {
                     newPassword = it
@@ -78,6 +100,7 @@ fun ChangePasswordScreen(
             )
 
             Button(
+                modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     authenticationViewModel.changePassword(
                         newPassword = newPassword,

@@ -56,7 +56,8 @@ fun NavigationGraph(
         composable("change_password_screen") {
             ChangePasswordScreen(
                 authenticationViewModel = authenticationViewModel,
-                navHostController = navHostController
+                navHostController = navHostController,
+                cookieRepository = cookieRepository
             )
         }
 

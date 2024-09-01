@@ -49,7 +49,7 @@ fun LoginForm(
         }
 
         if (response.code() == 400) {
-            Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Login attempt unsuccessful", Toast.LENGTH_LONG).show()
         }
     }
 

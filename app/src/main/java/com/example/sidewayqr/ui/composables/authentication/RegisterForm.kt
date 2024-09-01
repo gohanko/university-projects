@@ -48,7 +48,7 @@ fun RegisterForm (
         }
 
         if (response.code() == 400) {
-            Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Registration unsuccessful", Toast.LENGTH_LONG).show()
         }
 
         if (response.code() == 500) {
