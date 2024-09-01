@@ -31,6 +31,10 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificationSettingsScreen(navController: NavController) {
+    var notificationsEnabled by remember { mutableStateOf(true) }
+    var soundEnabled by remember { mutableStateOf(true) }
+    var vibrationEnabled by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -55,11 +59,6 @@ fun NotificationSettingsScreen(navController: NavController) {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            var notificationsEnabled by remember { mutableStateOf(true) }
-            var soundEnabled by remember { mutableStateOf(true) }
-            var vibrationEnabled by remember { mutableStateOf(false) }
-
-            // Toggle for enabling/disabling notifications
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -74,7 +73,6 @@ fun NotificationSettingsScreen(navController: NavController) {
                 )
             }
 
-            // Toggle for enabling/disabling sound
             if (notificationsEnabled) {
                 Row(
                     modifier = Modifier
@@ -90,7 +88,6 @@ fun NotificationSettingsScreen(navController: NavController) {
                     )
                 }
 
-                // Toggle for enabling/disabling vibration
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -110,9 +107,13 @@ fun NotificationSettingsScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    // Save the notification settings here
-                    saveNotificationSettings(notificationsEnabled, soundEnabled, vibrationEnabled, context = navController.context)
-                    navController.popBackStack() // Go back after saving settings
+                    saveNotificationSettings(
+                        notificationsEnabled,
+                        soundEnabled,
+                        vibrationEnabled,
+                        context = navController.context
+                    )
+                    navController.popBackStack()
                 },
                 modifier = Modifier.align(Alignment.End)
             ) {
@@ -122,7 +123,12 @@ fun NotificationSettingsScreen(navController: NavController) {
     }
 }
 
-fun saveNotificationSettings(notificationsEnabled: Boolean, soundEnabled: Boolean, vibrationEnabled: Boolean, context: Context) {
+fun saveNotificationSettings(
+    notificationsEnabled: Boolean,
+    soundEnabled: Boolean,
+    vibrationEnabled: Boolean,
+    context: Context
+) {
     val preferences = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
     preferences.edit().apply {
         putBoolean("notifications_enabled", notificationsEnabled)

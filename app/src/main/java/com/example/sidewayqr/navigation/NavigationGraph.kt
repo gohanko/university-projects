@@ -6,16 +6,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
-import com.example.sidewayqr.ui.screens.settings.AboutPage
 import com.example.sidewayqr.ui.screens.settings.AccountSettingsScreen
 import com.example.sidewayqr.ui.screens.settings.DataUsageScreen
-import com.example.sidewayqr.ui.screens.settings.GeneralSettingsScreen
 import com.example.sidewayqr.ui.screens.authentication.LoginScreen
 import com.example.sidewayqr.ui.screens.authentication.RegisterScreen
 import com.example.sidewayqr.ui.screens.settings.NotificationSettingsScreen
 import com.example.sidewayqr.ui.screens.ScanHistoryScreen
 import com.example.sidewayqr.ui.screens.authentication.ChangePasswordScreen
 import com.example.sidewayqr.ui.screens.Onboarding
+import com.example.sidewayqr.ui.screens.settings.AboutScreen
 import com.example.sidewayqr.ui.screens.settings.LanguageSelectionScreen
 import com.example.sidewayqr.ui.screens.settings.SettingsScreen
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
@@ -78,21 +77,16 @@ fun NavigationGraph(
 
         composable("settings_screen") {
             SettingsScreen(
-                navHostController,
-                authenticationViewModel
+                navHostController
             )
         }
 
         composable("about_page") {
-            AboutPage(navHostController)
+            AboutScreen(navHostController)
         }
 
         composable("notification_settings") {
             NotificationSettingsScreen(navHostController)
-        }
-
-        composable("general_settings") {
-            GeneralSettingsScreen(navHostController)
         }
 
         composable("language_selection") {

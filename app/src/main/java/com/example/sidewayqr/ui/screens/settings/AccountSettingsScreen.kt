@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -91,24 +92,25 @@ fun AccountSettingsScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Button(
-                onClick = {
-                    navController.navigate("change_password_screen")
-                },
-            ) {
-                Text(text = "Change Password")
-            }
-            
-            Button(
-                onClick = {
-                    authenticationViewModel.logout(
-                        handleResponse = ::handleResponse
-                    )
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-                modifier = Modifier.align(Alignment.End)
-            ) {
-                Text("Logout", color = Color.White)
+            Row {
+                Button(
+                    onClick = {
+                        navController.navigate("change_password_screen")
+                    },
+                ) {
+                    Text(text = "Change Password")
+                }
+
+                Button(
+                    onClick = {
+                        authenticationViewModel.logout(
+                            handleResponse = ::handleResponse
+                        )
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                ) {
+                    Text("Logout", color = Color.White)
+                }
             }
         }
     }
