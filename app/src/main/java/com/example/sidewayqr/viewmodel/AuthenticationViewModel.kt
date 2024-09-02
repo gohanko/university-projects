@@ -1,6 +1,5 @@
 package com.example.sidewayqr.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sidewayqr.data.api.GenericAPIResponse
@@ -10,7 +9,6 @@ import com.example.sidewayqr.data.api.authentication.RegisterLoginRequest
 import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.network.SidewayQRAPIService
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

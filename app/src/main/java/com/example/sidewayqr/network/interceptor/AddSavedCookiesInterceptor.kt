@@ -1,10 +1,6 @@
 package com.example.sidewayqr.network.interceptor
 
-import android.util.Log
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.sidewayqr.data.datastore.CookieRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request

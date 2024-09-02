@@ -1,9 +1,9 @@
 package com.example.sidewayqr.network
 
-import com.example.sidewayqr.data.api.authentication.RegisterLoginRequest
 import com.example.sidewayqr.data.api.GenericAPIResponse
 import com.example.sidewayqr.data.api.authentication.ChangePasswordRequest
 import com.example.sidewayqr.data.api.authentication.LoginResponse
+import com.example.sidewayqr.data.api.authentication.RegisterLoginRequest
 import com.example.sidewayqr.data.api.event.AttendEventRequest
 import com.example.sidewayqr.data.api.event.CreateUpdateEventRequest
 import com.example.sidewayqr.data.api.event.GetEventResponse

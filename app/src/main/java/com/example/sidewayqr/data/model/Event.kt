@@ -2,7 +2,6 @@ package com.example.sidewayqr.data.model
 
 import com.google.gson.annotations.SerializedName
 import java.util.Date
-import java.util.UUID
 
 data class Event(
     @SerializedName("id")

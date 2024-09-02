@@ -1,8 +1,5 @@
 package com.example.sidewayqr.ui.screens.settings
 
-import android.app.Activity
-import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,14 +20,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sidewayqr.data.api.GenericAPIResponse
-import com.example.sidewayqr.data.api.authentication.LoginResponse
 import com.example.sidewayqr.data.datastore.CookieRepository
 import com.example.sidewayqr.viewmodel.AuthenticationViewModel
 import kotlinx.coroutines.runBlocking
