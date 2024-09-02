@@ -15,9 +15,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Login
 import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +34,7 @@ import com.example.sidewayqr.utility.convertDateTimeToReadable
 @Composable
 fun ScanHistoryListItem(
     event: Event,
+    onDeleteClick: (Int) -> Unit
 ) {
     Card (
         modifier = Modifier
@@ -61,11 +64,24 @@ fun ScanHistoryListItem(
                 verticalArrangement = Arrangement
                     .spacedBy(10.dp)
             ) {
-                Row {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = event.name,
                         fontWeight = FontWeight.ExtraBold,
+                        modifier = Modifier.weight(1f)
                     )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.weight(0.1f)
+                    ) {
+                        IconButton(onClick = { onDeleteClick(event.id.toInt()) }) {
+                            Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Event")
+                        }
+                    }
                 }
 
                 Row {

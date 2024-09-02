@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -112,69 +113,12 @@ fun ScanHistoryScreen(
         floatingActionButton = {
             ExpandableFloatingActionButton(
                 onScanClick = { scanQRCodeLauncher.launch(null) },
-                onCreateClick = {
-                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-                    val startDate = dateFormat.format(Date())
-                    val endDate = dateFormat.format(Date())
-
-                    eventOperationViewModel.createEvent(
-                        name = "New Event",
-                        description = "Event Description",
-                        startDate = startDate,
-                        endDate = endDate,
-                        handleResponse = { call, response ->
-                            Log.d("API Response", "Create Event Response: ${response.code()} - ${response.message()}")
-                            if (response.isSuccessful) {
-                                Toast.makeText(context, "Event Created", Toast.LENGTH_SHORT).show()
-                                onRefresh()
-                            } else {
-                                val errorBody = response.errorBody()?.string()
-                                Log.e("API Error", "Failed to Create Event: $errorBody")
-                                Toast.makeText(context, "Failed to Create Event: $errorBody", Toast.LENGTH_SHORT).show()
-                            }
-                        }
+                onCreateClick = { navHostController.navigate("event_creation") },
+                onEditClick = { eventId, eventName, eventDescription, eventStartDate, eventEndDate ->
+                    navHostController.navigate(
+                        "event_edit/$eventId/$eventName/$eventDescription/$eventStartDate/$eventEndDate"
                     )
                 },
-                onEditClick = {
-                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-                    val startDate = dateFormat.format(Date())
-                    val endDate = dateFormat.format(Date())
-
-                    eventOperationViewModel.updateEvent(
-                        eventId = 1, // Replace with actual event ID
-                        name = "Updated Event",
-                        description = "Updated Description",
-                        startDate = startDate,
-                        endDate = endDate,
-                        handleResponse = { call, response ->
-                            Log.d("API Response", "Update Event Response: ${response.code()} - ${response.message()}")
-                            if (response.isSuccessful) {
-                                Toast.makeText(context, "Event Updated", Toast.LENGTH_SHORT).show()
-                                onRefresh()
-                            } else {
-                                val errorBody = response.errorBody()?.string()
-                                Log.e("API Error", "Failed to Update Event: $errorBody")
-                                Toast.makeText(context, "Failed to Update Event: $errorBody", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    )
-                },
-                onDeleteClick = {
-                    eventOperationViewModel.deleteEvent(
-                        eventId = 1, // Replace with actual event ID
-                        handleResponse = { call, response ->
-                            Log.d("API Response", "Delete Event Response: ${response.code()} - ${response.message()}")
-                            if (response.isSuccessful) {
-                                Toast.makeText(context, "Event Deleted", Toast.LENGTH_SHORT).show()
-                                onRefresh()
-                            } else {
-                                val errorBody = response.errorBody()?.string()
-                                Log.e("API Error", "Failed to Delete Event: $errorBody")
-                                Toast.makeText(context, "Failed to Delete Event: $errorBody", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    )
-                }
             )
         }
     ) { innerPadding ->
@@ -183,7 +127,23 @@ fun ScanHistoryScreen(
             listItems = eventsList,
             content = {
                 ScanHistoryListItem(
-                    event = it
+                    event = it,
+                    onDeleteClick = { eventId ->
+                        eventOperationViewModel.deleteEvent(
+                            eventId = eventId,
+                            handleResponse = { call, response ->
+                                Log.d("API Response", "Delete Event Response: ${response.code()} - ${response.message()}")
+                                if (response.isSuccessful) {
+                                    Toast.makeText(context, "Event Deleted", Toast.LENGTH_SHORT).show()
+                                    onRefresh()
+                                } else {
+                                    val errorBody = response.errorBody()?.string()
+                                    Log.e("API Error", "Failed to Delete Event: $errorBody")
+                                    Toast.makeText(context, "Failed to Delete Event: $errorBody", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        )
+                    }
                 )
             },
             isRefreshing = isLoading,
@@ -196,8 +156,7 @@ fun ScanHistoryScreen(
 fun ExpandableFloatingActionButton(
     onScanClick: () -> Unit,
     onCreateClick: () -> Unit,
-    onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit
+    onEditClick: (Int, String, String, String, String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -207,12 +166,8 @@ fun ExpandableFloatingActionButton(
             .animateContentSize()
     ) {
         if (expanded) {
-
-            FloatingActionButton(onClick = onDeleteClick) {
-                Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Event")
-            }
             Spacer(modifier = Modifier.height(8.dp))
-            FloatingActionButton(onClick = onEditClick) {
+            FloatingActionButton(onClick = { onEditClick(1, "Event Name", "Event Description", "Start Date", "End Date") }) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Event")
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -225,7 +180,10 @@ fun ExpandableFloatingActionButton(
             }
             Spacer(modifier = Modifier.height(8.dp))
         }
-        FloatingActionButton(onClick = { expanded = !expanded }) {
+        FloatingActionButton(
+            onClick = { expanded = !expanded },
+            elevation = FloatingActionButtonDefaults.elevation(0.dp)
+        ) {
             Icon(imageVector = if (expanded) Icons.Default.Close else Icons.Default.MoreVert, contentDescription = "Expand")
         }
     }

@@ -11,8 +11,8 @@ data class CreateUpdateEventRequest(
     val description: String,
 
     @SerializedName("startDate")
-    val startDate: Date,
+    val startDate: String,
 
     @SerializedName("endDate")
-    val endDate: Date,
+    val endDate: String,
 )

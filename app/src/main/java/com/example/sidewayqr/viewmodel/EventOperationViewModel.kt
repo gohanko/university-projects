@@ -43,15 +43,15 @@ class EventOperationViewModel(
             -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
     ) {
         viewModelScope.launch {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            val parsedStartDate = dateFormat.parse(startDate)
-            val parsedEndDate = dateFormat.parse(endDate)
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())
+            val formattedStartDate = dateFormat.format(dateFormat.parse(startDate))
+            val formattedEndDate = dateFormat.format(dateFormat.parse(endDate))
 
             val call = sidewayQRAPIService.createEvent(CreateUpdateEventRequest(
                 name = name,
                 description = description,
-                startDate = parsedStartDate,
-                endDate = parsedEndDate
+                startDate = formattedStartDate,
+                endDate = formattedEndDate
             ))
 
             call.enqueue(object : Callback<GenericAPIResponse> {
@@ -114,17 +114,17 @@ class EventOperationViewModel(
             -> Unit = { _: Call<GenericAPIResponse>, _: Throwable -> },
     ) {
         viewModelScope.launch {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            val parsedStartDate = dateFormat.parse(startDate)
-            val parsedEndDate = dateFormat.parse(endDate)
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())
+            val formattedStartDate = dateFormat.format(dateFormat.parse(startDate))
+            val formattedEndDate = dateFormat.format(dateFormat.parse(endDate))
 
             val call = sidewayQRAPIService.updateEvent(
                 eventId,
                 CreateUpdateEventRequest(
                     name = name,
                     description = description,
-                    startDate = parsedStartDate,
-                    endDate = parsedEndDate
+                    startDate = formattedStartDate,
+                    endDate = formattedEndDate
                 )
             )
 
