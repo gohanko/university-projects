@@ -123,10 +123,10 @@ describe('DELETE /api/event/:eventId', () => {
     })
 })
 
-describe('GET /api/event/:eventId/code', () => {
+describe('GET /api/event/:eventId/getCode', () => {
     it("Should not be able to get event code if event does not exist.", async () => {
         const response = await request(expressApp)
-            .get('/api/event/20/code')
+            .get('/api/event/20/qrCode')
             .set('Cookie', authCookie)
             .send()
         
@@ -142,7 +142,7 @@ describe('GET /api/event/:eventId/code', () => {
         expect(eventCreationResponse.status).toBe(201)
         
         const response = await request(expressApp)
-            .get(`/api/event/${eventCreationResponse.body.data.id}/code`)
+            .get(`/api/event/${eventCreationResponse.body.data.id}/qrCode`)
             .set('Cookie', authCookie)
             .send()
         
