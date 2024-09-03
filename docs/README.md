@@ -63,6 +63,6 @@ Here is the how the source code is structured:
 
 ### Video Demonstration
 
-https://github.com/gohanko/SidewayQR/tree/main/docs/videos/demo.mp4
+[![Watch the video](https://img.youtube.com/vi/9zrTCBWHm9s/maxresdefault.jpg)](https://youtu.be/9zrTCBWHm9s)
 
 
