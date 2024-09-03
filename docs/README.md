@@ -59,7 +59,18 @@ Here is the how the source code is structured:
 ## Screenshots & Demonstrations
 
 ### Screenshots
-<img src="images/Screenshot_20240903_175041.png" width="250">
+
+<p float="left">
+  <img src="images/onboarding.png" width="250">
+  <img src="images/login_page.png" width="250">
+  <img src="images/scan_history.png" width="250">
+</p>
+
+<p float="left">
+  <img src="images/scanner_page.png" width="250" />
+  <img src="images/create_event.png" width="250" /> 
+  <img src="images/settings.png" width="250" />
+</p>
 
 ### Video Demonstration
 
