@@ -58,5 +58,11 @@ Here is the how the source code is structured:
 
 ## Screenshots & Demonstrations
 
+### Screenshots
+![alt text](images/Screenshot_20240903_175041.png)
+
+### Video Demonstration
+[![Watch the video](videos/demo.mp4)](videos/demo.mp4)
+
 ## Acknowledgement
 
