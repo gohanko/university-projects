@@ -62,6 +62,7 @@ Here is the how the source code is structured:
 <img src="images/Screenshot_20240903_175041.png" width="250">
 
 ### Video Demonstration
+
 https://github.com/gohanko/SidewayQR/tree/main/docs/videos/demo.mp4
 
 
