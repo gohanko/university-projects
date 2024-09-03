@@ -42,19 +42,19 @@ There we go! You should be able to build and run the application locally.
 
 ### Folder Structure
 Here is the how the source code is structured:
-- data/ - Contains code that holds user data during run time.
-  - api/ - Contains data classes related to API request and response.
-  - datastore/ - Contains code to access the SharedPreference DataStore.
-  - model/ - Contains code that holds data received from the API.
-- navigation/ - Contains Navigation Graphs for Android navigation.
-- network/ - Contains Retrofit networking code.
-  - interceptor/ - Contains interceptor for OkHTTP3. Mostly for retrieving and storing auth tokens, as well as apply the auth tokens when making calls (for authorized only endpoints).
-- ui/ - Contains code to UI components and different screens.
-  - composables/ - All reusable components live here. Business logic should be minimal.
-  - screens/ - Different screens (pages) of the application live here. Contains business logic related to the UI.
-  - theme/ - Has theme, theme manager, colors and font files.
-- utility/ - For business logic that is not UI related, and also random things.
-- viewmodel/ - Has API related viewmodels that hold data after calling the API.
+- **data/** - Contains code that holds user data during run time.
+  - **api/** - Contains data classes related to API request and response.
+  - **datastore/** - Contains code to access the SharedPreference DataStore.
+  - **model/** - Contains code that holds data received from the API.
+- **navigation/** - Contains Navigation Graphs for Android navigation.
+- **network/** - Contains Retrofit networking code.
+  - **interceptor/** - Contains interceptor for OkHTTP3. Mostly for retrieving and storing auth tokens, as well as apply the auth tokens when making calls (for authorized only endpoints).
+- **ui/** - Contains code to UI components and different screens.
+  - **composables/** - All reusable components live here. Business logic should be minimal.
+  - **screens/** - Different screens (pages) of the application live here. Contains business logic related to the UI.
+  - **theme/** - Has theme, theme manager, colors and font files.
+- **utility/** - For business logic that is not UI related, and also random things.
+- **viewmodel/** - Has API related viewmodels that hold data after calling the API.
 
 ## Screenshots & Demonstrations
 
