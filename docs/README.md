@@ -8,7 +8,6 @@ SidewayQR is a minimalist QR attendance tracking application. Built using:
 - Quickie (QR Code Scanning Library)
 - Retrofit
 
-## About
 The application is a frontend for the API provided by [sidewayqr-api](https://github.com/gohanko/sidewayqr-api). Basically, the API software provides the functions of a QR attendance application but this mobile application provides an Android frontend to access the API.
 
 It is built for a group assignment for UCCD3223 Mobile Applications Development at University Tunku Abdul Rahman.
@@ -40,6 +39,22 @@ To get started and running:
 - Run it as per any other android projects.
 
 There we go! You should be able to build and run the application locally.
+
+### Folder Structure
+Here is the how the source code is structured:
+- data/ - Contains code that holds user data during run time.
+  - api/ - Contains data classes related to API request and response.
+  - datastore/ - Contains code to access the SharedPreference DataStore.
+  - model/ - Contains code that holds data received from the API.
+- navigation/ - Contains Navigation Graphs for Android navigation.
+- network/ - Contains Retrofit networking code.
+  - interceptor/ - Contains interceptor for OkHTTP3. Mostly for retrieving and storing auth tokens, as well as apply the auth tokens when making calls (for authorized only endpoints).
+- ui/ - Contains code to UI components and different screens.
+  - composables/ - All reusable components live here. Business logic should be minimal.
+  - screens/ - Different screens (pages) of the application live here. Contains business logic related to the UI.
+  - theme/ - Has theme, theme manager, colors and font files.
+- utility/ - For business logic that is not UI related, and also random things.
+- viewmodel/ - Has API related viewmodels that hold data after calling the API.
 
 ## Screenshots & Demonstrations
 
