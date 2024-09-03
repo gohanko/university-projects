@@ -59,9 +59,9 @@ Here is the how the source code is structured:
 ## Screenshots & Demonstrations
 
 ### Screenshots
-![alt text](images/Screenshot_20240903_175041.png)
+<img src="images/Screenshot_20240903_175041.png" width="250">
 
 ### Video Demonstration
-[![Watch the video](videos/demo.mp4)](videos/demo.mp4)
+https://github.com/gohanko/SidewayQR/tree/main/docs/videos/demo.mp4
 
 
