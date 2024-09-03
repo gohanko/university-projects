@@ -64,5 +64,4 @@ Here is the how the source code is structured:
 ### Video Demonstration
 [![Watch the video](videos/demo.mp4)](videos/demo.mp4)
 
-## Acknowledgement
 
