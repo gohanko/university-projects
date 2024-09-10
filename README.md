@@ -1,1 +1,1 @@
-# MiniCinema
+# mini-cinema
