@@ -34,7 +34,7 @@ Older versions of Android Studio will have issues importing, building, and runni
 To get started and running:
 
 - Clone this repository and import into Android Studio
-  - Simply do: ```git clone git@github.com:gohanko/SidewayQR.git`````
+  - Simply do: ```git clone git@github.com:gohanko/SidewayQR.git```
   - Import into Android Studio
 - Run it as per any other android projects.
 
