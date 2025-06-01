@@ -1,0 +1,61 @@
+﻿@page
+@model MiniCinema.Pages.Lea.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container mt-3">
+    <h1>Create</h1>
+
+    <h4>Leave</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Leave.Name" class="control-label"></label>
+                    <input asp-for="Leave.Name" class="form-control" />
+                    <span asp-validation-for="Leave.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Leave.Department" class="control-label"></label>
+                    <input asp-for="Leave.Department" class="form-control" />
+                    <span asp-validation-for="Leave.Department" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Leave.Position" class="control-label"></label>
+                    <input asp-for="Leave.Position" class="form-control" />
+                    <span asp-validation-for="Leave.Position" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Leave.LeaveStartDate" class="control-label"></label>
+                    <input asp-for="Leave.LeaveStartDate" class="form-control" />
+                    <span asp-validation-for="Leave.LeaveStartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Leave.LeaveEndDate" class="control-label"></label>
+                    <input asp-for="Leave.LeaveEndDate" class="form-control" />
+                    <span asp-validation-for="Leave.LeaveEndDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Leave.ReasonForLeave" class="control-label"></label>
+                    <input asp-for="Leave.ReasonForLeave" class="form-control" />
+                    <span asp-validation-for="Leave.ReasonForLeave" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

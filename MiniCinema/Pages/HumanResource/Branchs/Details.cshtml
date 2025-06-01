@@ -1,0 +1,45 @@
+﻿@page
+@model MiniCinema.Pages.Brs.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mt-3">
+    <h1>Details</h1>
+
+    <div>
+        <h4>Branchs</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Branchs.BranchName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Branchs.BranchName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Branchs.Area)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Branchs.Area)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Branchs.BranchManager)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Branchs.BranchManager)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Branchs.Postcode)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Branchs.Postcode)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-page="./Edit" asp-route-id="@Model.Branchs?.ID">Edit</a> |
+        <a asp-page="./Index">Back to List</a>
+    </div>
+</div>

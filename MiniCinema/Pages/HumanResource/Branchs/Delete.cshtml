@@ -1,0 +1,48 @@
+﻿@page
+@model MiniCinema.Pages.Brs.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container mt-3">
+    <h1>Delete</h1>
+
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Branchs</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Branchs.BranchName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Branchs.BranchName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Branchs.Area)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Branchs.Area)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Branchs.BranchManager)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Branchs.BranchManager)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Branchs.Postcode)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Branchs.Postcode)
+            </dd>
+        </dl>
+    
+        <form method="post">
+            <input type="hidden" asp-for="Branchs.ID" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-page="./Index">Back to List</a>
+        </form>
+    </div>
+</div>

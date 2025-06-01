@@ -1,0 +1,44 @@
+﻿@page
+@model MiniCinema.Pages.Movies.Showtime
+
+@{
+    ViewData["Title"] = "Showtimes";
+}
+
+<div class="container mt-3">
+    <h1>Sessions - @Html.DisplayFor(model => model.Movie.Title)</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Movie.Sessions.ElementAt(0).ShowingDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Movie.Sessions.ElementAt(1).HallId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Movie.Sessions.ElementAt(2).Movie.Title)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var session in Model.Movie.Sessions)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="/Ticketing/Booking" asp-route-id="@session.SessionId">
+                            @Html.DisplayFor(modelItem => session.ShowingDate)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => session.Hall.Branch.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => session.Movie.Title)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
