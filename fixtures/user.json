@@ -1,0 +1,18 @@
+[
+    {
+        "email": "lecturer@email.com",
+        "password": "lecturer"
+    },
+    {
+        "email": "student1@email.com",
+        "password": "student1"
+    },
+    {
+        "email": "student2@email.com",
+        "password": "student2"
+    },
+    {
+        "email": "student3@email.com",
+        "password": "student3"
+    }
+]

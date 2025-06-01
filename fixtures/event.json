@@ -1,0 +1,66 @@
+[
+    {
+        "name": "(L1) UCCA2103 Management Information Systems",
+        "description": "Week 1",
+        "startDate": "2024-09-03 10:00:00.000",
+        "endDate": "2024-09-03 11:00:00.000",
+        "code": "tango_code",
+        "createdBy": "1"
+    },
+    {
+        "name": "(P4) UCCD3223 Mobile Applications Development",
+        "description": "Week 1",
+        "startDate": "2024-09-03 16:00:00.000",
+        "endDate": "2024-09-03 18:00:00.000",
+        "code": "tango_code",
+        "createdBy": "1"
+    },
+    {
+        "name": "(L1) UCCD2043 Information Technology Project Management",
+        "description": "Week 1",
+        "startDate": "2024-09-04 08:00:00.000",
+        "endDate": "2024-09-04 09:00:00.000",
+        "code": "tango_code",
+        "createdBy": "1"
+    },
+    {
+        "name": "(L1) UCCA2103 Management Information Systems",
+        "description": "Week 1",
+        "startDate": "2024-09-04 11:00:00.000",
+        "endDate": "2024-09-04 13:00:00.000",
+        "code": "tango_code",
+        "createdBy": "1"
+    },
+    {
+        "name": "(T1) UCCA2103 Management Information Systems",
+        "description": "Week 1",
+        "startDate": "2024-09-05 13:00:00.000",
+        "endDate": "2024-09-05 14:00:00.000",
+        "code": "tango_code",
+        "createdBy": "1"
+    },
+    {
+        "name": "(L1) UCCD3223 Mobile Applications Development",
+        "description": "Week 1",
+        "startDate": "2024-09-05 14:00:00.000",
+        "endDate": "2024-09-05 16:00:00.000",
+        "code": "tango_code",
+        "createdBy": "1"
+    },
+    {
+        "name": "(L1) UCCD2043 Information Technology Project Management",
+        "description": "Week 1",
+        "startDate": "2024-09-05 16:00:00.000",
+        "endDate": "2024-09-05 18:00:00.000",
+        "code": "tango_code",
+        "createdBy": "1"
+    },
+    {
+        "name": "(T1) UCCD2043 Information Technology Project Management",
+        "description": "Week 1",
+        "startDate": "2024-09-06 09:00:00.000",
+        "endDate": "2024-09-06 10:00:00.000",
+        "code": "tango_code",
+        "createdBy": "1"
+    }
+]
